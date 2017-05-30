@@ -1,0 +1,28 @@
+<project>
+    <target name="all" depends="build, javadoc, jar">
+    <target name="clean"> 
+        <delete dir="build"/> 
+    </target> 
+    <target name="build"> 
+        <mkdir dir="build/classes"/> 
+        <javac srcdir="src" destdir="build/classes"/> 
+    </target> 
+    <target name="javadoc"> 
+        <javadoc packagenames="*" sourcepath="${src.dir}" destdir = "doc" version = "true" windowtitle = "DBrium Documentation">
+            <doctitle><![CDATA[= DBrium Documentation =]]></doctitle>
+       </javadoc>
+       
+       <echo message = "javadoc has been generated!" />
+    </target> 
+    <target name="jar"> 
+        <mkdir dir="build/jar"/> 
+        <jar destfile="build/jar/DBriumLauncher.jar" basedir="build/classes"> 
+            <manifest> 
+                <attribute name="Main-Class" value="DBriumLauncher"/> 
+            </manifest> 
+        </jar> 
+    </target> 
+    <target name="run"> 
+        <java jar="build/jar/DBriumLauncher.jar" fork="true"/> 
+    </target> 
+</project>
