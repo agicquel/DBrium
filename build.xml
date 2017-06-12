@@ -6,29 +6,35 @@
     <property name="doc.dir" value="doc/"/>
     <property name="jar.dir" value="build/jar"/>
 
-    <path id="classpath.test">
-        <fileset dir="lib/" includes="*.jar"/>
-        <pathelement location="lib/junit-4.12.jar"/>
-        <pathelement location="lib/hamcrest-core-1.3.jar"/>
-        <pathelement location="${main.build.dir}"/>
+    <path id="classpath">
+        <fileset dir="lib/">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement path="${build.dir}"/>
+        <pathelement path="${test.build.dir}"/>
     </path>
 
     <target name="all" depends="build, javadoc, jar"/>
     
     <target name="clean"> 
         <delete dir="${build.dir}"/> 
+        <delete dir="${test.build.dir}"/> 
+        <delete dir="${jar.dir}"/> 
     </target> 
     
     <target name="build"> 
         <mkdir dir="${build.dir}" />
-        <javac srcdir="${src.dir}" destdir="${build.dir}"/>
+
+        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}" failonerror="true">
+            <classpath refid="classpath" />
+        </javac>
         <echo message = "build successfully" />
     </target>
 
     <target name="test-build"> 
-        <mkdir dir="${build.dir}" /> 
-        <javac includeantruntime="false" srcdir="${test.src.dir}" destdir="${build.dir}">
-            <classpath refid="classpath.test"/>
+        <mkdir dir="${test.build.dir}" /> 
+        <javac includeantruntime="false" srcdir="${test.src.dir}" destdir="${test.build.dir}">
+            <classpath refid="classpath"/>
         </javac>
         <echo message = "test build successfully" />
     </target>
@@ -39,12 +45,7 @@
 
         <junit printsummary="on" haltonfailure="yes" fork="true">
 
-            <classpath>
-                <pathelement path="lib/junit-4.12.jar"/>
-                <pathelement path="lib/hamcrest-core-1.3.jar"/>
-                <pathelement path="${build.dir}"/>
-                <pathelement path="test.build.dir"/>
-            </classpath>
+            <classpath refid="classpath"/>
 
              <batchtest>
                 <fileset dir="${test.src.dir}">
@@ -57,7 +58,9 @@
         </junit>
     </target>
     
-    <target name="javadoc"> 
+    <target name="javadoc">
+        <mkdir dir="${doc.dir}"/>
+
         <javadoc packagenames="*" sourcepath="${src.dir}" destdir ="${doc.dir}" version = "true" windowtitle = "DBrium Documentation">
             <doctitle><![CDATA[= DBrium Documentation =]]></doctitle>
        </javadoc>
@@ -66,16 +69,20 @@
     </target> 
     
     <target name="jar"> 
-        <mkdir dir="${jar.dir}"/> 
-        <jar destfile="${jar.dir}/DDBriumLauncher.jar" destdir="${build.dir}"> 
+        <mkdir dir="${jar.dir}"/>
+
+        <jar destfile="${jar.dir}/DBriumLauncher.jar" basedir="${build.dir}"> 
             <manifest> 
                 <attribute name="Main-Class" value="DBriumLauncher"/> 
-            </manifest> 
+            </manifest>
+            <zipgroupfileset dir="lib/" includes="*.jar"/> 
         </jar> 
     </target> 
     
     <target name="run"> 
-        <java jar="${jar.dir}/DBriumLauncher.jar" fork="true"/> 
+        <java jar="${jar.dir}/DBriumLauncher.jar" fork="true">
+            <classpath refid="classpath"/>
+        </java>
     </target>
 
 </project>

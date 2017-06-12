@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class ConnectDB
 {
-	//Class.forName("org.postgresql.Driver");
+	//Class.forName("oracle.jdbc.driver.OracleDriver");
 
 	private String url = "jdbc:postgresql://localhost:5432/Ecole";
 	private String user;
