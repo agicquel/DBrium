@@ -7,6 +7,8 @@ import java.sql.*;
 import oracle.jdbc.driver.OracleDriver;
 import oracle.jdbc.*;
 
+import model.*;
+
 
 public class DBriumLauncher
 {
@@ -17,7 +19,12 @@ public class DBriumLauncher
 		try
 		{
 			//step1 load the driver class 
-			Class.forName("oracle.jdbc.OracleDriver");  
+			Class.forName("oracle.jdbc.OracleDriver");
+			System.out.println("ca marche !");
+
+			ConnectDB test = new ConnectDB();
+			test.setUrl("azerty");
+			System.out.println(test.getUrl());
 		}
 		catch(Exception err)
 		{

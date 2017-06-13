@@ -1,4 +1,4 @@
-<project>
+<project default="all">
     <property name="build.dir" value="build/main"/>
     <property name="src.dir" value="src/main"/>
     <property name="test.build.dir" value="build/test"/>
@@ -10,11 +10,16 @@
         <fileset dir="lib/">
             <include name="*.jar"/>
         </fileset>
+
+        <fileset dir="${build.dir}">
+            <include name="**/*.class"/>
+        </fileset>
+
         <pathelement path="${build.dir}"/>
         <pathelement path="${test.build.dir}"/>
     </path>
 
-    <target name="all" depends="build, javadoc, jar"/>
+    <target name="all" depends="build, jar, run"/>
     
     <target name="clean"> 
         <delete dir="${build.dir}"/> 
@@ -33,7 +38,7 @@
 
     <target name="test-build"> 
         <mkdir dir="${test.build.dir}" /> 
-        <javac includeantruntime="false" srcdir="${test.src.dir}" destdir="${test.build.dir}">
+        <javac includeantruntime="false" srcdir="${test.src.dir}" destdir="${test.build.dir}" failonerror="true">
             <classpath refid="classpath"/>
         </javac>
         <echo message = "test build successfully" />
