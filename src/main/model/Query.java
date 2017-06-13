@@ -11,6 +11,6 @@ public class Query
 
 	public String toString()
 	{
-		return query;
+		return this.query;
 	}
 }

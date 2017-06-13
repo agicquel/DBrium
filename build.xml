@@ -19,7 +19,7 @@
         <pathelement path="${test.build.dir}"/>
     </path>
 
-    <target name="all" depends="build, jar, run"/>
+    <target name="all" depends="clean, build, jar, run"/>
     
     <target name="clean"> 
         <delete dir="${build.dir}"/> 
