@@ -11,10 +11,6 @@
             <include name="*.jar"/>
         </fileset>
 
-        <fileset dir="${build.dir}">
-            <include name="**/*.class"/>
-        </fileset>
-
         <pathelement path="${build.dir}"/>
         <pathelement path="${test.build.dir}"/>
     </path>
@@ -44,7 +40,7 @@
         <echo message = "test build successfully" />
     </target>
 
-    <target name="test" depends="build, test-build">
+    <target name="test" depends="clean, build, test-build">
 
         <mkdir dir="${test.build.dir}" />
 

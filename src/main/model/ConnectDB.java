@@ -2,14 +2,23 @@ package model;
 
 import java.sql.*;
 
+
+/**
+* Database connexion handler
+* @author Antoine Gicquel
+*/
 public class ConnectDB
 {
-	private String url;
-	private String user;
-	private String pwd;
+	private String url, user, pwd;
+	private boolean connected;
 	private Connection conn;
 	private Statement state;
 
+	/**
+	* Constructor
+	* initialyse url user and pwd with empty string
+	* it also call the oracle driver for jdbc
+	*/
 	public ConnectDB()
 	{
 		try
@@ -21,8 +30,15 @@ public class ConnectDB
 			System.out.println("Oracle Driver unreachable");
 			System.out.println(err.getMessage());
 		}
+		this.connected = false;
 	}
 
+	/**
+	* Constructor
+	* @param url the url to the DB
+	* @param user the username
+	* @param pwd the password of the user
+	*/
 	public ConnectDB(String url, String user, String pwd)
 	{
 		this();
@@ -31,12 +47,17 @@ public class ConnectDB
 		this.pwd = pwd;
 	}
 
+	/**
+	* Connect to the DB
+	* @throws SQLException if url / user / pwd is wrong
+	*/
 	public void connect() throws SQLException
 	{
 		try
 		{
 			this.conn = DriverManager.getConnection(this.url, this.user, this.pwd);
 			this.state = this.conn.createStatement();
+			this.connected = true;
 		}
 		catch(SQLException err)
 		{
@@ -45,12 +66,17 @@ public class ConnectDB
 		
 	}
 
+	/**
+	* Disconnect to the DB
+	* @throws SQLException if you're already diconnected
+	*/
 	public void disconnect() throws SQLException
 	{
 		try
 		{
 			this.conn.close();
 			this.state.close();
+			this.connected = false;
 		}
 		catch(SQLException err)
 		{
@@ -58,49 +84,83 @@ public class ConnectDB
 		}
 	}
 
+	/**
+	* Send a query to the DB
+	* @param query the query you wanna send
+	* @return return a result object
+	* @throws SQLException if query is not valid
+	*/
 	public Result sendQuery(Query query) throws SQLException
 	{
 		Result res = null;
 
 		try
 		{
-			//this.state = this.conn.createStatement();
 			res = new Result(state.executeQuery(query.toString()));
 		}
 		catch(SQLException err)
 		{
-			err.printStackTrace();
+			//System.out.println("Query not correct : " + err.getMessage());
 			throw err;
 		}
 
 		return res;
 	}
 
+	/**
+	* @return give the url attribute
+	*/
 	public String getUrl()
 	{
-		return url;
+		return this.url;
 	}
 
+	/**
+	* @return give thr user name attribute
+	*/
 	public String getUser()
 	{
-		return user;
+		return this.user;
 	}
 
+	/**
+	* @return give the password attribute
+	*/
 	public String getPwd()
 	{
-		return pwd;
+		return this.pwd;
 	}
 
+	/**
+	* @return true if connected
+	*/
+	public boolean isConnected()
+	{
+		return this.connected;
+	}
+
+	/**
+	* Set the url attribute
+	* @param url the new url
+	*/
 	public void setUrl(String url)
 	{
 		this.url = url;
 	}
 
+	/**
+	* Set the user attribute
+	* @param user the new user
+	*/
 	public void setUser(String user)
 	{
 		this.user = user;
 	}
 
+	/**
+	* Set the pwd attribute
+	* @param pwd the new pwd
+	*/
 	public void setPwd(String pwd)
 	{
 		this.pwd = pwd;
