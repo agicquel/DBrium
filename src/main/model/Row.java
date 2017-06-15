@@ -4,6 +4,7 @@ import java.sql.*;
 
 /**
 * The Object contained into Result
+* @author Antoine Gicquel
 */
 public class Row
 {

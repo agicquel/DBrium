@@ -2,6 +2,7 @@ package model;
 
 /**
 * Query Object containing SQL code
+* @author Antoine Gicquel
 */
 public class Query
 {

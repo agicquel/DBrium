@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 /**
 * The Object returned from a Query Execution
+* @author Antoine Gicquel
 */
 public class Result
 {

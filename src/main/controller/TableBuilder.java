@@ -1,0 +1,217 @@
+package controller;
+
+import model.Query;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.table.*;
+
+/**
+* Graphical tool to create SQL Table for Oracle
+* To use it, you have to initialize a TableBuilder object
+* and execute run like this : 
+* TableBuilder tb = new TableBuilder()
+* Query q = tb.run();
+* The current system will be paused until the sql is generate
+* @author Antoine Gicquel
+*/
+public class TableBuilder extends JFrame implements ActionListener
+{
+	private JButton addBtn;
+	private JButton delBtn;
+	private JButton generateBtn;
+	private JTextField nameTxtField;
+	private JTable table;
+	private DefaultTableModel model;
+
+	private boolean done;
+	private Query query;
+
+	/**
+	* Constructor : nothing is requiered
+	*/
+	public TableBuilder()
+	{
+		this.setTitle("Créer une table");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.getContentPane().setLayout(new BorderLayout());
+		this.done = false;
+
+		JPanel tableNamePanel = new JPanel();
+		tableNamePanel.setLayout(new GridLayout(1,2));
+		tableNamePanel.add(new JLabel("Nom de la table : "));
+		this.nameTxtField = new JTextField();
+		tableNamePanel.add(this.nameTxtField);
+
+		
+		model = new DefaultTableModel() {
+	      public Class getColumnClass(int columnIndex) {
+	        Object o = getValueAt(0, columnIndex);
+	        if (o == null) {
+	          return Object.class;
+	        } else {
+	          return o.getClass();
+	        }
+	      }
+	    };
+	    this.table = new JTable(model);
+	    model.addColumn("Nom", new Object[] { new String() });
+	    model.addColumn("Type", new Object[] { new String() });
+	    model.addColumn("Taille", new Object[] { new Integer(1) });
+	   	model.addColumn("Primary Key", new Object[]{});
+	    model.addColumn("Not Null", new Object[]{});
+	    model.addColumn("Unique", new Object[]{});
+
+	    setUpTypeColumn(table.getColumnModel().getColumn(1));
+	    setCheckBoxColumn(table.getColumnModel().getColumn(3));
+	    setCheckBoxColumn(table.getColumnModel().getColumn(4));
+	    setCheckBoxColumn(table.getColumnModel().getColumn(5));
+
+	    // doit changer les renderer :c
+
+	    Container buttonContainer = new Container();
+	    buttonContainer.setLayout(new GridLayout(2,1));
+	    this.addBtn = new JButton("Ajouter");
+	    this.addBtn.addActionListener(this);
+	    this.delBtn = new JButton("Supprimer");
+	    this.delBtn.addActionListener(this);
+	    buttonContainer.add(this.addBtn);
+	    buttonContainer.add(this.delBtn);
+
+		JPanel generatePanel = new JPanel();
+		this.generateBtn = new JButton("Générer");
+		this.generateBtn.addActionListener(this);
+		generatePanel.add(this.generateBtn);
+
+		this.getContentPane().add(tableNamePanel, BorderLayout.NORTH);
+		this.getContentPane().add(buttonContainer, BorderLayout.WEST);
+		this.getContentPane().add(new JScrollPane(this.table), BorderLayout.CENTER);
+		this.getContentPane().add(generatePanel, BorderLayout.SOUTH);
+
+		this.pack();
+	}
+
+	/**
+	* Initilize a "data type" column
+	* @param dataTypeColumn the column to set
+	*/
+	private void setUpTypeColumn(TableColumn dataTypeColumn)
+	{
+		String[] types = {"VARCHAR2", "NVARCHAR2", "NUMBER", "LONG", "DATE"};
+		JComboBox<String> typesComboBox = new JComboBox<String>(types);
+		dataTypeColumn.setCellEditor(new DefaultCellEditor(typesComboBox));
+	}
+
+	/**
+	* Initilize a checkbox column
+	* @param column the column to set
+	*/
+	private void setCheckBoxColumn(TableColumn column)
+	{
+		column.setCellEditor(new DefaultCellEditor(new JCheckBox()));
+	}
+
+	/**
+	* Launch run and process will be stoped until the class is generate
+	* @return the generated query
+	*/
+	public synchronized Query run()
+	{
+		this.setVisible(true);
+		while(!this.done)
+		{
+			try
+			{
+				wait();
+			}
+			catch(Exception e){}
+		}
+		this.setVisible(false);
+		return query;
+	}
+
+	public void actionPerformed(ActionEvent e)
+	{
+		if(e.getSource() == addBtn)
+		{
+			model.addRow(new Object[model.getColumnCount()]);
+		}
+		else if(e.getSource() == delBtn)
+		{
+			if(table.getSelectedRow() >= 0 && table.getSelectedRow() < table.getRowCount())
+				model.removeRow(table.getSelectedRow());
+		}
+		else if(e.getSource() == generateBtn)
+		{
+			// faut check avant
+			// A FAIRE
+			// test le nombre de pk
+			// les cases a remplir absolument
+			// enleveer les null
+			for(int i = 0; i < table.getRowCount(); i++)
+			{
+				for(int j = 0; j < table.getColumnCount(); j++)
+				{
+					if(model.getValueAt(i, 0) == null)
+						System.out.println("null à (" + i + ", " + j + ")");
+				}
+			}
+
+			generateQuery();
+			//System.out.println(query);
+		}
+	}
+
+	/**
+	* Create the query from info of the table
+	*/
+	public synchronized void generateQuery()
+	{
+		String s = "CREATE TABLE " + nameTxtField.getText() + " (\n";
+
+		for(int i = 0; i < table.getRowCount(); i++)
+		{
+			s += "\n\t" + model.getValueAt(i, 0).toString();
+			s += "\t" + model.getValueAt(i, 1).toString() + "(" + model.getValueAt(i, 2).toString() + ")";
+
+			if(model.getValueAt(i, 4) != null && model.getValueAt(i, 4).toString() == "true")
+				s += "\n\tCONSTRAINT NN" + model.getValueAt(i, 0).toString() + "\n\tNOT NULL";
+			if(model.getValueAt(i, 5) != null && model.getValueAt(i, 5).toString() == "true")
+				s += "\n\tCONSTRAINT UQ" + model.getValueAt(i, 0).toString() + "\n\tUNIQUE";
+
+			if(i != table.getRowCount()-1)
+				s += ",\n";
+		}
+
+		int nbOfPk = 0;
+		int nbOfPkDone = 0;
+
+		for(int i = 0; i < table.getRowCount(); i++)
+			if(model.getValueAt(i, 3) != null && model.getValueAt(i, 3).toString() == "true")
+				nbOfPk++;
+
+		if(nbOfPk > 0)
+		{
+			s += ",\n\n\tCONSTRAINT PK" + nameTxtField.getText() + "\n\tPRIMARY KEY(";
+			for(int i = 0; i < table.getRowCount(); i++)
+			{
+				if(model.getValueAt(i, 3) != null && model.getValueAt(i, 3).toString() == "true")
+				{
+					s += model.getValueAt(i, 0).toString();
+					nbOfPkDone++;
+					if(nbOfPk > nbOfPkDone)
+						s += ", ";
+				}
+			}
+			s += ")";
+		}
+		
+		s += "\n)";
+
+		this.query = new Query(s);
+		this.done = true;
+		notifyAll();
+	}
+	
+}
