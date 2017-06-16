@@ -1,7 +1,7 @@
 package model;
 
 import java.sql.*;
-
+import java.util.ArrayList;
 
 /**
 * Database connexion handler
@@ -13,6 +13,7 @@ public class ConnectDB
 	private boolean connected;
 	private Connection conn;
 	private Statement state;
+	private ArrayList<Table> tables;
 
 	/**
 	* Constructor
@@ -57,6 +58,7 @@ public class ConnectDB
 		{
 			this.conn = DriverManager.getConnection(this.url, this.user, this.pwd);
 			this.state = this.conn.createStatement();
+			this.fillIntoTables();
 			this.connected = true;
 		}
 		catch(SQLException err)
@@ -105,6 +107,29 @@ public class ConnectDB
 		}
 
 		return res;
+	}
+
+	private void fillIntoTables() throws SQLException
+	{
+		try
+		{
+			this.tables = new ArrayList<Table>();
+			ArrayList<String> tableNames = new ArrayList<String>();
+			Result resTableName = this.sendQuery(new Query("SELECT table_name FROM user_tables WHERE table_name NOT LIKE '%$%'"));
+			for(int i = 1; i < resTableName.getRows().size(); i++)
+			{
+				tableNames.add(resTableName.getRow(i).getAData(0).toString());
+			}
+
+			for(String tableName : tableNames)
+				this.tables.add(new Table(tableName, this.sendQuery(new Query("SELECT COLUMN_NAME, DATA_TYPE FROM USER_TAB_COLUMNS WHERE UPPER(TABLE_NAME) = + '" + tableName.toUpperCase() + "'"))));
+
+		}
+		catch(SQLException err)
+		{
+			throw err;
+		}
+		
 	}
 
 	/**

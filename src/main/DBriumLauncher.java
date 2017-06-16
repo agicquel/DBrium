@@ -14,5 +14,10 @@ public class DBriumLauncher
 	public static void main(String args[])
 	{
 		System.out.println("hello world");
+		TableBuilder tb = new TableBuilder();
+		System.out.println(tb.run());
+		tb.close();
+
+		System.out.println("finnn");
 	} 
 }

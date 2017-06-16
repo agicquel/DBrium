@@ -25,11 +25,15 @@ public class ModelTest
 
 			System.out.println(result);
 
+			Thread.sleep(3000);
+
 			test.disconnect();
 		}
 		catch(Exception err)
 		{
 			System.out.println("erreur : " + err.getMessage());
+			err.printStackTrace();
 		}
     }
+
 }

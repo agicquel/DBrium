@@ -31,6 +31,20 @@ public class Row
 		return data;
 	}
 
+	/**
+	* Get a specefic data of the data array
+	* @param index index
+	* @return the data, or null if index not valid
+	*/
+	public Object getAData(int index)
+	{
+		Object ret = null;
+		if(index >= 0 && index < this.data.length)
+			ret = this.data[index];
+		return ret;
+	}
+
+
 	@Override
 	public String toString()
 	{

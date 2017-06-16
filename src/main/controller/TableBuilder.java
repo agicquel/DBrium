@@ -16,7 +16,7 @@ import javax.swing.table.*;
 * The current system will be paused until the sql is generate
 * @author Antoine Gicquel
 */
-public class TableBuilder extends JFrame implements ActionListener
+public class TableBuilder extends JFrame implements ActionListener, WindowListener
 {
 	private JButton addBtn;
 	private JButton delBtn;
@@ -33,8 +33,9 @@ public class TableBuilder extends JFrame implements ActionListener
 	*/
 	public TableBuilder()
 	{
-		this.setTitle("Créer une table");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super("Créer une table");
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(this);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.done = false;
 
@@ -68,7 +69,9 @@ public class TableBuilder extends JFrame implements ActionListener
 	    setCheckBoxColumn(table.getColumnModel().getColumn(4));
 	    setCheckBoxColumn(table.getColumnModel().getColumn(5));
 
+	    this.table.updateUI();
 	    // doit changer les renderer :c
+
 
 	    Container buttonContainer = new Container();
 	    buttonContainer.setLayout(new GridLayout(2,1));
@@ -90,6 +93,7 @@ public class TableBuilder extends JFrame implements ActionListener
 		this.getContentPane().add(generatePanel, BorderLayout.SOUTH);
 
 		this.pack();
+		this.setVisible(true);
 	}
 
 	/**
@@ -101,6 +105,7 @@ public class TableBuilder extends JFrame implements ActionListener
 		String[] types = {"VARCHAR2", "NVARCHAR2", "NUMBER", "LONG", "DATE"};
 		JComboBox<String> typesComboBox = new JComboBox<String>(types);
 		dataTypeColumn.setCellEditor(new DefaultCellEditor(typesComboBox));
+
 	}
 
 	/**
@@ -110,6 +115,7 @@ public class TableBuilder extends JFrame implements ActionListener
 	private void setCheckBoxColumn(TableColumn column)
 	{
 		column.setCellEditor(new DefaultCellEditor(new JCheckBox()));
+		column.setCellRenderer(new CheckBoxRenderer());
 	}
 
 	/**
@@ -118,6 +124,7 @@ public class TableBuilder extends JFrame implements ActionListener
 	*/
 	public synchronized Query run()
 	{
+		this.query = null;
 		this.setVisible(true);
 		while(!this.done)
 		{
@@ -159,8 +166,8 @@ public class TableBuilder extends JFrame implements ActionListener
 			}
 
 			generateQuery();
-			//System.out.println(query);
 		}
+		this.table.updateUI();
 	}
 
 	/**
@@ -206,12 +213,29 @@ public class TableBuilder extends JFrame implements ActionListener
 			}
 			s += ")";
 		}
-		
+
 		s += "\n)";
 
 		this.query = new Query(s);
 		this.done = true;
 		notifyAll();
 	}
+
+	public void close()
+	{
+		dispose();
+	}
+
+	public synchronized void windowClosing(WindowEvent e)
+	{
+        this.done = true;
+        notifyAll();
+	}
+	public void windowActivated(WindowEvent e){}
+	public void windowClosed(WindowEvent e){}
+	public void windowDeactivated(WindowEvent e){}
+	public void windowDeiconified(WindowEvent e){}
+	public void windowIconified(WindowEvent e){}
+	public void windowOpened(WindowEvent e){}
 	
 }
