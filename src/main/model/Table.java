@@ -1,20 +1,31 @@
 package model;
 
 import java.sql.*;
-
 import java.util.ArrayList;
 
+/**
+* Table data object containing columns object
+*/
 public class Table
 {
 	private String name;
 	private ArrayList<Column> columns;
 
+	/**
+	* Construcor
+	* @param name the name of the table
+	*/
 	public Table(String name)
 	{
 		this.name = name;
 		this.columns = new ArrayList<Column>();
 	}
 
+	/**
+	* Construcor : fill the column arraylist from a Result object
+	* @param name the name of the table
+	* @param r the result object
+	*/
 	public Table(String name, Result r)
 	{
 		this(name);
@@ -27,26 +38,45 @@ public class Table
 
 	}
 
+	/**
+	* Add a column into the column array list
+	* @param column the column you want to add
+	*/
 	public void addColumn(Column column)
 	{
 		this.columns.add(column);
 	}
 
+	/**
+	* @return get the name of the table
+	*/
 	public String getName()
 	{
 		return this.name;
 	}
 
+	/**
+	* Set the name of table
+	* @param name the new name of the table
+	*/
 	public void setName(String name)
 	{
 		this.name = name;
 	}
 
+	/**
+	* @return get the column array list
+	*/
 	public ArrayList<Column> getColumns()
 	{
 		return this.columns;
 	}
 
+	/**
+	* Get a specif column from the array list
+	* @param index the index of the column
+	* @return the column object, null if not found
+	*/
 	public Column getColumn(int index)
 	{
 		Column ret = null;
@@ -58,9 +88,7 @@ public class Table
 	@Override
 	public String toString()
 	{
-		String ret = "\t*** " + this.name + " ***\t";
-		for(Column c : this.columns)
-			ret += "\n" + c.getName() + "\t\t" + c.getType();
+		String ret = this.name + " (" + this.columns.size() + " colonnes)";
 		return ret;
 	}
 }

@@ -221,11 +221,15 @@ public class TableBuilder extends JFrame implements ActionListener, WindowListen
 		notifyAll();
 	}
 
+	/**
+	* Close the TableBuilder frame
+	*/
 	public void close()
 	{
 		dispose();
 	}
 
+	@Override
 	public synchronized void windowClosing(WindowEvent e)
 	{
         this.done = true;

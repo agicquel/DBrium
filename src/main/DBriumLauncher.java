@@ -13,11 +13,32 @@ public class DBriumLauncher
 {
 	public static void main(String args[])
 	{
-		System.out.println("hello world");
-		TableBuilder tb = new TableBuilder();
-		System.out.println(tb.run());
-		tb.close();
+		try
+		{
+			System.out.println("hello world");
 
-		System.out.println("finnn");
+			ConnectDB test = new ConnectDB();
+			test.setName("Connection Test");
+			test.setUrl("jdbc:oracle:thin:@localhost:49161:xe");
+			test.setUser("system");
+			test.setPwd("oracle");
+			test.connect();
+			System.out.println("Connection ok !");
+			
+			TablePicker tp = new TablePicker(test);
+			tp.showIt();
+			System.out.println(tp.getTable());
+			System.out.println(tp.getConnectDB());
+			tp.close();
+
+			test.disconnect();
+			System.out.println("finnn");
+		}
+		catch(Exception err)
+		{
+			System.out.println("erreur : " + err.getMessage());
+			err.printStackTrace();
+		}
+		
 	} 
 }

@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.table.*;
 
+/**
+* Simple class to improve the default cell renderer of checkbox
+*/
 public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer
 {
 	public CheckBoxRenderer()
@@ -12,6 +15,7 @@ public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer
 		setHorizontalAlignment(JLabel.CENTER);
 	}
 
+    @Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 	{
 		if (isSelected)

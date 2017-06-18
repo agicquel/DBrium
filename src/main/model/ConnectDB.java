@@ -9,6 +9,7 @@ import java.util.ArrayList;
 */
 public class ConnectDB
 {
+	private String name;
 	private String url, user, pwd;
 	private boolean connected;
 	private Connection conn;
@@ -36,13 +37,15 @@ public class ConnectDB
 
 	/**
 	* Constructor
+	* @param name the name of the connexion
 	* @param url the url to the DB
 	* @param user the username
 	* @param pwd the password of the user
 	*/
-	public ConnectDB(String url, String user, String pwd)
+	public ConnectDB(String name, String url, String user, String pwd)
 	{
 		this();
+		this.name = name;
 		this.url = url;
 		this.user = user;
 		this.pwd = pwd;
@@ -109,6 +112,10 @@ public class ConnectDB
 		return res;
 	}
 
+	/**
+	* Fill info about the tables of the connexion into the table array list
+	* @throws SQLException if info about table can't be reached
+	*/
 	private void fillIntoTables() throws SQLException
 	{
 		try
@@ -131,6 +138,15 @@ public class ConnectDB
 		}
 		
 	}
+
+	/**
+	* @return give the name attribute
+	*/
+	public String getName()
+	{
+		return this.name;
+	}
+		
 
 	/**
 	* @return give the url attribute
@@ -156,12 +172,26 @@ public class ConnectDB
 		return this.pwd;
 	}
 
+	public ArrayList<Table> getTables()
+	{
+		return this.tables;
+	}
+
 	/**
 	* @return true if connected
 	*/
 	public boolean isConnected()
 	{
 		return this.connected;
+	}
+
+	/**
+	* Set the name attribute
+	* @param name the new url
+	*/
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 
 	/**
@@ -189,6 +219,13 @@ public class ConnectDB
 	public void setPwd(String pwd)
 	{
 		this.pwd = pwd;
+	}
+
+	@Override
+	public String toString()
+	{
+		String ret = this.name + " (" + this.url + ")";
+		return ret;
 	}
 
 	@Override
