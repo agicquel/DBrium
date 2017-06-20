@@ -2,6 +2,13 @@ import java.sql.*;
 import oracle.jdbc.driver.OracleDriver;
 import oracle.jdbc.*;
 
+import java.io.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.table.*;
+
 import model.*;
 import controller.*;
 
@@ -17,21 +24,18 @@ public class DBriumLauncher
 		{
 			System.out.println("hello world");
 
-			ConnectDB test = new ConnectDB();
+			/*ConnectDB test = new ConnectDB();
 			test.setName("Connection Test");
 			test.setUrl("jdbc:oracle:thin:@localhost:49161:xe");
 			test.setUser("system");
 			test.setPwd("oracle");
 			test.connect();
-			System.out.println("Connection ok !");
-			
-			TablePicker tp = new TablePicker(test);
-			tp.showIt();
-			System.out.println(tp.getTable());
-			System.out.println(tp.getConnectDB());
-			tp.close();
+			System.out.println("Connection ok !");*/
 
-			test.disconnect();
+			
+
+			
+			//test.disconnect();
 			System.out.println("finnn");
 		}
 		catch(Exception err)

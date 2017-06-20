@@ -17,15 +17,21 @@ public class Result
 	* Constructor : Create from a ResultSet
 	* @param resultRaw the resultRaw which the infos came from
 	*/
-	public Result(ResultSet resultRaw)
+	public Result(ResultSet resultRaw) throws SQLException
 	{
 		this.res = resultRaw;
-		try
+		if(resultRaw != null)
 		{
-			this.meta = resultRaw.getMetaData();
-			this.fillIntoRows();
+			try
+			{
+				this.meta = resultRaw.getMetaData();
+				this.fillIntoRows();
+			}
+			catch(SQLException err)
+			{
+				throw err;
+			}
 		}
-		catch(SQLException err){}
 	}
 
 	/**
@@ -39,7 +45,7 @@ public class Result
 			ArrayList<Object> row = new ArrayList<Object>();
 
 			for(int i = 1; i <= this.meta.getColumnCount(); i++)
-					row.add(this.meta.getColumnName(i).toUpperCase());
+				row.add(this.meta.getColumnName(i).toUpperCase());
 
 			this.rows.add(new Row(row.toArray(new Object[row.size()])));
 			row = new ArrayList<Object>();
@@ -47,7 +53,7 @@ public class Result
 			while(this.res.next())
     		{
 	    		for(int i = 1; i <= this.meta.getColumnCount(); i++)
-	    			row.add(this.res.getObject(i));
+		    		row.add(this.res.getObject(i));
 	    		
 	    		this.rows.add(new Row(row.toArray(new Object[row.size()])));
 	    		row = new ArrayList<Object>();

@@ -91,4 +91,22 @@ public class Table
 		String ret = this.name + " (" + this.columns.size() + " colonnes)";
 		return ret;
 	}
+
+	/**
+	* Make the query to delete the table of the server
+	* @return the delete query
+	*/
+	public Query deleteTable()
+	{
+		return new Query("DROP TABLE " + this.name + " \n");
+	}
+
+	/**
+	* Make the query to delete all t-uples of the server
+	* @return the truncate query
+	*/
+	public Query truncateTable()
+	{
+		return new Query("TRUNCATE TABLE " + this.name + " \n");
+	}
 }

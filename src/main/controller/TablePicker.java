@@ -39,7 +39,7 @@ public class TablePicker implements ActionListener
 	public TablePicker(ConnectDB ... cdb)
 	{
 		this.cons = new ArrayList<ConnectDB>();
-		done = false;
+		this.done = false;
 		for(ConnectDB c : cdb)
 			this.cons.add(c);
 

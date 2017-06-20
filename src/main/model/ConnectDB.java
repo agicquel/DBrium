@@ -1,7 +1,9 @@
 package model;
 
 import java.sql.*;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
 * Database connexion handler
@@ -110,6 +112,23 @@ public class ConnectDB
 		}
 
 		return res;
+	}
+
+	/**
+	* Send a update to the DB like INSERT, UPDATE, or DELETE, even triggers
+	* @param query the query you wanna send
+	* @throws SQLException if something went wrong
+	*/
+	public void sendUpdate(Query query) throws SQLException
+	{
+		try
+		{
+			state.executeUpdate(query.toString());
+		}
+		catch(SQLException err)
+		{
+			throw err;
+		}
 	}
 
 	/**
@@ -244,5 +263,82 @@ public class ConnectDB
 		{
             throw t;
         }
+	}
+
+	/**
+	* Save the connexions informations into a file
+	* @param fileName the file name
+	* @param con the connexion you wanna save
+	*/
+	public static void saveConnect(String fileName, ConnectDB con) throws IOException
+	{
+		PrintWriter sortie = null;
+
+		try
+		{
+			sortie = new PrintWriter(new FileWriter(fileName));
+			sortie.print("name=" + con.getName() + "\n");
+			sortie.print("url=" + con.getUrl() + "\n");
+			sortie.print("user=" + con.getUser() + "\n");
+			sortie.print("pwd=" + con.getPwd() + "\n");
+		}
+		catch(IOException err)
+		{
+			throw err;
+		}
+		finally
+		{
+			sortie.close();
+		}
+	}
+
+	/**
+	*  Load a connexion object from a file
+	* @param fileName the file name
+	* @return return the connectBD object
+	*/
+	public static ConnectDB loadConnect(String fileName) throws IOException
+	{
+		ConnectDB con = new ConnectDB();
+		Scanner scanner = null;
+		Scanner scannerLine = null;
+		String scan = null;
+
+		try
+		{
+			scannerLine = new Scanner(new File(fileName)).useDelimiter("\\s*\n\\s*");
+			while(scannerLine.hasNext())
+			{
+				scanner = new Scanner(scannerLine.next()).useDelimiter("\\s*=\\s*");
+				scan = scanner.next();
+
+				switch(scan)
+				{
+					case "name":
+						con.setName(scanner.next());
+						break;
+					case "user":
+						con.setUser(scanner.next());
+						break;
+					case "url":
+						con.setUrl(scanner.next());
+						break;
+					case "pwd":
+						con.setPwd(scanner.next());
+						break;
+				}
+			}
+		}
+		catch(IOException err)
+		{
+			throw err;
+		}
+		finally
+		{
+			scanner.close();
+			scannerLine.close();
+		}
+
+		return con;
 	}
 }

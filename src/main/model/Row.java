@@ -48,9 +48,15 @@ public class Row
 	@Override
 	public String toString()
 	{
-		String ret = "| \t";
-		for(Object o : this.data)
-			ret += o.toString() + "\t|\t";
+		String ret = "";
+		if(data.length == 1)
+			ret = this.data[0].toString();
+		else
+		{
+			ret += "| \t";
+			for(Object o : this.data)
+				ret += o.toString() + "\t|\t";
+		}
 		return ret;
 	}
 }

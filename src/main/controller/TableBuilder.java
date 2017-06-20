@@ -11,9 +11,10 @@ import javax.swing.table.*;
 * Graphical tool to create SQL Table for Oracle
 * To use it, you have to initialize a TableBuilder object
 * and execute run like this : 
-* TableBuilder tb = new TableBuilder()
+* TableBuilder tb = new TableBuilder();
 * Query q = tb.run();
-* The current system will be paused until the sql is generate
+* tb.close();
+* The current process will be paused until the sql is generate
 * @author Antoine Gicquel
 */
 public class TableBuilder extends JFrame implements ActionListener, WindowListener
@@ -46,7 +47,7 @@ public class TableBuilder extends JFrame implements ActionListener, WindowListen
 		tableNamePanel.add(this.nameTxtField);
 
 		
-		model = new DefaultTableModel() {
+		this.model = new DefaultTableModel() {
 	      public Class getColumnClass(int columnIndex) {
 	        Object o = getValueAt(0, columnIndex);
 	        if (o == null) {
@@ -68,9 +69,7 @@ public class TableBuilder extends JFrame implements ActionListener, WindowListen
 	    setCheckBoxColumn(table.getColumnModel().getColumn(3));
 	    setCheckBoxColumn(table.getColumnModel().getColumn(4));
 	    setCheckBoxColumn(table.getColumnModel().getColumn(5));
-
 	    this.table.updateUI();
-	    // doit changer les renderer :c
 
 
 	    Container buttonContainer = new Container();
@@ -151,21 +150,28 @@ public class TableBuilder extends JFrame implements ActionListener, WindowListen
 		}
 		else if(e.getSource() == generateBtn)
 		{
-			// faut check avant
-			// A FAIRE
-			// test le nombre de pk
-			// les cases a remplir absolument
-			// enleveer les null
-			for(int i = 0; i < table.getRowCount(); i++)
+			boolean check = true;
+
+			if(nameTxtField.getText() == null || nameTxtField.getText().equals(""))
 			{
-				for(int j = 0; j < table.getColumnCount(); j++)
+				check = false;
+				JOptionPane.showMessageDialog(new JFrame(), "Nom de la table invalide");
+			}
+
+			for(int i = 0; i < table.getRowCount() && check; i++)
+			{
+				for(int j = 0; j < 3 && check; j++)
 				{
-					if(model.getValueAt(i, 0) == null)
-						System.out.println("null à (" + i + ", " + j + ")");
+					if(model.getValueAt(i, j) == null || model.getValueAt(i, j).toString().isEmpty())
+					{
+						check = false;
+						JOptionPane.showMessageDialog(new JFrame(), "Donnée invalide en (" + i + ", " + j + ")");
+					}
 				}
 			}
 
-			generateQuery();
+			if(check)
+				generateQuery();
 		}
 		this.table.updateUI();
 	}
