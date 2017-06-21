@@ -11,6 +11,7 @@ import javax.swing.table.*;
 
 import model.*;
 import controller.*;
+import view.interfaces.*;
 
 /**
 * Launcher
@@ -32,8 +33,15 @@ public class DBriumLauncher
 			test.connect();
 			System.out.println("Connection ok !");
 
-			Result resTriggerName = test.sendQuery(new Query("SELECT TRIGGER_NAME FROM USER_TRIGGERS WHERE TRIGGER_NAME NOT LIKE '%$%'"));
+			ConnectDB.saveConnect("test.cdb", test);
+
+			Result resTriggerName = test.sendQuery(new Query("SELECT nom, prenom FROM Agent"));
 			System.out.println(resTriggerName);
+
+			DBFrame f = new DBFrame();
+			Image icone = Toolkit.getDefaultToolkit().getImage("Image/DBrium.png");
+
+			Controller controller = new Controller();
 
 			
 			test.disconnect();
