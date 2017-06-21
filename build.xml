@@ -73,16 +73,16 @@
     <target name="jar"> 
         <mkdir dir="${jar.dir}"/>
 
-        <jar destfile="${jar.dir}/TextEditorDemo.jar" basedir="${build.dir}"> 
+        <jar destfile="${jar.dir}/DBriumLauncher.jar" basedir="${build.dir}"> 
             <manifest> 
-                <attribute name="Main-Class" value="TextEditorDemo"/> 
+                <attribute name="Main-Class" value="DBriumLauncher"/> 
             </manifest>
             <zipgroupfileset dir="lib/" includes="*.jar"/> 
         </jar> 
     </target> 
     
     <target name="run"> 
-        <java jar="${jar.dir}/TextEditorDemo.jar" fork="true">
+        <java jar="${jar.dir}/DBriumLauncher.jar" fork="true">
             <classpath refid="classpath"/>
         </java>
     </target>

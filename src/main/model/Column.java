@@ -4,6 +4,7 @@ import java.sql.*;
 
 /**
 * Column contain in the Table
+* @author Antoine Gicquel
 */
 public class Column
 {

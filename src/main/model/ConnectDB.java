@@ -16,7 +16,8 @@ public class ConnectDB
 	private boolean connected;
 	private Connection conn;
 	private Statement state;
-	private ArrayList<Table> tables;
+	private ArrayList<Table> tables; // need geter
+	private ArrayList<Trigger> triggers; // pareil
 
 	/**
 	* Constructor
@@ -64,6 +65,7 @@ public class ConnectDB
 			this.conn = DriverManager.getConnection(this.url, this.user, this.pwd);
 			this.state = this.conn.createStatement();
 			this.fillIntoTables();
+			this.fillIntoTriggers();
 			this.connected = true;
 		}
 		catch(SQLException err)
@@ -142,6 +144,7 @@ public class ConnectDB
 			this.tables = new ArrayList<Table>();
 			ArrayList<String> tableNames = new ArrayList<String>();
 			Result resTableName = this.sendQuery(new Query("SELECT table_name FROM user_tables WHERE table_name NOT LIKE '%$%'"));
+			
 			for(int i = 1; i < resTableName.getRows().size(); i++)
 			{
 				tableNames.add(resTableName.getRow(i).getAData(0).toString());
@@ -156,6 +159,31 @@ public class ConnectDB
 			throw err;
 		}
 		
+	}
+
+	// public get list views array list string  SELECT VIEW_NAME FROM USER_VIEWS WHERE VIEW_NAME NOT LIKE '%$%'
+
+	private void fillIntoTriggers() throws SQLException
+	{
+		try
+		{
+			this.triggers = new ArrayList<Trigger>();
+			ArrayList<String> triggerNames = new ArrayList<String>();
+			Result resTriggerName = this.sendQuery(new Query("SELECT TRIGGER_NAME FROM USER_TRIGGERS WHERE TRIGGER_NAME NOT LIKE '%$%'"));
+			
+			for(int i = 1; i < resTriggerName.getRows().size(); i++)
+			{
+				triggerNames.add(resTriggerName.getRow(i).getAData(0).toString());
+			}
+
+			for(String triggerName : triggerNames)
+				this.triggers.add(new Trigger(triggerName, this.sendQuery(new Query("SELECT TRIGGER_BODY FROM USER_TRIGGERS WHERE TRIGGER_NAME = '" + triggerName.toUpperCase() + "'")).getRow(1).toString()));
+
+		}
+		catch(SQLException err)
+		{
+			throw err;
+		}
 	}
 
 	/**

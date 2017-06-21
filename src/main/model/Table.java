@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 /**
 * Table data object containing columns object
+* @author Antoine Gicquel
 */
 public class Table
 {

@@ -6,7 +6,7 @@ import java.awt.event.*;
 import javax.swing.table.*;
 
 /**
-* Simple class to improve the default cell renderer of checkbox
+* Improve the default cell renderer of checkbox
 */
 public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer
 {

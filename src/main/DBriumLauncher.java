@@ -24,18 +24,19 @@ public class DBriumLauncher
 		{
 			System.out.println("hello world");
 
-			/*ConnectDB test = new ConnectDB();
+			ConnectDB test = new ConnectDB();
 			test.setName("Connection Test");
 			test.setUrl("jdbc:oracle:thin:@localhost:49161:xe");
 			test.setUser("system");
 			test.setPwd("oracle");
 			test.connect();
-			System.out.println("Connection ok !");*/
+			System.out.println("Connection ok !");
+
+			Result resTriggerName = test.sendQuery(new Query("SELECT TRIGGER_NAME FROM USER_TRIGGERS WHERE TRIGGER_NAME NOT LIKE '%$%'"));
+			System.out.println(resTriggerName);
 
 			
-
-			
-			//test.disconnect();
+			test.disconnect();
 			System.out.println("finnn");
 		}
 		catch(Exception err)
