@@ -15,7 +15,8 @@ public class BarreGauche extends JPanel {
 	private JPanel barreGauche, barreHaut, barreBas, boutonHaut;
 	private JButton param, ajouter, refresh, delete;
 	private JScrollPane jsp, jsp2;
-	private JTree jtree, jtree2;
+	private JTree jtree;
+	private JList<Object> list;
 	private JToolBar jtb;
 	private DefaultMutableTreeNode racine, racine2;
 	
@@ -51,7 +52,8 @@ public class BarreGauche extends JPanel {
 		refresh.setToolTipText("Refresh");
 
 
-
+		list = new JList<Object>();
+		
 
 
 		// Création de la JToolBar
@@ -75,7 +77,7 @@ public class BarreGauche extends JPanel {
 				DefaultMutableTreeNode dmtn = new DefaultMutableTreeNode(c.getName());
 				dmtn.add(new DefaultMutableTreeNode("Tables"));
 				dmtn.add(new DefaultMutableTreeNode("View"));
-				dmtn.add(new DefaultMutableTreeNode("trigger"));
+				dmtn.add(new DefaultMutableTreeNode("Trigger"));
 				racine.add(dmtn);
 			}
 		}
@@ -94,38 +96,6 @@ public class BarreGauche extends JPanel {
     	tCellRenderer[0].setLeafIcon(new ImageIcon("Image/Folder.png"));
     	jtree.setCellRenderer(tCellRenderer[0]);
 
-    	// La même chose pour jtree2
-
-    	for(int i = 0; i < 2; i++) {
-
-			//racine.add(new DefaultMutableTreeNode("Table" + (i+1) + ""));
-			DefaultMutableTreeNode script = new DefaultMutableTreeNode("Script" + (i+1) + "");
-
-			for(int j = 0; j < 4; j++) {
-
-				DefaultMutableTreeNode table = new DefaultMutableTreeNode("Table" + (j+1) + "");
-
-				for(int k=0; k < 8; k++) {
-
-					table.add(new DefaultMutableTreeNode("Attribut" + (k+1) + ""));
-				}
-
-				script.add(table);
-			}
-
-			racine2.add(script);
-		}
-
-		jtree2 = new JTree(racine2);
-
-		tCellRenderer2 = new  DefaultTreeCellRenderer[3];
-		tCellRenderer2[0] = new  DefaultTreeCellRenderer();
-
-		tCellRenderer2[0].setClosedIcon(new ImageIcon("Image/Table.png"));
-    	tCellRenderer2[0].setOpenIcon(new ImageIcon("Image/Table.png"));
-    	tCellRenderer2[0].setLeafIcon(new ImageIcon("Image/OK.png"));
-    	jtree2.setCellRenderer(tCellRenderer2[0]);
-
     	// Ajout des elements
       
       		// Création des différents JPanel
@@ -137,7 +107,7 @@ public class BarreGauche extends JPanel {
 
 		// Création des JScrollPane
 
-		jsp2 = new JScrollPane(jtree2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		jsp2 = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jsp = new JScrollPane(jtree, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 		this.add(param, BorderLayout.NORTH);
@@ -165,7 +135,8 @@ public class BarreGauche extends JPanel {
 	public JButton getDelete() { return this.delete; }
 
 	public JTree getJtree() { return this.jtree; }
-	public JTree getJtree2() { return this.jtree2; }
+	
+	public JList<Object> getList() { return this.list; }
 
 	public DefaultMutableTreeNode getRacine1() { return this.racine; }
 	public DefaultMutableTreeNode getRacine2() { return this.racine2; }

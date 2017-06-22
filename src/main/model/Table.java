@@ -106,8 +106,8 @@ public class Table
 	* Make the query to delete all t-uples of the server
 	* @return the truncate query
 	*/
-	public Query truncateTable()
+	public Query deleteFromTable()
 	{
-		return new Query("TRUNCATE TABLE " + this.name + " \n");
+		return new Query("DELETE FROM " + this.name + " \n");
 	}
 }

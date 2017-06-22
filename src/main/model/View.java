@@ -3,32 +3,32 @@ package model;
 import java.sql.*;
 
 /**
-* Simple Trigger Object containing the trigger's code and its code
+* Simple View Object 
 * @author Antoine Gicquel
 */
-public class Trigger
+public class View
 {
 	private String name;
-	private String code;
+	private String text;
 
 	/**
 	* Constructor
-	* @param name the trigger name
+	* @param name the view name
 	*/
-	public Trigger(String name)
+	public View(String name)
 	{
 		this.name = name;
 	}
 
 	/**
 	* Constructor
-	* @param name the trigger name
-	* @param code the code of the trigger
+	* @param name the view name
+	* @param text the text of the view
 	*/
-	public Trigger(String name, String code)
+	public View(String name, String text)
 	{
 		this.name = name;
-		this.code = code;
+		this.text = text;
 	}
 
 	/**
@@ -49,20 +49,20 @@ public class Trigger
 	}
 
 	/**
-	* @return give the code of the trigger
+	* @return give the text of the trigger
 	*/
-	public String getCode()
+	public String getText()
 	{
-		return this.code;
+		return this.text;
 	}
 
 	/**
-	* Set the code of trigger
-	* @param code the new code of the trigger
+	* Set the text of trigger
+	* @param text the new text of the trigger
 	*/
-	public void setCode(String code)
+	public void setText(String text)
 	{
-		this.code = code;
+		this.text = text;
 	}
 
 	@Override

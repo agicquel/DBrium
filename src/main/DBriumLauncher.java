@@ -23,29 +23,8 @@ public class DBriumLauncher
 	{
 		try
 		{
-			System.out.println("hello world");
-
-			ConnectDB test = new ConnectDB();
-			test.setName("Connection Test");
-			test.setUrl("jdbc:oracle:thin:@localhost:49161:xe");
-			test.setUser("system");
-			test.setPwd("oracle");
-			test.connect();
-			System.out.println("Connection ok !");
-
-			ConnectDB.saveConnect("test.cdb", test);
-
-			Result resTriggerName = test.sendQuery(new Query("SELECT nom, prenom FROM Agent"));
-			System.out.println(resTriggerName);
-
 			DBFrame f = new DBFrame();
 			Image icone = Toolkit.getDefaultToolkit().getImage("Image/DBrium.png");
-
-			Controller controller = new Controller();
-
-			
-			test.disconnect();
-			System.out.println("finnn");
 		}
 		catch(Exception err)
 		{

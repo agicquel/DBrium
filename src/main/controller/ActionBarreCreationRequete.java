@@ -140,7 +140,57 @@ public class ActionBarreCreationRequete implements ActionListener {
 					try
 					{
 						if(q.toString().toUpperCase().contains("SELECT"))
+						{
 							res += ((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendQuery(q).toString();
+						}
+						else if (q.toString().toUpperCase().contains("INSERT"))
+						{
+							System.out.println("1");
+							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
+							System.out.println("2");
+							res += "Ligne ajoutée.";
+						}
+						else if (q.toString().toUpperCase().contains("UPDATE"))
+						{
+							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
+							res += "Mise à jour de la ligne effectuée.";
+						}
+						else if (q.toString().toUpperCase().contains("UPDATE"))
+						{
+							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
+							res += "Mise à jour de la ligne effectuée.";
+						}
+						else if (q.toString().toUpperCase().contains("DELETE") || q.toString().toUpperCase().contains("TRUNCATE"))
+						{
+							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
+							res += "Ligne supprimée.";
+						}
+						else if (q.toString().toUpperCase().contains("DROP"))
+						{
+							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
+							res += "Table supprimée.";
+						}
+						else if (q.toString().toUpperCase().contains("TRIGGER"))
+						{
+							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
+							res += "Trigger crée.";
+						}
+						else if (q.toString().toUpperCase().contains("VIEW"))
+						{
+							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
+							res += "View crée.";
+						}
+						else if (q.toString().toUpperCase().contains("CREATE TABLE"))
+						{
+							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
+							res += "Table crée.";
+						}
+						else if (q.toString().toUpperCase().contains("UPDATE"))
+						{
+							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
+							res += "Table mise à jour.";
+						}
+						
 					}
 					catch(Exception err)
 					{

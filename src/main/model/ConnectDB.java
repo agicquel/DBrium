@@ -16,8 +16,9 @@ public class ConnectDB
 	private boolean connected;
 	private Connection conn;
 	private Statement state;
-	private ArrayList<Table> tables; // need geter
-	private ArrayList<Trigger> triggers; // pareil
+	private ArrayList<Table> tables;
+	private ArrayList<Trigger> triggers;
+	private ArrayList<View> views;
 
 	/**
 	* Constructor
@@ -64,8 +65,10 @@ public class ConnectDB
 		{
 			this.conn = DriverManager.getConnection(this.url, this.user, this.pwd);
 			this.state = this.conn.createStatement();
+			this.state.setQueryTimeout(2);
 			this.fillIntoTables();
 			this.fillIntoTriggers();
+			this.fillIntoViews();
 			this.connected = true;
 		}
 		catch(SQLException err)
@@ -186,6 +189,29 @@ public class ConnectDB
 		}
 	}
 
+	private void fillIntoViews() throws SQLException
+	{
+		try
+		{
+			this.views = new ArrayList<View>();
+			ArrayList<String> viewNames = new ArrayList<String>();
+			Result resViewName = this.sendQuery(new Query("SELECT VIEW_NAME FROM USER_VIEWS WHERE VIEW_NAME NOT LIKE '%$%'"));
+			
+			for(int i = 1; i < resViewName.getRows().size(); i++)
+			{
+				viewNames.add(resViewName.getRow(i).getAData(0).toString());
+			}
+
+			for(String viewName : viewNames)
+				this.views.add(new View(viewName, this.sendQuery(new Query("SELECT TEXT FROM USER_VIEWS WHERE VIEW_NAME = '" + viewName.toUpperCase() + "'")).getRow(1).toString()));
+
+		}
+		catch(SQLException err)
+		{
+			throw err;
+		}
+	}
+
 	/**
 	* @return give the name attribute
 	*/
@@ -222,6 +248,16 @@ public class ConnectDB
 	public ArrayList<Table> getTables()
 	{
 		return this.tables;
+	}
+
+	public ArrayList<Trigger> getTriggers()
+	{
+		return this.triggers;
+	}
+
+	public ArrayList<View> getViews()
+	{
+		return this.views;
 	}
 
 	/**

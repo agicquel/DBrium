@@ -2,6 +2,7 @@ package controleur;
 
 import view.elements.*;
 import view.interfaces.*;
+import model.*;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -23,7 +24,10 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 	int i;
 	JPopupMenu jpm;
 	DefaultMutableTreeNode lenoeud;
-	JMenuItem co, deco, deleteCo, newTable, open, deleteTable; 
+	JMenuItem co, deco, deleteCo, newTable, open, deleteTable;
+	
+	JPopupMenu listMenu;
+	JMenuItem openTable, openCode, create, delete;
 
 	/**
 	 * This is the constructor which initialyse they elements add during they different
@@ -43,6 +47,16 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 		deco.addActionListener(this);
 		deleteCo.addItemListener(this);
 		deleteCo.addActionListener(this);
+
+		listMenu = new JPopupMenu();
+		openTable = new JMenuItem("Ouvrir données...");
+		openCode = new JMenuItem("Afficher code...");
+		create = new JMenuItem("Créer une nouvelle table...");
+		delete = new JMenuItem("Supprimer...");
+		openTable.addActionListener(this);
+		openCode.addActionListener(this);
+		create.addActionListener(this);
+		delete.addActionListener(this);
 
 		newTable = new JMenuItem("Nouvelle table...", new ImageIcon("Image/Table.png"));
 		open = new JMenuItem("Afficher...");
@@ -65,7 +79,7 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 			//JOptionPane jop = new JOptionPane();
 			//String connexionName = jop.showInputDialog(null, "Name of the connexion", "New connexion", JOptionPane.QUESTION_MESSAGE);
 
-			ConnexionDialog cd = new ConnexionDialog(null, "New Connexion", true);
+			ConnexionDialog cd = new ConnexionDialog(null, "Nouvelle connection", true);
 
 			String connexionName = cd.getNameCo();
 
@@ -76,9 +90,9 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 			//jpm.setInvoker(connexion);
 			
 
-			DefaultMutableTreeNode view = new DefaultMutableTreeNode("View");
 			DefaultMutableTreeNode tables = new DefaultMutableTreeNode("Tables");
-			DefaultMutableTreeNode trigger = new DefaultMutableTreeNode("trigger");
+			DefaultMutableTreeNode view = new DefaultMutableTreeNode("View");
+			DefaultMutableTreeNode trigger = new DefaultMutableTreeNode("Trigger");
 
 			f.getBarreGauche().getM().insertNodeInto(connexion, f.getBarreGauche().getRacine1(), i);
 
@@ -136,7 +150,6 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 			try
 			{
 				this.treeWillExpand(null);
-				// MAX FAUT OUVRIR LE JTREE PUTAAIIIN
 			}
 			catch(Exception err){}
 
@@ -147,7 +160,6 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 			try
 			{
 				this.treeWillCollapse(null);
-				// MAX FAUT FERMER LE JTREE PUTAAIIIN
 			}
 			catch(Exception err){}
 
@@ -207,7 +219,6 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
                 //DefaultMutableTreeNode t = (DefaultMutableTreeNode)((DefaultMutableTreeNode)path1.getLastPathComponent()).getUserObject();
 
                 if ( pathBounds != null && pathBounds.contains ( e.getX (), e.getY () ) ) 
-
                 {	if(!lenoeud.isLeaf()) {
 
                     	JPopupMenu menu = new JPopupMenu ("Connections");
@@ -218,7 +229,6 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
                     	menu.show ( f.getBarreGauche().getJtree(), pathBounds.x, pathBounds.y + pathBounds.height );
 
                     } else {
-
                     	JPopupMenu menu = new JPopupMenu ("Connections");
                     	menu.setPopupSize(new Dimension(300,60));
                     	menu.add(newTable);
@@ -228,6 +238,7 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 
                     }
                 }
+
             }
 
 	}
@@ -238,26 +249,31 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 	}
 
     public void valueChanged(TreeSelectionEvent e) {
-
     	lenoeud = (DefaultMutableTreeNode)f.getBarreGauche().getJtree().getLastSelectedPathComponent();
-		/*if(!lenoeud.isRoot()) {
+    	if(lenoeud.isLeaf())
+    	{
+    		ConnectDB con = (ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem();
+    		DefaultListModel<Object> model = new DefaultListModel<Object>();
 
-			JOptionPane jop = new JOptionPane();
+    		// table
+    		if(lenoeud == lenoeud.getParent().getChildAt(0) ) {
+    			for(Table t : con.getTables())
+    				model.addElement(t);
+    		}
+    		// view
+    		else if(lenoeud == lenoeud.getParent().getChildAt(1) ) {
+    			for(View v : con.getViews())
+    				model.addElement(v);
+    		}
+    		// trigger
+    		else if(lenoeud == lenoeud.getParent().getChildAt(2) ) {
+    			for(Trigger t : con.getTriggers())
+    				model.addElement(t);
+    		}
 
-			int m = jop.showConfirmDialog(null,"Voulez-vous supprimer cette connexion ?","Supprimer Connection", JOptionPane.YES_NO_OPTION);
-      	
-      		if (m == JOptionPane.YES_OPTION ) {
-
-      			i--;
-      			System.out.println("yo");
-				f.getBarreGauche().getRacine1().remove(lenoeud);
-				System.out.println("yoyo");
-				f.getBarreGauche().getM().reload();
-				System.out.println("yoyoyo");
-			}
-
-		}*/
-
+    		f.getBarreGauche().getList().setModel(model);
+    			
+    	}
 	}
 
 	public void itemStateChanged(ItemEvent e) {
@@ -311,7 +327,6 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 				JOptionPane.showMessageDialog(new JFrame(), err.getMessage(), "Probleme de connection", JOptionPane.ERROR_MESSAGE);
 				throw new ExpandVetoException(e);
 			}
-			
 		}
 	}
 
@@ -334,7 +349,6 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 				JOptionPane.showMessageDialog(new JFrame(), err.getMessage(), "Probleme de deconnection", JOptionPane.ERROR_MESSAGE);
 				throw new ExpandVetoException(e);
 			}
-
 		}
 	}
 
