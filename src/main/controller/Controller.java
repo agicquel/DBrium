@@ -70,9 +70,26 @@ public class Controller
 		return this.connexions;
 	}
 
-	public void deleteConnexion(int index) throws IOException
+	public void deleteConnexion(ConnectDB con)
 	{
+		try
+		{
+			File file = new File(getUserDataDirectory() + File.separator + con.getName().toUpperCase() + ".cdb");
+			file.delete();
+		}
+		catch(Exception err){}
+	}
 
+	public void saveConnexion(ConnectDB con) throws IOException
+	{
+		try
+		{
+			ConnectDB.saveConnect(getUserDataDirectory() + File.separator + con.getName().toUpperCase() + ".cdb", con);
+		}
+		catch(Exception err)
+		{
+			throw err;
+		}
 	}
 
 	/**

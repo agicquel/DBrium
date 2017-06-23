@@ -10,7 +10,7 @@ import model.ConnectDB;
 public class BarreCreationRequetes extends JPanel 
 {
 	
-	private JButton nouveau, rechercher, executer, effacer, indenter, texte, graphique, compilation, execution;
+	private JButton nouveau, rechercher, executer, effacer, indenter, newUser, createTable;
 	private ActionBarreCreationRequete a;
 	private DBFrame f;
 	private JToolBar jtb;
@@ -19,9 +19,9 @@ public class BarreCreationRequetes extends JPanel
 	public BarreCreationRequetes (DBFrame f) 
 	{
 
-		// In initialisation du JPanel de la classe BarreCreationRequete
+		// Initialisation du JPanel de la classe BarreCreationRequete
 
-		super(new GridLayout(1,13));
+		super(new GridLayout(1,12));
 
 		this.f = f;
 
@@ -46,41 +46,32 @@ public class BarreCreationRequetes extends JPanel
 		indenter.setBorderPainted(false);
 		indenter.setToolTipText("Indent Script");
 
+		effacer = new JButton(new ImageIcon("Image/8.png"));
+		effacer.addActionListener(a);
+		effacer.setBorderPainted(false);
+		effacer.setToolTipText("Effacer Script");
+
 		rechercher = new JButton(new ImageIcon("Image/Search.png"));
 		rechercher.addActionListener(a);
 		rechercher.setBorderPainted(false);
 		rechercher.setToolTipText("Search");
 
-		texte = new JButton(new ImageIcon("Image/Texte.png"));
-		texte.addActionListener(a);
-		texte.setBorderPainted(false);
-		texte.setToolTipText("Texte Mode");
+		createTable = new JButton(new ImageIcon("Image/ajouterTableBig.png"));
+		createTable.addActionListener(a);
+		createTable.setBorderPainted(false);
+		createTable.setToolTipText("Créer une table");
 
-		graphique = new JButton(new ImageIcon("Image/Graph.png"));
-		graphique.addActionListener(a);
-		graphique.setBorderPainted(false);
-		graphique.setToolTipText("Graphique Mode");
-
-		compilation = new JButton(new ImageIcon("Image/compile.png"));
-		compilation.addActionListener(a);
-		compilation.setBorderPainted(false);
-		compilation.setToolTipText("Compilation");
-
-		execution = new JButton("Execution");
-		execution.addActionListener(a);
-		execution.setBorderPainted(false);
-		execution.setToolTipText("Execution");
-
-		effacer = new JButton(new ImageIcon("Image/8.png"));
-		effacer.addActionListener(a);
-		effacer.setBorderPainted(false);
-		effacer.setToolTipText("Effacer");
+		newUser = new JButton(new ImageIcon("Image/users.png"));
+		newUser.addActionListener(a);
+		newUser.setBorderPainted(false);
+		newUser.setToolTipText("Nouvel utilisateur");
 
 		currentConnexion = new JComboBox<ConnectDB>();
 		for(ConnectDB c : f.getController().getConnexions())
 			if(c.isConnected())
 				currentConnexion.addItem(c);
 
+		// Ajout des différents éléments
 
 		JPanel space1, space2, space3, space4;
 		
@@ -97,32 +88,93 @@ public class BarreCreationRequetes extends JPanel
 		jtb.add(effacer);
 		jtb.add(space1);
 		jtb.add(space2);
-		jtb.add(texte);
-		jtb.add(graphique);
 		jtb.add(space3);
 		jtb.add(space4);
-		jtb.add(compilation);
-		jtb.add(execution);
+		jtb.add(newUser);
+		jtb.add(createTable);
 		jtb.add(currentConnexion);
 
 		this.add(jtb);
 
 	}
 
-	public JButton getNouveau () { return this.nouveau; }
-	public JButton getExecuter () { return this.executer; }
-	public JButton getIndenter () { return this.indenter; }
-	public JButton getRechercher () { return this.rechercher; }
-	public JButton getEffacer () {return this.effacer; }
+   /**
+    * @return the New Button
+    */
+	public JButton getNouveau () 
+	{ 
+		return this.nouveau; 
+	}
 
-	public JButton getTexte () { return this.texte; }
-	public JButton getGraphique () { return this.graphique; }
+	/**
+    * @return the Execution Button
+    */
+	public JButton getExecuter () 
+	{ 
+		return this.executer; 
+	}
 
-	public JButton getCompilation () { return this.compilation; }
-	public JButton getExecution () { return this.execution; }
+   /**
+    * @return the Indent Button
+    */
+	public JButton getIndenter () 
+	{ 
+		return this.indenter; 
+	}
 
-	public ActionBarreCreationRequete getActionBarre() { return this.a; }
+   /**
+    * @return the Search Button
+    */
+	public JButton getRechercher () 
+	{ 
+		return this.rechercher; 
+	}
 
-	public DBFrame getFrame() { return this.f; }
-	public JComboBox<ConnectDB> getCurrentConnexion() { return this.currentConnexion;}
+   /**
+    * @return the Clean Button
+    */
+	public JButton getEffacer () 
+	{
+		return this.effacer; 
+	}
+
+   /**
+    * @return the New User Button
+    */
+	public JButton getNewUser () 
+	{ 
+		return this. newUser; 
+	}
+
+   /**
+    * @return the Create Table Button
+    */
+	public JButton getCreateTable () 
+	{ 
+		return this.createTable; 
+	}
+
+   /**
+    * @return the ActionListener of the QueryCreationBar
+    */
+	public ActionBarreCreationRequete getActionBarre() 
+	{ 
+		return this.a; 
+	}
+
+   /**
+    * @return the principal Frame
+    */
+	public DBFrame getFrame() 
+	{ 
+		return this.f; 
+	}
+
+   /**
+    * @return the Combox which show the current connexion
+    */
+	public JComboBox<ConnectDB> getCurrentConnexion()
+	{ 
+		return this.currentConnexion;
+	}
 }

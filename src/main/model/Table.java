@@ -7,7 +7,7 @@ import java.util.ArrayList;
 * Table data object containing columns object
 * @author Antoine Gicquel
 */
-public class Table
+public class Table implements Deletable, Codable
 {
 	private String name;
 	private ArrayList<Column> columns;
@@ -86,6 +86,14 @@ public class Table
 		return ret;
 	}
 
+	/**
+	* @return give the code of the trigger
+	*/
+	public String getCode()
+	{
+		return "SELECT * FROM " + this.name;
+	}
+
 	@Override
 	public String toString()
 	{
@@ -97,7 +105,7 @@ public class Table
 	* Make the query to delete the table of the server
 	* @return the delete query
 	*/
-	public Query deleteTable()
+	public Query delete()
 	{
 		return new Query("DROP TABLE " + this.name + " \n");
 	}

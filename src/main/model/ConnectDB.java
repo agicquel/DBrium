@@ -140,7 +140,7 @@ public class ConnectDB
 	* Fill info about the tables of the connexion into the table array list
 	* @throws SQLException if info about table can't be reached
 	*/
-	private void fillIntoTables() throws SQLException
+	public void fillIntoTables() throws SQLException
 	{
 		try
 		{
@@ -166,7 +166,7 @@ public class ConnectDB
 
 	// public get list views array list string  SELECT VIEW_NAME FROM USER_VIEWS WHERE VIEW_NAME NOT LIKE '%$%'
 
-	private void fillIntoTriggers() throws SQLException
+	public void fillIntoTriggers() throws SQLException
 	{
 		try
 		{
@@ -189,7 +189,7 @@ public class ConnectDB
 		}
 	}
 
-	private void fillIntoViews() throws SQLException
+	public void fillIntoViews() throws SQLException
 	{
 		try
 		{

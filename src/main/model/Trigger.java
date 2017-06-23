@@ -6,7 +6,7 @@ import java.sql.*;
 * Simple Trigger Object containing the trigger's code and its code
 * @author Antoine Gicquel
 */
-public class Trigger
+public class Trigger implements Deletable, Codable
 {
 	private String name;
 	private String code;
@@ -63,6 +63,14 @@ public class Trigger
 	public void setCode(String code)
 	{
 		this.code = code;
+	}
+
+	/**
+	* @return return a query to delete the trigger
+	*/
+	public Query delete()
+	{
+		return new Query("DROP TRIGGER " + this.name);
 	}
 
 	@Override

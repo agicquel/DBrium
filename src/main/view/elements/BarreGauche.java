@@ -8,6 +8,17 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import javax.swing.tree.*;
+import util.*;
+
+/**
+ * Here is the class that creates the left part of the DBFrame.
+ * This class initially creates the JTree which allows the management of the connections 
+ * and their contents.
+ * This same Jtree is managed by multiple buttons like the addButton button that creates 
+ * a new connection and adds it to the JTree.
+ * @author m.hervé;
+ * @version 1.0;
+ */
 
 public class BarreGauche extends JPanel {
 
@@ -15,15 +26,20 @@ public class BarreGauche extends JPanel {
 	private JPanel barreGauche, barreHaut, barreBas, boutonHaut;
 	private JButton param, ajouter, refresh, delete;
 	private JScrollPane jsp, jsp2;
-	private JTree jtree;
-	private JList<Object> list;
 	private JToolBar jtb;
-	private DefaultMutableTreeNode racine, racine2;
-	
-	private DefaultTreeModel tree;
-	private DefaultTreeCellRenderer[] tCellRenderer, tCellRenderer2;
+	private JList<Object> list;
+
 	private ActionBarreGauche abg;
-	private JPopupMenu jpm;
+
+	private DefaultMutableTreeNode racine;
+	private JTree jtree;
+	private DefaultTreeModel tree;
+	private DefaultTreeCellRenderer[] tCellRenderer;
+	
+	/**
+	 * This is the constructor of the class leftBar which initialize the leftBar.
+	 * @param f The principal Frame where this component will be add.
+	 */
 
 	public BarreGauche( DBFrame f) {
 
@@ -35,7 +51,7 @@ public class BarreGauche extends JPanel {
 
 		// Creation des JButton
 
-		ajouter = new JButton(new ImageIcon("Image/NewConnection.png"));
+		ajouter = new JButton(new ImageIcon("Image/NewConnection2.png"));
 		ajouter.setBorderPainted(false);
 		ajouter.addActionListener(abg);
 		ajouter.setToolTipText("Add New Connexion");
@@ -51,25 +67,22 @@ public class BarreGauche extends JPanel {
 		refresh.addActionListener(abg);
 		refresh.setToolTipText("Refresh");
 
+		// Initialisation de la JList et affectation d'un MonRenderer
 
 		list = new JList<Object>();
-		
-
+		list.addMouseListener(abg);
 
 		// Création de la JToolBar
 
 		jtb = new JToolBar();
-		jpm = new JPopupMenu("Marche");
-
-		// Création des racines des JTree
+		
+		// Création de la racine du JTree
 
 		racine = new DefaultMutableTreeNode("Connection");
-		racine2 = new DefaultMutableTreeNode("Scripts");
-
 		tree = new DefaultTreeModel(racine);
-		//tree.addMouseListener(abg);
 
-		// On ajoute les différents élements de jtree
+		// On ajoute les différents élements du JTree
+
 		if(f.getController().getConnexions() != null && f.getController().getConnexions().size() != 0)
 		{
 			for(ConnectDB c : f.getController().getConnexions())
@@ -82,7 +95,6 @@ public class BarreGauche extends JPanel {
 			}
 		}
 
-		//jpm.setInvoker(jtree);
 		jtree = new JTree(tree);
 		jtree.addTreeSelectionListener(abg);
 		jtree.addMouseListener(abg);
@@ -95,10 +107,8 @@ public class BarreGauche extends JPanel {
     	tCellRenderer[0].setOpenIcon(new ImageIcon("Image/ConnexionSucced.png"));
     	tCellRenderer[0].setLeafIcon(new ImageIcon("Image/Folder.png"));
     	jtree.setCellRenderer(tCellRenderer[0]);
-
-    	// Ajout des elements
       
-      		// Création des différents JPanel
+      	// Création des différents JPanel
 
 		barreGauche = new JPanel(new GridLayout(2,1));
 		barreHaut = new JPanel(new BorderLayout());
@@ -110,42 +120,101 @@ public class BarreGauche extends JPanel {
 		jsp2 = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jsp = new JScrollPane(jtree, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-		this.add(param, BorderLayout.NORTH);
-		this.add(barreGauche, BorderLayout.CENTER);
-
-		barreGauche.add(barreHaut);
-		barreGauche.add(barreBas);
-
-		barreBas.add(jsp2);
-
-		barreHaut.add(boutonHaut, BorderLayout.NORTH);
-		barreHaut.add(jsp, BorderLayout.CENTER);
-
-		boutonHaut.add(jtb);
+		// Ajout des elements
 
 		jtb.add(ajouter);
 		jtb.add(refresh);
 		jtb.add(param);
 
+		boutonHaut.add(jtb);
+
+		barreHaut.add(boutonHaut, BorderLayout.NORTH);
+		barreHaut.add(jsp, BorderLayout.CENTER);
+
+		barreBas.add(jsp2);
+
+		barreGauche.add(barreHaut);
+		barreGauche.add(barreBas);
+
+		this.add(param, BorderLayout.NORTH);
+		this.add(barreGauche, BorderLayout.CENTER);
+
 	}
 
-	public JButton getAjouter() { return this.ajouter; }
-	public JButton getParam() { return this.param; }
-	public JButton getRefresh() { return this.refresh; }
-	public JButton getDelete() { return this.delete; }
+   /**
+    * @return the Add Button
+    */
+	public JButton getAjouter() 
+	{ 
+		return this.ajouter; 
+	}
 
-	public JTree getJtree() { return this.jtree; }
+   /**
+    * @return the Parameters Button
+    */
+	public JButton getParam() 
+	{ 
+		return this.param; 
+	}
+
+   /**
+    * @return the Refresh Button
+    */
+	public JButton getRefresh() 
+	{ 
+		return this.refresh; 
+	}
+   /**
+    * @return the Delete Button
+    */
+	public JButton getDelete() 
+	{ 
+		return this.delete; 
+	}
+
+   /**
+    * @return the JTree of this class
+    */
+	public JTree getJtree() 
+	{ 
+		return this.jtree; 
+	}
 	
-	public JList<Object> getList() { return this.list; }
+   /**
+    * @return the JList of this class
+    */
+	public JList<Object> getList() 
+	{ 
+		return this.list; 
+	}
 
-	public DefaultMutableTreeNode getRacine1() { return this.racine; }
-	public DefaultMutableTreeNode getRacine2() { return this.racine2; }
-	public DefaultTreeModel getM() { return this.tree; }
+   /**
+    * @return the Root of the JTree
+    */
+	public DefaultMutableTreeNode getRacine1() 
+	{ 
+		return this.racine; 
+	}
 
-	public DefaultTreeCellRenderer[] getTCellRenderer1() { return this.tCellRenderer; }
-	public DefaultTreeCellRenderer[] getTCellRenderer2() { return this.tCellRenderer2; }
+   /**
+    * @return the Model of the JTree
+    */
+	public DefaultTreeModel getM() 
+	{ 
+		return this.tree; 
+	}
 
-	public JPopupMenu getPopUp() { return this.jpm; }
+   /**
+    * @return the CellRenderer of the JTree
+    */
+	public DefaultTreeCellRenderer[] getTCellRenderer() 
+	{ 
+		return this.tCellRenderer; 
+	}
 
+	public ActionBarreGauche getActionBarreGauche()
+	{
+		return this.abg;
+	}
 
 }

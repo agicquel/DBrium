@@ -194,7 +194,6 @@ public class ActionBarreCreationRequete implements ActionListener {
 							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
 							res += "Table mise à jour.";
 						}
-
 					}
 					catch(Exception err)
 					{
@@ -204,13 +203,65 @@ public class ActionBarreCreationRequete implements ActionListener {
 					res += "\n\n-------------------------------------------------------------\n\n";
 				}
 
+				try
+				{
+					((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).fillIntoTables();
+					((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).fillIntoTriggers();
+					((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).fillIntoViews();
+				}
+				catch(Exception err)
+				{
+					err.printStackTrace();
+				}
+
 				f.getFenetre().getResultQuerry().setText(res);
+				f.getBarreGauche().getActionBarreGauche().valueChanged(null);
 			}
 			else
 			{
 				JOptionPane.showMessageDialog(new JFrame(), "Il faut choisir une connection pour executer un script", "Pas de connection choisie", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+		// Action du boutton nouvel utilisateur
+		else if( source == f.getBarreRequete().getNewUser()) 
+		{
+			new Thread()
+			{
+				public void run()
+				{
+					NewUserBuilder nub = new NewUserBuilder();
+					nub.showIt();
+					Query q = nub.getQuery();
+					nub.close();
+
+					if(q != null)
+					{
+						f.getFenetre().text().setText(f.getFenetre().text().getText() + q.toString());
+					}
+				}
+        	}.start();
+		}
+
+		// Action du boutton création de table
+		else if( source == f.getBarreRequete().getCreateTable() )
+		{
+			new Thread()
+			{
+				public void run()
+				{
+					TableBuilder tb = new TableBuilder();
+					Query q = tb.run();
+					tb.close();
+
+					if(q != null)
+					{
+						f.getFenetre().text().setText(f.getFenetre().text().getText() + q.toString());
+					}
+				}
+        	}.start();
+		}
+
+
 
 	}
 

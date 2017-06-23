@@ -220,7 +220,7 @@ public class TableBuilder extends JFrame implements ActionListener, WindowListen
 			s += ")";
 		}
 
-		s += "\n)";
+		s += "\n);\n";
 
 		this.query = new Query(s);
 		this.done = true;

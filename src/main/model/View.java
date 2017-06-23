@@ -6,10 +6,10 @@ import java.sql.*;
 * Simple View Object 
 * @author Antoine Gicquel
 */
-public class View
+public class View implements Deletable, Codable
 {
 	private String name;
-	private String text;
+	private String code;
 
 	/**
 	* Constructor
@@ -23,12 +23,12 @@ public class View
 	/**
 	* Constructor
 	* @param name the view name
-	* @param text the text of the view
+	* @param code the text of the view
 	*/
-	public View(String name, String text)
+	public View(String name, String code)
 	{
 		this.name = name;
-		this.text = text;
+		this.code = code;
 	}
 
 	/**
@@ -49,20 +49,28 @@ public class View
 	}
 
 	/**
-	* @return give the text of the trigger
+	* @return give the code of the trigger
 	*/
-	public String getText()
+	public String getCode()
 	{
-		return this.text;
+		return this.code;
 	}
 
 	/**
-	* Set the text of trigger
-	* @param text the new text of the trigger
+	* Set the code of trigger
+	* @param code the new code of the trigger
 	*/
-	public void setText(String text)
+	public void setCode(String code)
 	{
-		this.text = text;
+		this.code = code;
+	}
+
+	/**
+	* @return return a query to delete the view
+	*/
+	public Query delete()
+	{
+		return new Query("DROP TRIGGER " + this.name);
 	}
 
 	@Override
