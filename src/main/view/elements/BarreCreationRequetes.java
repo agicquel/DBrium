@@ -3,7 +3,7 @@ package view.elements;
 import javax.swing.*;
 import java.awt.*;
 import view.interfaces.*;
-import controleur.*;
+import controller.*;
 import model.ConnectDB;
 
 

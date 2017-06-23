@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
-import controleur.*;
+import controller.*;
 import view.elements.*;
 import view.interfaces.*;
 import javax.imageio.ImageIO;

@@ -70,7 +70,7 @@ public class DBFrame extends JFrame {
 		// initialisation de la fenêtre et ajout de ses caractéristiques
 
 		super("Dbrium : Le gestionnaire de base de donnees");
-		this.controller = new Controller();
+		this.controller = new Controller(this);
 
 		try {
 

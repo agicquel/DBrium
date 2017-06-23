@@ -3,7 +3,7 @@ package view.elements;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
-import controleur.*;
+import controller.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Element;
@@ -21,11 +21,11 @@ import org.fife.ui.rsyntaxtextarea.*;
  * @version 1.0
  */
 
-public class FenetreCreationRequetes extends JPanel 
+public class FenetreCreationRequetes extends JPanel
 {
 
 	private JTextArea resultQuerry, errorQuery;
-	private RSyntaxTextArea writeQuerry;
+	private AreaToSave writeQuerry;
 	private JPanel pnlTab;
 	private JLabel lblTitle;
 	private JTabbedPane result, write;
@@ -36,7 +36,7 @@ public class FenetreCreationRequetes extends JPanel
 	private JButton btnClose;
 
 
-	public FenetreCreationRequetes(DBFrame f) 
+	public FenetreCreationRequetes(DBFrame f)
 	{
 
 		super(new BorderLayout());
@@ -44,7 +44,7 @@ public class FenetreCreationRequetes extends JPanel
 
 		// Création de JTextArea et du RSyntaxTextArea
 
-		writeQuerry = new RSyntaxTextArea();
+		writeQuerry = new AreaToSave();
 		writeQuerry.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
 		writeQuerry.setCodeFoldingEnabled(true);
 
@@ -128,17 +128,17 @@ public class FenetreCreationRequetes extends JPanel
      * JTabbedPane.
      * @return area The JTextArea target in the JTabbedPane.
      */
-    public JTextArea text() 
+    public AreaToSave text()
     {
 
-		JScrollPane scroll = (JScrollPane)getWrite().getSelectedComponent();
+		RTextScrollPane scroll = (RTextScrollPane)getWrite().getSelectedComponent();
 		JViewport viewport = scroll.getViewport();
-		JTextArea area = (JTextArea)viewport.getView();
+		AreaToSave area = (AreaToSave)viewport.getView();
 
 		return area;
 	}
 
-	public RSyntaxTextArea getWriteQuerry() { return this.writeQuerry; }
+	public AreaToSave getWriteQuerry() { return this.writeQuerry; }
 	public JTextArea getResultQuerry() { return this.resultQuerry; }
 	public JTextArea getErrorQuerry() { return this.errorQuery; }
 

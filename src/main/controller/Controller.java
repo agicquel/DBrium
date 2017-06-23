@@ -10,13 +10,17 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.table.*;
 
+import view.interfaces.DBFrame;
+
 public class Controller
 {
 	private ArrayList<ConnectDB> connexions;
+	private DBFrame frame;
 
-	public Controller()
+	public Controller(DBFrame frame)
 	{
 		this.connexions = new ArrayList<ConnectDB>();
+		this.frame = frame;
 
 		File folder = new File(getUserDataDirectory());
 		File[] listOfFiles = folder.listFiles();

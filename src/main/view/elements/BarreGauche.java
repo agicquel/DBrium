@@ -1,7 +1,7 @@
 package view.elements;
 
 import view.interfaces.*;
-import controleur.*;
+import controller.*;
 import model.ConnectDB;
 
 import javax.swing.*;

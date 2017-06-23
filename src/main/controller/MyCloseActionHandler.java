@@ -1,4 +1,4 @@
-package controleur;
+package controller;
 
 import view.elements.*;
 import view.interfaces.*;

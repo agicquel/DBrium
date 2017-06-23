@@ -21,7 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 
-import controleur.*;
+import controller.*;
 
 
 public class Menu extends JPanel{
@@ -59,7 +59,7 @@ public class Menu extends JPanel{
   /**
   * All of items for all of menus in order for all menus
   */
-  private JMenuItem newFile, newWindow, open, save, saveAs, settings, quit, undo, redo, fullScreen, find, manual, about;
+  private JMenuItem newFile, newWindow, open, save, saveAs, settings, quit, undo, redo, copy, paste, cut, selectA, fullScreen, find, manual, about;
 
   /**
   * Action for the menu item
@@ -127,14 +127,16 @@ public class Menu extends JPanel{
     this.saveAs.addActionListener(a);
     this.fileMenu.add(this.saveAs);
 
+
+
     //Add a separator
-    this.fileMenu.addSeparator();
+    //this.fileMenu.addSeparator();
 
     //settings
     this.settings = new JMenuItem("Parametres", KeyEvent.VK_P);
     this.settings.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
     this.settings.addActionListener(a);
-    this.fileMenu.add(this.settings);
+    //this.fileMenu.add(this.settings);
 
     //Add a separator
     this.fileMenu.addSeparator();
@@ -164,6 +166,29 @@ public class Menu extends JPanel{
     this.redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
     this.redo.addActionListener(a);
     this.editMenu.add(this.redo);
+
+    //Add of a separator
+    this.editMenu.addSeparator();
+
+    this.copy = new JMenuItem("Copier", KeyEvent.VK_C);
+    this.copy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+    this.copy.addActionListener(a);
+    this.editMenu.add(this.copy);
+
+    this.paste = new JMenuItem("Coller", KeyEvent.VK_V);
+    this.paste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+    this.paste.addActionListener(a);
+    this.editMenu.add(this.paste);
+
+    this.cut = new JMenuItem("Couper", KeyEvent.VK_X);
+    this.cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+    this.cut.addActionListener(a);
+    this.editMenu.add(this.cut);
+
+    this.selectA = new JMenuItem("Tout selectionner", KeyEvent.VK_A);
+    this.selectA.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
+    this.selectA.addActionListener(a);
+    this.editMenu.add(this.selectA);
 
     //Add of a separator
     this.editMenu.addSeparator();
@@ -267,6 +292,34 @@ public class Menu extends JPanel{
    */
    public JMenuItem getRedo(){
     return this.redo;
+   }
+
+   /**
+   * @return the menu item copy
+   */
+   public JMenuItem getCopy(){
+     return this.copy;
+   }
+
+   /**
+   * @return the menu item paste
+   */
+   public JMenuItem getPaste(){
+     return this.paste;
+   }
+
+   /**
+   * @return the menu item cut
+   */
+   public JMenuItem getCut(){
+     return this.cut;
+   }
+
+   /**
+   * @return the menu item selectA
+   */
+   public JMenuItem getSelectA(){
+     return this.selectA;
    }
 
    /**

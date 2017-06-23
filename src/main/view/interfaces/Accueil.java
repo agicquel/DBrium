@@ -1,7 +1,7 @@
 package view.interfaces;
 
 import view.elements.*;
-import controleur.*;
+import controller.*;
 
 import javax.swing.*;
 import java.awt.*;

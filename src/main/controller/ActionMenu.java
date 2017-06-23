@@ -3,7 +3,7 @@
 * @author SomeOne
 * @version 1.0
 */
-package controleur;
+package controller;
 
 import view.elements.*;
 import view.interfaces.*;
@@ -19,6 +19,14 @@ import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Document;
 import javax.swing.text.Highlighter;
 import javax.swing.text.JTextComponent;
+
+import org.fife.ui.rtextarea.*;
+import org.fife.ui.rsyntaxtextarea.*;
+import org.fife.ui.rtextarea.RTextAreaEditorKit.*;
+
+import java.io.*;
+
+import java.util.StringTokenizer;
 
 import java.io.*;
 public class ActionMenu implements ActionListener{
@@ -60,24 +68,10 @@ public class ActionMenu implements ActionListener{
 
     //Action listener for the menu item save As
     if( source == this.f.getMenu().getSaveAs()){
-      /*try{
-        JFileChooser filechoose = new JFileChooser();
-        filechoose.setCurrentDirectory(new File("."));
-        String approve = new String("Enregistrer sous");
-        int resultatEnregistrer = filechoose.showDialog(filechoose, approve);
-        if (resultatEnregistrer == JFileChooser.APPROVE_OPTION){
-          String theFile = new String(filechoose.getSelectedFile().toString());
-          if(!theFile.endsWith(".txt") && !theFile.endsWith(".TXT")){
-            theFile = theFile + ".txt";
-          }
-          this.saveAs(theFile, this.f.getFenetre().getWriteQuerry().getText());
-        }
-      } catch (Exception er) {
-        er.printStackTrace();
-      }*/
-      JTextArea tamp = (JTextArea)this.f.getFenetre().text();
 
-      this.saveAs(tamp.getText());
+      AreaToSave tamp = this.f.getFenetre().text();
+
+      this.saveAs(tamp);
     }
 
 
@@ -87,9 +81,12 @@ public class ActionMenu implements ActionListener{
       a.setIndex(f.getFenetre().getWrite().getTabCount() + 1);
       String ret = "untitled";
 
-      System.out.println(a.getIndex());
+      //System.out.println(a.getIndex());
+      AreaToSave tamp = new AreaToSave(30, 100);
+      tamp.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
+  		tamp.setCodeFoldingEnabled(true);
 
-      f.getFenetre().getWrite().addTab("untitled", new JScrollPane(new JTextArea(30,100)));
+      f.getFenetre().getWrite().addTab("untitled", new RTextScrollPane(tamp));
       JButton btn = new JButton("x");
       JPanel pnlTab = new JPanel(new GridBagLayout());
       pnlTab.setOpaque(false);
@@ -115,38 +112,21 @@ public class ActionMenu implements ActionListener{
 
       btn.addActionListener(new MyCloseActionHandler(f.getFenetre().getWrite(), a.getIndex()-1));
 
-      //f.getBarreGauche().getOngletGauche().add(new JScrollPane(new JTextArea()));
-      //f.getBarreGauche().getOngletGauche().setTitleAt((a.getIndex() - 1), ret);
+
     }
 
 
     //Action listener for the menu item save
     if(source.equals(this.f.getMenu().getSave())){
-      System.out.println("Test save");
+      AreaToSave tamp = this.f.getFenetre().text();
+
+      this.save(tamp);
     }
 
     //Action listener for the menu item open
     if(source.equals(this.f.getMenu().getOpen())){
-      /*try{
-        JFileChooser filechoose = new JFileChooser();
-        // Créer un JFileChooser
-        filechoose.setCurrentDirectory(new File("."));
-        // Le répertoire source du JFileChooser est le répertoire d'où est lancé notre programme
-        String approve = new String("Ouvrir");
-        // Le bouton pour valider l'enregistrement portera la mention OUVRIR
-        String theFile = null; //On ne sait pas pour l'instant quel sera le fichier à ouvrir
-        int resultatOuvrir = filechoose.showDialog(filechoose, approve); // Pour afficher le JFileChooser...
-        if(resultatOuvrir == filechoose.APPROVE_OPTION){
-          theFile = filechoose.getSelectedFile().toString();
+      this.open();
 
-          this.f.getFenetre().setWriteQuerry(this.open(theFile));
-        }
-      } catch (Exception er) {
-        er.printStackTrace();
-      }*/
-
-      open();
-      //tamp = new JTextArea(this.open());
     }
 
     //Action listener for the menu item new window
@@ -162,12 +142,38 @@ public class ActionMenu implements ActionListener{
 
     //Action listener for the menu item undo
     if(source.equals(this.f.getMenu().getUndo())){
-      System.out.println("Test undo");
+      UndoAction ua = new UndoAction();
+      ua.actionPerformedImpl(e, (RTextArea)this.f.getFenetre().text());
     }
 
     //Action listener for the menu item redo
     if(source.equals(this.f.getMenu().getRedo())){
-      System.out.println("Test redo ");
+      RedoAction ra = new RedoAction();
+      ra.actionPerformedImpl(e, (RTextArea)this.f.getFenetre().text());
+    }
+
+    //Action listener for the menu item copy
+    if(source.equals(this.f.getMenu().getCopy())){
+      CopyAction ca = new CopyAction();
+      ca.actionPerformedImpl(e, (RTextArea)this.f.getFenetre().text());
+    }
+
+    //Action listener for the menu item past
+    if(source.equals(this.f.getMenu().getPaste())){
+      PasteAction pa = new PasteAction();
+      pa.actionPerformedImpl(e, (RTextArea)this.f.getFenetre().text());
+    }
+
+    //Action listener for the menu item cut
+    if(source.equals(this.f.getMenu().getCut())){
+      CutAction ca = new CutAction();
+      ca.actionPerformedImpl(e, (RTextArea)this.f.getFenetre().text());
+    }
+
+    //Action listener for the menu item selectA
+    if(source.equals(this.f.getMenu().getSelectA())){
+      SelectAllAction sa = new SelectAllAction();
+      sa.actionPerformedImpl(e, (RTextArea)this.f.getFenetre().text());
     }
 
     //Action listener for the menu item full screen
@@ -206,6 +212,53 @@ public class ActionMenu implements ActionListener{
 
   }
 
+
+  /**
+  * Method to change the title of the curent file when is saved
+  * @param title The name of the file to change
+  */
+  public void changeTitleTab(String title,String contain){
+    ActionBarreCreationRequete a = this.f.getBarreRequete().getActionBarre();
+    a.setIndex(f.getFenetre().getWrite().getTabCount() + 1);
+    String ret = this.tokenizeFileName(title);
+
+    //System.out.println(a.getIndex());
+    AreaToSave tamp = new AreaToSave(30,100);
+    tamp.setText(contain);
+    tamp.setSavePath(title);
+    tamp.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
+    tamp.setCodeFoldingEnabled(true);
+    f.getFenetre().getWrite().addTab(ret, new RTextScrollPane(tamp));
+    JButton btn = new JButton("x");
+    JPanel pnlTab = new JPanel(new GridBagLayout());
+    pnlTab.setOpaque(false);
+    btn.setBorderPainted(false);
+    btn.setContentAreaFilled(false);
+    btn.setBackground(new Color(200,220,241));
+
+    JLabel lblTitle = new JLabel(ret);
+
+    GridBagConstraints gbc = new GridBagConstraints();
+
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.weightx = 2;
+
+    pnlTab.add(lblTitle, gbc);
+
+    gbc.gridx++;
+    gbc.weightx = 0;
+    pnlTab.add(btn, gbc);
+
+    f.getFenetre().getWrite().setTabComponentAt(a.getIndex()-1, pnlTab);
+
+    btn.addActionListener(new MyCloseActionHandler(f.getFenetre().getWrite(), a.getIndex()-1));
+  }
+
+
+  /**
+  * Method to open a file from a file chooser, open only the sql files
+  */
   public void open(){
 
 		String fileContain="";
@@ -217,15 +270,53 @@ public class ActionMenu implements ActionListener{
 			if(retour==JFileChooser.APPROVE_OPTION){
 				String theFile = choice.getSelectedFile().toString();
 				if(theFile.matches(".*\\.sql")){
-					FileReader file=new FileReader(theFile);
+          FileReader file=new FileReader(theFile);
 					BufferedReader in=new BufferedReader(file);
-					while(in.readLine()!=null){
-
-						fileContain += ""+in.readLine()+"\n";
-            JTextArea tamp = (JTextArea)this.f.getFenetre().text();
-            tamp.setText(fileContain);
+          String line = in.readLine();
+					while(line != null){
+            fileContain += ""+line+"\n";
+						line = in.readLine();
 
 					}
+
+          //Creation of a new title
+          AreaToSave tamp = new AreaToSave(30,100);
+          tamp.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
+      		tamp.setCodeFoldingEnabled(true);
+          tamp.setFont(new Font("TimesRoman",Font.BOLD,15));
+          tamp.setText(fileContain);
+          tamp.setSavePath(theFile);
+          RTextScrollPane scrollTamp = new RTextScrollPane(tamp);
+          ActionBarreCreationRequete a = this.f.getBarreRequete().getActionBarre();
+          a.setIndex(f.getFenetre().getWrite().getTabCount() + 1);
+          String ret = this.tokenizeFileName(theFile);
+
+
+          f.getFenetre().getWrite().addTab(ret,scrollTamp);
+          JButton btn = new JButton("x");
+          JPanel pnlTab = new JPanel(new GridBagLayout());
+          pnlTab.setOpaque(false);
+          btn.setBorderPainted(false);
+          btn.setContentAreaFilled(false);
+          btn.setBackground(new Color(200,220,241));
+
+          JLabel lblTitle = new JLabel(ret);
+
+          GridBagConstraints gbc = new GridBagConstraints();
+
+          gbc.gridx = 0;
+          gbc.gridy = 0;
+          gbc.weightx = 2;
+
+          pnlTab.add(lblTitle, gbc);
+
+          gbc.gridx++;
+          gbc.weightx = 0;
+          pnlTab.add(btn, gbc);
+
+          f.getFenetre().getWrite().setTabComponentAt(a.getIndex()-1, pnlTab);
+
+          btn.addActionListener(new MyCloseActionHandler(f.getFenetre().getWrite(), a.getIndex()-1));
 
 				}
 				else{
@@ -242,27 +333,58 @@ public class ActionMenu implements ActionListener{
 		}
 	}
 
-	public void saveAs(String fileContain){
+  /**
+  * Method to save a file with a filechooser
+  * @param ats the text Area to save
+  * @return The same area but with the save path changed
+  */
+	public void saveAs(AreaToSave ats){
+
 
 		try{
 
-			JFileChooser choice =new JFileChooser();
+      String fileContain = ats.getText();
+			JFileChooser choice = new JFileChooser();
+      choice.setCurrentDirectory(new File("."));
 			int back = choice.showDialog(choice,"Enregistrer sous");
+      String theFile = null;
+      File f = null;
 			if(back == JFileChooser.APPROVE_OPTION){
+        theFile = choice.getSelectedFile().toString();
+        f = choice.getSelectedFile();
+        if(!theFile.endsWith(".sql")){
+          theFile = theFile+".sql";
+        }
+        int c = JOptionPane.NO_OPTION;
+					if (f.exists()) {
+						c = JOptionPane.showConfirmDialog(null, "Le fichier exister deja voulez vous l ecraser ?");
+						if(f.getName() != null && c == JOptionPane.YES_OPTION){
+							/*String title = file.getName().split("[.]")[0];
+							changeTitleTab(title);
+							RWFile.writeFile(textPane.getText(), file.toString());
+							gui.getActionBar().getAction().setText("<html>Fichier enregistr&eacute;</html>");
+							currentPath = file.getParent();
+							savePath = file.toString();*/
+      			  this.changeTitleTab(theFile, fileContain);
+      				FileWriter file = new FileWriter(theFile);
+      				BufferedWriter in = new BufferedWriter(file);
+      				PrintWriter er = new PrintWriter(in);
+      				er.println(fileContain);
+      				er.close();
+						}
+			} else {
 
-				String theFile = choice.getSelectedFile().toString()+".sql";
-				FileWriter file = new FileWriter(theFile);
-				BufferedWriter in = new BufferedWriter(file);
-				PrintWriter er = new PrintWriter(in);
-				er.println(fileContain);
-				er.close();
-				this.way = theFile;
-
-			}
+        this.changeTitleTab(theFile, fileContain);
+        FileWriter file = new FileWriter(theFile);
+        BufferedWriter in = new BufferedWriter(file);
+        PrintWriter er = new PrintWriter(in);
+        er.println(fileContain);
+        er.close();
+      }
 
 		}
 
-		catch(Exception ex){
+		} catch(Exception ex){
 
 			System.out.println(ex.getMessage());
 
@@ -270,15 +392,25 @@ public class ActionMenu implements ActionListener{
 
 	}
 
-	public void save(String fileContain){
+
+
+    /**
+  * Method to save a file aleready saved as, if it's not saved save as is called
+  * @param ats the area to save
+  */
+	public void save(AreaToSave ats){
 
 		try{
-
-				FileWriter file=new FileWriter(this.way);
-				BufferedWriter in=new BufferedWriter(file);
-				PrintWriter er=new PrintWriter(in);
-				er.println(fileContain);
-				er.close();
+        if(ats.getSavePath() != null){
+          String fileContain = ats.getText();
+          FileWriter file=new FileWriter(ats.getSavePath());
+          BufferedWriter in=new BufferedWriter(file);
+          PrintWriter er=new PrintWriter(in);
+          er.println(fileContain);
+          er.close();
+        } else {
+          this.saveAs(ats);
+        }
 
 			}	catch(Exception ex){
 
@@ -287,6 +419,25 @@ public class ActionMenu implements ActionListener{
 		}
 
 	}
+
+  /**
+  * Method to get just the last part of the name of the fileMenu
+  * @param name the name of the file to tokenize
+  * @return the name cut
+  */
+  private String tokenizeFileName(String name){
+    StringTokenizer firstToken;
+    String ret = "Untitle";
+    if(name.contains("\\")){
+      firstToken = new StringTokenizer(name, "\\", false);
+    } else {
+      firstToken = new StringTokenizer(name, "/", false);
+    }
+    while(firstToken.hasMoreTokens()){
+      ret = firstToken.nextToken();
+    }
+    return ret;
+  }
 
   // Code important
   // Ajout un HighlightPainter de type HPainter sur toutes les occurrences "word"

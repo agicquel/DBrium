@@ -1,4 +1,4 @@
-package controleur;
+package controller;
 
 import view.elements.*;
 import view.interfaces.*;
@@ -44,8 +44,10 @@ public class ActionBarreCreationRequete implements ActionListener {
 				index = 0;
 				String ret = "untitled";
 
-				RSyntaxTextArea jtx = new RSyntaxTextArea(30,100);
-				jtx.setFont(new Font("TimesRoman",Font.BOLD,15));
+				AreaToSave jtx = new AreaToSave(30,100);
+				jtx.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
+  			jtx.setCodeFoldingEnabled(true);
+
 
 				f.getFenetre().getWrite().addTab("untitled", new RTextScrollPane(jtx));
 				JButton btn = new JButton("x");
@@ -78,9 +80,11 @@ public class ActionBarreCreationRequete implements ActionListener {
 				index = f.getFenetre().getWrite().getTabCount() + 1;
 				String ret = "untitled";
 
-				System.out.println(index);
+				AreaToSave jtx = new AreaToSave(30,100);
+				jtx.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
+  			jtx.setCodeFoldingEnabled(true);
 
-				f.getFenetre().getWrite().addTab("untitled", new RTextScrollPane(new RSyntaxTextArea(30,100)));
+				f.getFenetre().getWrite().addTab("untitled", new RTextScrollPane(jtx));
 				JButton btn = new JButton("x");
 				JPanel pnlTab = new JPanel(new GridBagLayout());
 				pnlTab.setOpaque(false);
@@ -190,7 +194,7 @@ public class ActionBarreCreationRequete implements ActionListener {
 							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
 							res += "Table mise à jour.";
 						}
-						
+
 					}
 					catch(Exception err)
 					{
