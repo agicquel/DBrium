@@ -21,7 +21,7 @@ public class DBriumLauncher
 {
 	public static void main(String args[])
 	{
-		try
+		/**try
 		{
 			DBFrame f = new DBFrame();
 			Image icone = Toolkit.getDefaultToolkit().getImage("Image/DBrium.png");
@@ -30,7 +30,9 @@ public class DBriumLauncher
 		{
 			System.out.println("erreur : " + err.getMessage());
 			err.printStackTrace();
-		}
+		}*/
+
+		util.Window w = new util.Window();
 		
 	} 
 }

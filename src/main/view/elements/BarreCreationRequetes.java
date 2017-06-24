@@ -6,22 +6,54 @@ import view.interfaces.*;
 import controller.*;
 import model.ConnectDB;
 
-
+/**
+ * This class initializes the top part of the first part containing all the buttons 
+ * that have an action directly on the WindowCreateDefinition.
+ * This translation is a machine translation of the character string intended for the 
+ * user in the JOptionPane.
+ * Note that all buttons are added to a JToolBar.
+ * @author M.Hervé;
+ * @version 3.0;
+ */
 public class BarreCreationRequetes extends JPanel 
 {
-	
-	private JButton nouveau, rechercher, executer, effacer, indenter, newUser, createTable;
+
+	/**
+	 * They differents button of the JToolBar
+	 */
+	private JButton nouveau, rechercher, executer, effacer, newUser, createTable;
+
+	/**
+	 * The ActionListener of they buttons
+	 */
 	private ActionBarreCreationRequete a;
+
+	/**
+	 * The principal Frame.
+	 */
 	private DBFrame f;
+
+	/**
+	 * The space where all buttons are added
+	 */
 	private JToolBar jtb;
+
+	/**
+	 * A JComboBox where we can see the currentConnexion
+	 */
 	private JComboBox<ConnectDB> currentConnexion;
+
+	/**
+	 * This is the constructor of the class BarreCreationRequetes which initialize the button bar.
+	 * @param f The principal Frame where this component will be add.
+	 */
 
 	public BarreCreationRequetes (DBFrame f) 
 	{
 
 		// Initialisation du JPanel de la classe BarreCreationRequete
 
-		super(new GridLayout(1,12));
+		super(new GridLayout(1,11));
 
 		this.f = f;
 
@@ -34,17 +66,12 @@ public class BarreCreationRequetes extends JPanel
 		nouveau = new JButton(new ImageIcon("Image/New.png"));
 		nouveau.addActionListener(a);
 		nouveau.setBorderPainted(false);
-		nouveau.setToolTipText("New Script");
+		nouveau.setToolTipText("Nouveau Script");
 
 		executer = new JButton(new ImageIcon("Image/Execution.png"));
 		executer.addActionListener(a);
 		executer.setBorderPainted(false);
-		executer.setToolTipText("Script Execution");
-
-		indenter = new JButton(new ImageIcon("Image/indent.png"));
-		indenter.addActionListener(a);
-		indenter.setBorderPainted(false);
-		indenter.setToolTipText("Indent Script");
+		executer.setToolTipText("Execution du script");
 
 		effacer = new JButton(new ImageIcon("Image/8.png"));
 		effacer.addActionListener(a);
@@ -71,7 +98,7 @@ public class BarreCreationRequetes extends JPanel
 			if(c.isConnected())
 				currentConnexion.addItem(c);
 
-		// Ajout des différents éléments
+		// Création des espaces entres le boutons et de la JToolBar
 
 		JPanel space1, space2, space3, space4;
 		
@@ -81,9 +108,10 @@ public class BarreCreationRequetes extends JPanel
 		space3 = new JPanel();
 		space4 = new JPanel();
 
+		// Ajout des différents éléments
+
 		jtb.add(nouveau);
 		jtb.add(executer);
-		jtb.add(indenter);
 		jtb.add(rechercher);
 		jtb.add(effacer);
 		jtb.add(space1);
@@ -112,14 +140,6 @@ public class BarreCreationRequetes extends JPanel
 	public JButton getExecuter () 
 	{ 
 		return this.executer; 
-	}
-
-   /**
-    * @return the Indent Button
-    */
-	public JButton getIndenter () 
-	{ 
-		return this.indenter; 
 	}
 
    /**

@@ -87,7 +87,6 @@ public class Window extends JWindow{
           w.dispose();
           DBFrame f = new DBFrame();
           f.setVisible(true);
-          f.getAccueil().setVisible(false);
           f.setLocationRelativeTo(null);
         }
 

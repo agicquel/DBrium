@@ -22,18 +22,59 @@ import util.*;
 
 public class BarreGauche extends JPanel {
 
+	/**
+	 * The principal Frame.
+	 */
 	private DBFrame f;
-	private JPanel barreGauche, barreHaut, barreBas, boutonHaut;
-	private JButton param, ajouter, refresh, delete;
+
+	/**
+	 * They differents parts of the leftBar
+	 */
+	private JPanel barreGauche, barreHaut, barreBas;
+
+	/**
+	 * The button of the leftBar to add new connexion
+	 */
+	private JButton ajouter;
+
+	/**
+	 * The JscrollPane of the JTree and the JList
+	 */
 	private JScrollPane jsp, jsp2;
+
+	/**
+	 * The JToolBar where the button is added
+	 */
 	private JToolBar jtb;
+
+	/**
+	 * The List which show they Tables, View or Trigger of a connexion
+	 */
 	private JList<Object> list;
 
+	/**
+	 * They Actions of the leftBar
+	 */
 	private ActionBarreGauche abg;
 
+	/**
+	 * The root of the JTree
+	 */
 	private DefaultMutableTreeNode racine;
+
+	/**
+	 * The JTree which contains they connexions
+	 */
 	private JTree jtree;
+
+	/**
+	 * The Model of the JTree
+	 */
 	private DefaultTreeModel tree;
+
+	/**
+	 * The TreeCellRenderer which contains they pictures of the JTree
+	 */
 	private DefaultTreeCellRenderer[] tCellRenderer;
 	
 	/**
@@ -54,18 +95,7 @@ public class BarreGauche extends JPanel {
 		ajouter = new JButton(new ImageIcon("Image/NewConnection2.png"));
 		ajouter.setBorderPainted(false);
 		ajouter.addActionListener(abg);
-		ajouter.setToolTipText("Add New Connexion");
-
-		param = new JButton(new ImageIcon("Image/Parametre.png"));
-		param.setBorderPainted(false);
-		param.addActionListener(abg);
-		param.setToolTipText("Parameters");
-
-
-		refresh = new JButton(new ImageIcon("Image/Refresh.png"));
-		refresh.setBorderPainted(false);
-		refresh.addActionListener(abg);
-		refresh.setToolTipText("Refresh");
+		ajouter.setToolTipText("Ajouter une nouvelle connexion");
 
 		// Initialisation de la JList et affectation d'un MonRenderer
 
@@ -110,33 +140,28 @@ public class BarreGauche extends JPanel {
       
       	// Création des différents JPanel
 
-		barreGauche = new JPanel(new GridLayout(2,1));
+		barreGauche = new JPanel(new GridLayout(1,1));
 		barreHaut = new JPanel(new BorderLayout());
 		barreBas = new JPanel(new GridLayout(1,1));
-		boutonHaut = new JPanel(new GridLayout(1,3));
 
 		// Création des JScrollPane
 
 		jsp2 = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jsp = new JScrollPane(jtree, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
+		JSplitPane j1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, barreHaut, barreBas);
+
 		// Ajout des elements
 
 		jtb.add(ajouter);
-		jtb.add(refresh);
-		jtb.add(param);
 
-		boutonHaut.add(jtb);
-
-		barreHaut.add(boutonHaut, BorderLayout.NORTH);
+		barreHaut.add(jtb, BorderLayout.NORTH);
 		barreHaut.add(jsp, BorderLayout.CENTER);
 
 		barreBas.add(jsp2);
 
-		barreGauche.add(barreHaut);
-		barreGauche.add(barreBas);
+		barreGauche.add(j1);
 
-		this.add(param, BorderLayout.NORTH);
 		this.add(barreGauche, BorderLayout.CENTER);
 
 	}
@@ -147,29 +172,6 @@ public class BarreGauche extends JPanel {
 	public JButton getAjouter() 
 	{ 
 		return this.ajouter; 
-	}
-
-   /**
-    * @return the Parameters Button
-    */
-	public JButton getParam() 
-	{ 
-		return this.param; 
-	}
-
-   /**
-    * @return the Refresh Button
-    */
-	public JButton getRefresh() 
-	{ 
-		return this.refresh; 
-	}
-   /**
-    * @return the Delete Button
-    */
-	public JButton getDelete() 
-	{ 
-		return this.delete; 
 	}
 
    /**

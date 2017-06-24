@@ -100,11 +100,11 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 				{
 					JOptionPane.showMessageDialog(new JFrame(), err.getMessage(), "Impossible de créer la connection", JOptionPane.ERROR_MESSAGE);
 				}
-		}
-		else if(cd.isDone() && !cd.isCorrect())
-		{
-			JOptionPane.showMessageDialog(new JFrame(), "Tous les champs doivent être completés", "Impossible de créer la connection", JOptionPane.ERROR_MESSAGE);
-		}
+			}
+			else if(cd.isDone() && !cd.isCorrect())
+			{
+				JOptionPane.showMessageDialog(new JFrame(), "Tous les champs doivent être completés", "Impossible de créer la connection", JOptionPane.ERROR_MESSAGE);
+			}
 
 		// ACtion de deleteCo afin de supprimer une connection
 			
@@ -326,7 +326,8 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 
     public void valueChanged(TreeSelectionEvent e) 
     {
-    	lenoeud = (DefaultMutableTreeNode)f.getBarreGauche().getJtree().getLastSelectedPathComponent();
+    	if(f.getBarreGauche().getJtree().getLastSelectedPathComponent() != null)
+    		lenoeud = (DefaultMutableTreeNode)f.getBarreGauche().getJtree().getLastSelectedPathComponent();
 
     	if(lenoeud != null && lenoeud.isLeaf())
     	{

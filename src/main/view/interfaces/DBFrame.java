@@ -19,7 +19,8 @@ import de.javasoft.plaf.synthetica.*;
  * @version 1.0
  */
 
-public class DBFrame extends JFrame {
+public class DBFrame extends JFrame 
+{
 
 	/**
 	 * The BarreCreationRequete which is add to the Center of the Frame
@@ -51,12 +52,6 @@ public class DBFrame extends JFrame {
 
 	private static JPanel p;
 
-	/**
-	 * This is the Accueil, most precisely the first page where you enter your password and your account nam
-	 */
-	
-	private static Accueil a;
-
 	private static JSplitPane j1, j2, j3;
 
 	private static Controller controller;
@@ -65,27 +60,30 @@ public class DBFrame extends JFrame {
 	 * This is the constructor of the class Frame
 	 */
 
-	public DBFrame () {
+	public DBFrame () 
+	{
 
 		// initialisation de la fenêtre et ajout de ses caractéristiques
 
 		super("DBrium - Gestionnaire de base de donnees");
 		this.controller = new Controller(this);
 
-		try {
+		try 
+		{
 
     		setIconImage(ImageIO.read(new File("Image/DBrium.png")));
   		}
 
-  		catch (IOException e) {
-
+  		catch (IOException e) 
+  		{
     		e.printStackTrace();
   		}
 
   		LookAndFeelInfo[]  listLF;
 		listLF = UIManager.getInstalledLookAndFeels();
 
-		try {
+		try 
+		{
 
 			UIManager.setLookAndFeel(listLF[1].getClassName());
 			//UIManager.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
@@ -93,30 +91,25 @@ public class DBFrame extends JFrame {
 			SwingUtilities.updateComponentTreeUI(this);
 		}
 
-		catch (ClassNotFoundException c) {
-
+		catch (ClassNotFoundException c) 
+		{
 			c.printStackTrace();
 		}
 
-		catch (InstantiationException i) {
-
+		catch (InstantiationException i) 
+		{
 			i.printStackTrace();
 		}
 
-		catch (IllegalAccessException b) {
-
+		catch (IllegalAccessException b) 
+		{
 			b.printStackTrace();
 		}
 
-		catch (UnsupportedLookAndFeelException r) {
-
+		catch (UnsupportedLookAndFeelException r) 
+		{
 			r.printStackTrace();
 		}
-
-		/*for (int i = 0; i < listLF.length; i++) {
-
-			System.out.println(listLF[i]. getName ()+" - " + listLF[i].getClassName());
-		}*/
 
 		this.getContentPane().setLayout(new BorderLayout());
 
@@ -126,9 +119,6 @@ public class DBFrame extends JFrame {
 
    		this.setResizable(true);
 
-   		// Création de l'accueil
-
-   		//a = new Accueil(this);
 
    		// Création des élements de la fenêtre
 
@@ -143,7 +133,6 @@ public class DBFrame extends JFrame {
    		p.setBackground(Color.black);
 
    		j1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, bg, fcr);
-   		//j2 = new 
 
    		// Ajout du menu et du Panel contenant les élements à la fenêtre
 
@@ -169,10 +158,23 @@ public class DBFrame extends JFrame {
 		return this.controller;
 	}
 
-	public BarreGauche getBarreGauche() { return this.bg; }
-	public Accueil getAccueil() { return this.a; }
-	public FenetreCreationRequetes getFenetre() { return this.fcr; }
-	public BarreCreationRequetes getBarreRequete() { return this.bcr; }
-	public view.elements.Menu getMenu() { return this.menu;}
+	public BarreGauche getBarreGauche() 
+	{ 
+		return this.bg; 
+	}
 
+	public FenetreCreationRequetes getFenetre() 
+	{ 
+		return this.fcr; 
+	}
+
+	public BarreCreationRequetes getBarreRequete() 
+	{ 
+		return this.bcr; 
+	}
+
+	public view.elements.Menu getMenu() 
+	{ 
+		return this.menu;
+	}
 }
