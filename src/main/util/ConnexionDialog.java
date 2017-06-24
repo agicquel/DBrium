@@ -1,39 +1,7 @@
 package util;
 
-import java.awt.BorderLayout;
-
 import java.awt.*;
-
-import java.awt.Color;
-
-import java.awt.Dimension;
-
-import java.awt.event.ActionEvent;
-
-import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-
-import javax.swing.ImageIcon;
-
-import javax.swing.JButton;
-
-import javax.swing.JComboBox;
-
-import javax.swing.JDialog;
-
-import javax.swing.JFrame;
-
-import javax.swing.JLabel;
-
-import javax.swing.JPanel;
-
-import javax.swing.JRadioButton;
-
-import javax.swing.ButtonGroup;
-
-import javax.swing.JTextField;
-
+import java.awt.event.*;
 import javax.swing.*;
 
 
@@ -54,6 +22,7 @@ public class ConnexionDialog extends JDialog {
 
   private String nameCo;
 
+  private boolean done;
 
   public ConnexionDialog(JFrame parent, String title, boolean modal){
 
@@ -75,6 +44,7 @@ public class ConnexionDialog extends JDialog {
 
   private void initComponent(){
 
+    done = false;
 
     //Le nom
 
@@ -148,8 +118,8 @@ public class ConnexionDialog extends JDialog {
     save = new JButton("Enregistrer");
     save.addActionListener(new ActionListener(){
 
-    public void actionPerformed(ActionEvent arg0) {        
-
+    public void actionPerformed(ActionEvent arg0) {     
+        done = true;
         nameCo = nameConnexionField.getText();
         setVisible(false);
 
@@ -211,5 +181,21 @@ public class ConnexionDialog extends JDialog {
   }  
 
   public String getNameCo() { return this.nameCo; }
+
+  public String getUserName(){return nameUserField.getText();}
+  public String getConnexionName(){return nameConnexionField.getText();}
+  public String getPassword(){return mdpField.getText();}
+  public String getSid(){return sidField.getText();}
+  public String getHost(){return nomHoteField.getText();}
+  public String getPortNumber(){return nomPortField.getText();}
+  public boolean isDone(){return done;}
+
+  public boolean isCorrect()
+  {
+    boolean ret = true;
+    if(getUserName() == null || getConnexionName() == null || getPassword() == null || getSid() == null || getHost() == null || getPortNumber() == null)
+        ret = false;
+    return ret;
+  }
 
 }

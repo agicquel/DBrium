@@ -35,7 +35,7 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 	public ActionBarreGauche(DBFrame f) {
 
 		this.f = f;
-		this.indexTree = 0;
+		this.indexTree = f.getController().getConnexions().size();
 
 		bView = false;
 		bTrigger = false;
@@ -51,6 +51,7 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 		openCode = new JMenuItem("Afficher code...");
 		createTable = new JMenuItem("Cr\u00e9er une nouvelle table...", new ImageIcon("Image/table.png"));
 		deleteTable = new JMenuItem("Supprimer...", new ImageIcon("Image/deleteTable.png"));
+		deleteCo = new JMenuItem("Supprimer...", new ImageIcon("Image/deleteTable.png"));
 
 		co.addActionListener(this);
 		deco.addActionListener(this);
@@ -58,6 +59,7 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 		openCode.addActionListener(this);
 		createTable.addActionListener(this);
 		deleteTable.addActionListener(this);
+		deleteCo.addActionListener(this);
 
 
 	}
@@ -70,34 +72,39 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 
 		// Action d'ajouter afin d'ajouter une Connexion
 
-		if( source == f.getBarreGauche().getAjouter() ) {
-
-			indexTree++;
-
+		if( source == f.getBarreGauche().getAjouter() )
+		{
 			ConnexionDialog cd = new ConnexionDialog(null, "Nouvelle connection", true);
 
-			String connexionName = cd.getNameCo();
-			
+			if(cd.isDone() && cd.isCorrect())
+			{
+				try
+				{
+					ConnectDB newCon = new ConnectDB(cd.getNameCo(), "jdbc:oracle:thin:@" + cd.getHost() + ":" + cd.getPortNumber() + ":" + cd.getSid(), cd.getUserName(), cd.getPassword());
+					f.getController().saveConnexion(newCon);
+					f.getController().getConnexions().add(newCon);
 
-			// MAX FAUT MIEUX FAIRE LE CONNEXION DIALOG
-			// FAUT QUE JE PUISSE RECUPERER LES ATTRIBUTS AVEC DES GETTEURS
-			//String = cd.
-			//ConnectDB con = new ConnectDB();
-						
-			DefaultMutableTreeNode connexion = new DefaultMutableTreeNode(connexionName);
+					DefaultMutableTreeNode connexion = new DefaultMutableTreeNode(cd.getNameCo());
+					DefaultMutableTreeNode tables = new DefaultMutableTreeNode("Tables");
+					DefaultMutableTreeNode view = new DefaultMutableTreeNode("View");
+					DefaultMutableTreeNode trigger = new DefaultMutableTreeNode("Trigger");
+					f.getBarreGauche().getM().insertNodeInto(connexion, f.getBarreGauche().getRacine1(), indexTree);
+					indexTree++;
 
-			DefaultMutableTreeNode tables = new DefaultMutableTreeNode("Tables");
-			DefaultMutableTreeNode view = new DefaultMutableTreeNode("View");
-			DefaultMutableTreeNode trigger = new DefaultMutableTreeNode("Trigger");
-
-			f.getBarreGauche().getM().insertNodeInto(connexion, f.getBarreGauche().getRacine1(), indexTree);
-
-
-			connexion.add(tables);
-			connexion.add(view);
-			connexion.add(trigger);
-
-			f.getBarreGauche().getM().reload();
+					connexion.add(tables);
+					connexion.add(view);
+					connexion.add(trigger);
+					f.getBarreGauche().getM().reload();			
+				}
+				catch(Exception err)
+				{
+					JOptionPane.showMessageDialog(new JFrame(), err.getMessage(), "Impossible de créer la connection", JOptionPane.ERROR_MESSAGE);
+				}
+		}
+		else if(cd.isDone() && !cd.isCorrect())
+		{
+			JOptionPane.showMessageDialog(new JFrame(), "Tous les champs doivent être completés", "Impossible de créer la connection", JOptionPane.ERROR_MESSAGE);
+		}
 
 		// ACtion de deleteCo afin de supprimer une connection
 			
@@ -112,6 +119,12 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 				int m = jop.showConfirmDialog(null,"Voulez-vous supprimer cette connexion ?","Supprimer Connection", JOptionPane.YES_NO_OPTION);
       	
       			if (m == JOptionPane.YES_OPTION ) {
+
+      				try
+					{
+						f.getController().deleteConnexion(f.getBarreGauche().getJtree().getLastSelectedPathComponent().toString());
+					}
+					catch(Exception err){}
 
       				indexTree--;
 					f.getBarreGauche().getRacine1().remove(lenoeud);
@@ -174,7 +187,7 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
         	}.start();
 		}
 
-		else if ( source == this.deleteTable || source == this.delete)
+		else if ( source == this.deleteTable)
 		{
 			try
 			{
@@ -251,15 +264,13 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
                     menu.setPopupSize(new Dimension(300,80));
                     menu.add(co);
                     menu.add(deco);
-                    menu.add(delete);
+                    menu.add(deleteCo);
                     menu.show ( f.getBarreGauche().getJtree(), pathBounds.x, pathBounds.y + pathBounds.height );
                 } 
             }
 
             else if( !f.getBarreGauche().getList().isSelectionEmpty() && f.getBarreGauche().getList().locationToIndex(e.getPoint()) == f.getBarreGauche().getList().getSelectedIndex()) 
             {  
-
-            	System.out.println("cacacac");
                			
                	if(bTable) 
                	{

@@ -31,33 +31,18 @@ public class Controller
 		    {
 		    	if(FilenameUtils.getExtension(f.getName()).toString().equals("cdb"))
 		    	{
-		    		System.out.println(f.getName());
 		    		try
 		    		{
 		    			this.connexions.add(ConnectDB.loadConnect(getUserDataDirectory() + File.separator + f.getName()));
 		    		}
 		    		catch(Exception e){}
 		    	}
-		    	//System.out.println(FilenameUtils.getExtension(f.getName()).toString());
-		    	//if(FilenameUtils.getExtension(f))
-		      // Do something with child
 		    }
 		}
 		else
 		{
 			folder.mkdirs();
-			// Handle the case where dir is not really a directory.
-		    // Checking dir.isDirectory() above would not be sufficient
-		    // to avoid race conditions with another process that deletes
-		    // directories.
-		  }
-
-		for(ConnectDB c : this.connexions)
-		{
-			System.out.println(c);
 		}
-
-		System.out.println(getUserDataDirectory());
 	}
 
 	public static String getUserDataDirectory()
@@ -74,7 +59,17 @@ public class Controller
 	{
 		try
 		{
-			File file = new File(getUserDataDirectory() + File.separator + con.getName().toUpperCase() + ".cdb");
+			File file = new File(getUserDataDirectory() + File.separator + con.getName().replaceAll("\\s+","").toLowerCase() + ".cdb");
+			file.delete();
+		}
+		catch(Exception err){}
+	}
+
+	public void deleteConnexion(String conName)
+	{
+		try
+		{
+			File file = new File(getUserDataDirectory() + File.separator + conName.replaceAll("\\s+","").toLowerCase() + ".cdb");
 			file.delete();
 		}
 		catch(Exception err){}
@@ -84,7 +79,7 @@ public class Controller
 	{
 		try
 		{
-			ConnectDB.saveConnect(getUserDataDirectory() + File.separator + con.getName().toUpperCase() + ".cdb", con);
+			ConnectDB.saveConnect(getUserDataDirectory() + File.separator + con.getName().replaceAll("\\s+","").toLowerCase() + ".cdb", con);
 		}
 		catch(Exception err)
 		{
