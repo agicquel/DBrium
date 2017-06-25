@@ -10,6 +10,10 @@ import java.awt.*;
 import javax.swing.tree.*;
 import util.*;
 
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 /**
  * Here is the class that creates the left part of the DBFrame.
  * This class initially creates the JTree which allows the management of the connections 
@@ -92,10 +96,17 @@ public class BarreGauche extends JPanel {
 
 		// Creation des JButton
 
-		ajouter = new JButton(new ImageIcon("Image/NewConnection2.png"));
-		ajouter.setBorderPainted(false);
-		ajouter.addActionListener(abg);
-		ajouter.setToolTipText("Ajouter une nouvelle connexion");
+		try
+		{
+			ajouter = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "NewConnection2.png"))));
+			ajouter.setBorderPainted(false);
+			ajouter.addActionListener(abg);
+			ajouter.setToolTipText("Ajouter une nouvelle connexion");
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 
 		// Initialisation de la JList et affectation d'un MonRenderer
 
@@ -133,11 +144,17 @@ public class BarreGauche extends JPanel {
 		tCellRenderer = new  DefaultTreeCellRenderer[3];
 		tCellRenderer[0] = new  DefaultTreeCellRenderer();
 
-		tCellRenderer[0].setClosedIcon(new ImageIcon("Image/ConnexionLost.png"));
-    	tCellRenderer[0].setOpenIcon(new ImageIcon("Image/ConnexionSucced.png"));
-    	tCellRenderer[0].setLeafIcon(new ImageIcon("Image/Folder.png"));
-    	jtree.setCellRenderer(tCellRenderer[0]);
-      
+		try
+		{
+			tCellRenderer[0].setClosedIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "ConnexionLost.png"))));
+    		tCellRenderer[0].setOpenIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "ConnexionSucced.png"))));
+    		tCellRenderer[0].setLeafIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "Folder.png"))));
+    		jtree.setCellRenderer(tCellRenderer[0]);
+    	}
+      	catch (IOException e)
+		{
+			e.printStackTrace();
+		}
       	// Création des différents JPanel
 
 		barreGauche = new JPanel(new GridLayout(1,1));

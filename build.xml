@@ -1,6 +1,7 @@
 <project default="all">
     <property name="build.dir" value="build/main"/>
     <property name="src.dir" value="src/main"/>
+    <property name="res.dir" value="res/"/>
     <property name="test.build.dir" value="build/test"/>
     <property name="test.src.dir" value="src/test/"/>
     <property name="doc.dir" value="doc/"/>
@@ -70,7 +71,7 @@
        <echo message = "javadoc has been generated successfully" />
     </target> 
     
-    <target name="jar"> 
+    <target name="jar" depends="clean, build"> 
         <mkdir dir="${jar.dir}"/>
 
         <jar destfile="${jar.dir}/DBriumLauncher.jar" basedir="${build.dir}"> 
@@ -78,6 +79,9 @@
                 <attribute name="Main-Class" value="DBriumLauncher"/> 
             </manifest>
             <zipgroupfileset dir="lib/" includes="*.jar"/> 
+            <zipfileset dir="${res.dir}" prefix="${res.dir}"/>
+            <!-- <fileset dir="${res.dir}"> </fileset> -->
+
         </jar> 
     </target> 
     

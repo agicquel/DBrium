@@ -97,7 +97,7 @@ public class FenetreCreationRequetes extends JPanel
 		// Création des JScrollPAne
 
 
-		scrollCreation = new RTextScrollPane(writeQuerry);
+		scrollCreation = new RTextScrollPane((Component)writeQuerry);
 		scrollResult = new JScrollPane(resultQuerry, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 		// Création des JTabbedPane

@@ -6,6 +6,10 @@ import view.interfaces.*;
 import controller.*;
 import model.ConnectDB;
 
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 /**
  * This class initializes the top part of the first part containing all the buttons 
  * that have an action directly on the WindowCreateDefinition.
@@ -63,43 +67,46 @@ public class BarreCreationRequetes extends JPanel
 
 		// Création des boutons, personnalisation et ajout de l'ActionListener
 
-		nouveau = new JButton(new ImageIcon("Image/New.png"));
-		nouveau.addActionListener(a);
-		nouveau.setBorderPainted(false);
-		nouveau.setToolTipText("Nouveau Script");
+		try
+		{
+			nouveau = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "New.png"))));
+			nouveau.addActionListener(a);
+			nouveau.setBorderPainted(false);
+			nouveau.setToolTipText("Nouveau Script");
 
-		executer = new JButton(new ImageIcon("Image/Execution.png"));
-		executer.addActionListener(a);
-		executer.setBorderPainted(false);
-		executer.setToolTipText("Execution du script");
+			executer = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "Execution.png"))));
+			executer.addActionListener(a);
+			executer.setBorderPainted(false);
+			executer.setToolTipText("Execution du script");
 
-		effacer = new JButton(new ImageIcon("Image/8.png"));
-		effacer.addActionListener(a);
-		effacer.setBorderPainted(false);
-		effacer.setToolTipText("Effacer Script");
+			effacer = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "8.png"))));
+			effacer.addActionListener(a);
+			effacer.setBorderPainted(false);
+			effacer.setToolTipText("Effacer Script");
 
-		rechercher = new JButton(new ImageIcon("Image/Search.png"));
-		rechercher.addActionListener(a);
-		rechercher.setBorderPainted(false);
-		rechercher.setToolTipText("Search");
+			rechercher = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "Search.png"))));
+			rechercher.addActionListener(a);
+			rechercher.setBorderPainted(false);
+			rechercher.setToolTipText("Search");
 
-		createTable = new JButton(new ImageIcon("Image/ajouterTableBig.png"));
-		createTable.addActionListener(a);
-		createTable.setBorderPainted(false);
-		createTable.setToolTipText("Créer une table");
+			createTable = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "ajouterTableBig.png"))));
+			createTable.addActionListener(a);
+			createTable.setBorderPainted(false);
+			createTable.setToolTipText("Créer une table");
 
-		newUser = new JButton(new ImageIcon("Image/users.png"));
-		newUser.addActionListener(a);
-		newUser.setBorderPainted(false);
-		newUser.setToolTipText("Nouvel utilisateur");
+			newUser = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "users.png"))));
+			newUser.addActionListener(a);
+			newUser.setBorderPainted(false);
+			newUser.setToolTipText("Nouvel utilisateur");
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 
-		currentConnexion = new JComboBox<ConnectDB>();
-		for(ConnectDB c : f.getController().getConnexions())
-			if(c.isConnected())
-				currentConnexion.addItem(c);
-
+		this.fillIntoCurrentConnexion();
+		
 		// Création des espaces entres le boutons et de la JToolBar
-
 		JPanel space1, space2, space3, space4;
 		
 		jtb = new JToolBar();
@@ -124,6 +131,15 @@ public class BarreCreationRequetes extends JPanel
 
 		this.add(jtb);
 
+	}
+
+	public void fillIntoCurrentConnexion()
+	{
+		currentConnexion = new JComboBox<ConnectDB>();
+		for(ConnectDB c : f.getController().getConnexions())
+			if(c.isConnected())
+				currentConnexion.addItem(c);
+		currentConnexion.updateUI();
 	}
 
    /**

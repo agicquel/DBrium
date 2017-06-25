@@ -1,17 +1,4 @@
-import java.sql.*;
-import oracle.jdbc.driver.OracleDriver;
-import oracle.jdbc.*;
-
-import java.io.*;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.table.*;
-
-import model.*;
-import controller.*;
-import view.interfaces.*;
+import util.LoadingWindow;
 
 /**
 * Launcher
@@ -32,7 +19,7 @@ public class DBriumLauncher
 			err.printStackTrace();
 		}*/
 
-		util.Window w = new util.Window();
+		LoadingWindow w = new LoadingWindow();
 		
 	} 
 }

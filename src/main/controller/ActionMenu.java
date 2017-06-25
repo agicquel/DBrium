@@ -9,26 +9,18 @@ import view.elements.*;
 import view.interfaces.*;
 
 import javax.swing.*;
+import javax.swing.text.*;
 import java.awt.event.*;
 import java.awt.*;
-
-import view.elements.*;
-
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultHighlighter;
-import javax.swing.text.Document;
-import javax.swing.text.Highlighter;
-import javax.swing.text.JTextComponent;
+import java.util.StringTokenizer;
 
 import org.fife.ui.rtextarea.*;
 import org.fife.ui.rsyntaxtextarea.*;
 import org.fife.ui.rtextarea.RTextAreaEditorKit.*;
 
 import java.io.*;
+import javax.imageio.ImageIO;
 
-import java.util.StringTokenizer;
-
-import java.io.*;
 public class ActionMenu implements ActionListener{
 
   /**
@@ -196,12 +188,12 @@ public class ActionMenu implements ActionListener{
 
     //Action listener for the menu item manual
     if(source.equals(this.f.getMenu().getManual())){
-      FrameForMenus f = new FrameForMenus("Files\\manuel.txt", "Manuel");
+      FrameForMenus ffm = new FrameForMenus(getClass().getResourceAsStream(File.separator + "res" + File.separator + "txt" + File.separator + "manuel.txt"), "Manuel");
     }
 
     //Action listener for the menu item about
     if(source.equals(this.f.getMenu().getAbout())){
-      FrameForMenus f = new FrameForMenus("File\\about.txt", "A propos");
+      FrameForMenus ffm = new FrameForMenus(getClass().getResourceAsStream(File.separator + "res" + File.separator + "txt" + File.separator + "about.txt"), "A propos");
     }
 
     //Action listener for the menu item quit

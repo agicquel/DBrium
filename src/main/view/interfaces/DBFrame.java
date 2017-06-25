@@ -10,7 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.UIManager.*;
 
-import de.javasoft.plaf.synthetica.*;
+import com.alee.laf.*;
+
+//import de.javasoft.plaf.synthetica.*;
 
 /**
  * This is the class which initialyse the principal Frame.
@@ -67,49 +69,7 @@ public class DBFrame extends JFrame
 
 		super("DBrium - Gestionnaire de base de donnees");
 		this.controller = new Controller(this);
-
-		try 
-		{
-
-    		setIconImage(ImageIO.read(new File("Image/DBrium.png")));
-  		}
-
-  		catch (IOException e) 
-  		{
-    		e.printStackTrace();
-  		}
-
-  		LookAndFeelInfo[]  listLF;
-		listLF = UIManager.getInstalledLookAndFeels();
-
-		try 
-		{
-
-			UIManager.setLookAndFeel(listLF[1].getClassName());
-			//UIManager.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
-			//UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-			SwingUtilities.updateComponentTreeUI(this);
-		}
-
-		catch (ClassNotFoundException c) 
-		{
-			c.printStackTrace();
-		}
-
-		catch (InstantiationException i) 
-		{
-			i.printStackTrace();
-		}
-
-		catch (IllegalAccessException b) 
-		{
-			b.printStackTrace();
-		}
-
-		catch (UnsupportedLookAndFeelException r) 
-		{
-			r.printStackTrace();
-		}
+		WebLookAndFeel.install(); // theme
 
 		this.getContentPane().setLayout(new BorderLayout());
 
@@ -145,6 +105,12 @@ public class DBFrame extends JFrame
    		p.add(j1, BorderLayout.CENTER);
    		//p.add(bg, BorderLayout.WEST);
 
+   		try
+   		{
+   			this. setIconImage(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "DBrium.png")));
+   		}
+   		catch(Exception err){}
+   		
    		this.pack();
    		this.setVisible(true);
    		this.setDefaultLookAndFeelDecorated(true);

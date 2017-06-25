@@ -3,7 +3,8 @@ package util;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
+import java.util.Scanner;
+import model.ConnectDB;
 
 public class ConnexionDialog extends JDialog {
 
@@ -18,9 +19,7 @@ public class ConnexionDialog extends JDialog {
 
   private JCheckBox ch;
 
-  private JButton save, help, connect, effacer, cancel;
-
-  private String nameCo;
+  private JButton save, help, connect, cancel;
 
   private boolean done;
 
@@ -39,6 +38,28 @@ public class ConnexionDialog extends JDialog {
     this.pack();
     this.setVisible(true);
 
+  }
+
+  public  ConnexionDialog(JFrame parent, String title, boolean modal, ConnectDB con){
+    super(parent, title, modal);
+    this.setPreferredSize(new Dimension(800, 500));
+    this.setResizable(true);
+    this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+    this.initComponent();
+
+    nameUserField.setText(con.getUser());
+    nameConnexionField.setText(con.getName());
+    mdpField.setText(con.getPwd());
+
+    Scanner s = new Scanner(con.getUrl()).useDelimiter("\\s*:\\s*");
+    s.next(); s.next(); s.next();
+
+    nomHoteField.setText(s.next().substring(1));
+    nomPortField.setText(s.next());
+    sidField.setText(s.next());
+
+    this.pack();
+    this.setVisible(true);
   }
 
 
@@ -120,12 +141,10 @@ public class ConnexionDialog extends JDialog {
 
     public void actionPerformed(ActionEvent arg0) {     
         done = true;
-        nameCo = nameConnexionField.getText();
         setVisible(false);
 
     }});
 
-    effacer = new JButton("Effacer");
     cancel = new JButton("Annuler");
     cancel.addActionListener(new ActionListener(){
 
@@ -139,7 +158,6 @@ public class ConnexionDialog extends JDialog {
 
     lb.add(save);
     lb.add(vide);
-    lb.add(effacer);
 
     lb2.add(cancel);
 
@@ -179,8 +197,6 @@ public class ConnexionDialog extends JDialog {
     //this.getContentPane().setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
   }  
-
-  public String getNameCo() { return this.nameCo; }
 
   public String getUserName(){return nameUserField.getText();}
   public String getConnexionName(){return nameConnexionField.getText();}

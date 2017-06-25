@@ -37,7 +37,7 @@ public class FrameForMenus extends JFrame{
 	/**
 	* The name of the file contain the informations
 	*/
-	private String fileName;
+	private InputStream stream;
 
 	/**
 	* The informations to show in the panel
@@ -50,7 +50,7 @@ public class FrameForMenus extends JFrame{
 	* @param fileName the file name to take the informations to show
 	* @param frameName the name to show in the frame
 	*/
-	public FrameForMenus(String fileName, String frameName){
+	public FrameForMenus(InputStream stream, String frameName){
 		super(frameName);
 
 		this.pane = new JPanel();
@@ -66,20 +66,20 @@ public class FrameForMenus extends JFrame{
     	});
 
 		this.info = "Text";
-		this.fileName = fileName;
+		this.stream = stream;
 		this.tArea = new JTextArea(info);
 		this.scroll = new JScrollPane(tArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 
 		try {
 
-			Scanner scannerFile = new Scanner(new FileReader(this.fileName));
+			Scanner scannerFile = new Scanner(this.stream);
 			this.info = scannerFile.nextLine();
 			while (scannerFile.hasNextLine()){
 				this.info += "\n "+ scannerFile.nextLine();
 			}
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			this.tArea = new JTextArea(this.info);
