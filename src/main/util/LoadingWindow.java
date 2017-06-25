@@ -28,7 +28,7 @@ public class LoadingWindow extends JWindow{
     ClassLoader classLoader = getClass().getClassLoader();
 
     try {
-      setIconImage(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "DBrium.png")));
+      setIconImage(ImageIO.read(getClass().getResourceAsStream("/res/img/DBrium.png")));
     } 
     catch (IOException e) {
       e.printStackTrace();
@@ -50,7 +50,7 @@ public class LoadingWindow extends JWindow{
 
     try
     {
-      this.getContentPane().add(new JLabel(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "DBrium.png")))), BorderLayout.CENTER);
+      this.getContentPane().add(new JLabel(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/DBrium.png")))), BorderLayout.CENTER);
     }
     catch (IOException e) {
       e.printStackTrace();

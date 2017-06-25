@@ -107,7 +107,7 @@ public class DBFrame extends JFrame
 
    		try
    		{
-   			this. setIconImage(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "DBrium.png")));
+   			this. setIconImage(ImageIO.read(getClass().getResourceAsStream("/res/img/DBrium.png")));
    		}
    		catch(Exception err){}
    		

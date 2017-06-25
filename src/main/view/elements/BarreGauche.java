@@ -98,7 +98,7 @@ public class BarreGauche extends JPanel {
 
 		try
 		{
-			ajouter = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "NewConnection2.png"))));
+			ajouter = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/NewConnection2.png"))));
 			ajouter.setBorderPainted(false);
 			ajouter.addActionListener(abg);
 			ajouter.setToolTipText("Ajouter une nouvelle connexion");
@@ -146,9 +146,9 @@ public class BarreGauche extends JPanel {
 
 		try
 		{
-			tCellRenderer[0].setClosedIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "ConnexionLost.png"))));
-    		tCellRenderer[0].setOpenIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "ConnexionSucced.png"))));
-    		tCellRenderer[0].setLeafIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "Folder.png"))));
+			tCellRenderer[0].setClosedIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/ConnexionLost.png"))));
+    		tCellRenderer[0].setOpenIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/ConnexionSucced.png"))));
+    		tCellRenderer[0].setLeafIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/Folder.png"))));
     		jtree.setCellRenderer(tCellRenderer[0]);
     	}
       	catch (IOException e)

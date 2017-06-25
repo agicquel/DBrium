@@ -21,7 +21,6 @@ public class ActionBarreCreationRequete implements ActionListener {
 
 	private int index;
 	private DBFrame f;
-	private static final long serialVersionUID = 2017911805149871896L;
     private final Highlighter.HighlightPainter hPainter = new HPainter(Color.YELLOW);
 
 	public ActionBarreCreationRequete (DBFrame f) {

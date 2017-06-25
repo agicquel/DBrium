@@ -69,32 +69,32 @@ public class BarreCreationRequetes extends JPanel
 
 		try
 		{
-			nouveau = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "New.png"))));
+			nouveau = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/New.png"))));
 			nouveau.addActionListener(a);
 			nouveau.setBorderPainted(false);
 			nouveau.setToolTipText("Nouveau Script");
 
-			executer = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "Execution.png"))));
+			executer = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/Execution.png"))));
 			executer.addActionListener(a);
 			executer.setBorderPainted(false);
 			executer.setToolTipText("Execution du script");
 
-			effacer = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "8.png"))));
+			effacer = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/8.png"))));
 			effacer.addActionListener(a);
 			effacer.setBorderPainted(false);
 			effacer.setToolTipText("Effacer Script");
 
-			rechercher = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "Search.png"))));
+			rechercher = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/Search.png"))));
 			rechercher.addActionListener(a);
 			rechercher.setBorderPainted(false);
 			rechercher.setToolTipText("Search");
 
-			createTable = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "ajouterTableBig.png"))));
+			createTable = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/ajouterTableBig.png"))));
 			createTable.addActionListener(a);
 			createTable.setBorderPainted(false);
 			createTable.setToolTipText("Créer une table");
 
-			newUser = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "users.png"))));
+			newUser = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/users.png"))));
 			newUser.addActionListener(a);
 			newUser.setBorderPainted(false);
 			newUser.setToolTipText("Nouvel utilisateur");

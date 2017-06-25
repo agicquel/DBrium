@@ -48,13 +48,13 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 		openCode = new JMenuItem("Afficher code...");
 		try
 		{
-			co = new JMenuItem("Connection...", new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "Connexion.png"))));
-			deco = new JMenuItem("Deconnection...", new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "ConnexionLost.png"))));
-			delete = new JMenuItem("Supprimer", new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "deletemini.png"))));
-			createTable = new JMenuItem("Cr\u00e9er une nouvelle table...", new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "table.png"))));
-			deleteTable = new JMenuItem("Supprimer...", new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "deleteTable.png"))));
-			deleteCo = new JMenuItem("Supprimer...", new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "deleteTable.png"))));
-			modifyCo = new JMenuItem("Modifier...", new ImageIcon(ImageIO.read(getClass().getResourceAsStream(File.separator + "res" + File.separator + "img" + File.separator + "ParametreMini.png"))));
+			co = new JMenuItem("Connection...", new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/Connexion.png"))));
+			deco = new JMenuItem("Deconnection...", new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/ConnexionLost.png"))));
+			delete = new JMenuItem("Supprimer", new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/deletemini.png"))));
+			createTable = new JMenuItem("Cr\u00e9er une nouvelle table...", new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/table.png"))));
+			deleteTable = new JMenuItem("Supprimer...", new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/deleteTable.png"))));
+			deleteCo = new JMenuItem("Supprimer...", new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/deleteTable.png"))));
+			modifyCo = new JMenuItem("Modifier...", new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/ParametreMini.png"))));
 		}
 		catch (IOException e)
 		{

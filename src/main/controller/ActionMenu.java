@@ -188,12 +188,12 @@ public class ActionMenu implements ActionListener{
 
     //Action listener for the menu item manual
     if(source.equals(this.f.getMenu().getManual())){
-      FrameForMenus ffm = new FrameForMenus(getClass().getResourceAsStream(File.separator + "res" + File.separator + "txt" + File.separator + "manuel.txt"), "Manuel");
+      FrameForMenus ffm = new FrameForMenus(getClass().getResourceAsStream("/res/txt/manuel.txt"), "Manuel");
     }
 
     //Action listener for the menu item about
     if(source.equals(this.f.getMenu().getAbout())){
-      FrameForMenus ffm = new FrameForMenus(getClass().getResourceAsStream(File.separator + "res" + File.separator + "txt" + File.separator + "about.txt"), "A propos");
+      FrameForMenus ffm = new FrameForMenus(getClass().getResourceAsStream("/res/txt/about.txt"), "A propos");
     }
 
     //Action listener for the menu item quit
