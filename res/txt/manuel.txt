@@ -1,3 +1,141 @@
-Ceci est un test
-Pour voir si tout fonctionne bien ici
-On y croit ouais ouais <FONT COLOR="red" >TEXTE </FONT>ouais
+Manuel d'utilisation du logiciel
+
+
+1. Connexion :
+
+
+	1.1 : Ajout d'une nouvelle connexion
+
+
+		* Cliquer sur le bouton "Ajouter nouvelle connexion"
+
+			- Possibilité n°1 :
+
+		  		Ouverture d'une page de formulaire demandant les différentes informations qui doivent être toutes remplis !
+
+		  		Une fois toutes les informations recensés, possibilité de fermer ou d'enregistrer les informations.
+
+		  		--> RESULTAT : Affichage d'une nouvelle connexion dans l'abre de connexion.
+
+		  		--> ERREUR : Si tous les champs ne sont pas correctement remplis, affichage d'un popup d'erreur.
+
+			- Possibilité n°2 : 
+
+		  		Rien ne se passe lors de la tentative d'ajout d'une connexion...
+
+		  		--> /!\ Contacter l'assistance technique aux adresses recensés dans la barre de menu Aide / A propos
+
+
+
+
+	1.2 : Ouverture d'une connexion existante
+
+		
+		* Cliquer deux fois sur la connexion recensé dans l'arbre.
+		
+			- Possibilités n°1 : 
+			
+		  		Connexion réussis et extension de l'arbre( visibilité des dossiers relatifs à la connexion selectionnée ).
+
+			- Possiblité n°2 : 
+
+		  		Apparition d'un fenêtres vous informant que la connexion est erronée. Cela peut-être du au mauvais recensement des informations de connexion.
+
+		  		SOLUTION : modifier la connexion afin de changer les paramètres de connexion ou supprimer la connexion existante et la recréer.
+
+			- Possiblité n°3 : 
+		
+		  		Rien ne se passe lors de la tentative de connexion...
+
+		  		--> /!\ Contacter l'assistance technique aux adresses recensés dans la barre de menu Aide / A propos
+
+		* Cliquer droit sur la connexion / Ouvrir...
+
+			- Possibilité n°1 : //
+			- Possibilité n°2 : //
+			- Possibilité n°3 : //
+
+
+
+	1.3 : Suppression d'une connexion existante
+
+
+		* Selection de la connexion puis appuyer sur le bouton "Supprimer la connexion"
+		
+			- Possibilité n°1 : 
+		  
+		  		Suppresion de la connexion et donc disparition de celle-ci ( plus visible dans l'arbre de connexion )
+
+			- Possibilité n°2 : 
+		  
+		  		Rien ne se passe lors de la tentative de suppression... 
+
+		  		--> /!\ Contacter l'assistance technique aux adresses recensés dans la barre de menu Aide / A propos
+
+		* Clique droit sur la connexion / Supprimmer...
+
+			- Possibilité n°1 : //
+			- Possibilité n°2 : //
+
+
+
+	1.4 : Modification d'une connexion existante  
+
+
+		* Selection de la connexion puis appuyer sur le bouton "Modifier la connexion"
+
+			- Possibilité n°1 : 
+
+		  		Affichage de la fenêtre d'ajout d'une nouvelle connexion remplis avec les informations recensés lors de sa création. Possibilité de changer ces informations en changeant le contenu des zones de textes.
+
+		  		Appuyer enfin sur "enregistrer" lorsque les changement sont faits.
+
+
+				--> RESULTAT : Si le nom de la connexion a été modifier, le nom de cette connexion dans l'arbre devrait être également modifié.
+
+			- Possibilité n°2 : 
+
+		  		Rien ne se passe lors de la tentative de modification de la connexion...
+
+		  		--> /!\ Contacter l'assistance technique aux adresses recensés dans la barre de menu Aide / A propos
+
+
+		* Clique droit sur la connexion / Modifier...
+
+			- Possibilité n°1 : //
+			- Possibilité n°2 : //
+
+
+
+
+
+1. Bouton de gestion des requêtes :
+
+
+	1.1 Nouvel onglet
+
+		* Clique sur le bouton "Nouveau"
+
+				- Possibilité n°1 : 
+
+			  		Création d'un nouvel onglet nommée "untitled" tant qu'il n'est pas enregistrer.
+
+			
+				- Possibilité n°2 :
+
+			  		Rien ne se passe lors de la tentative de création d'un nouvel onglet...
+
+			  		--> /!\ Contacter l'assistance technique aux adresses recensés dans la barre de menu Aide / A propos
+
+
+		Ouverture du menu puis Fichier / Nouveau
+
+				- Possibilité n°1 : //
+				- Possibilité n°2 : //
+
+			
+
+
+
+
+		  

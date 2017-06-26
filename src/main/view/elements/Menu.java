@@ -12,7 +12,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import javax.swing.*;
 import java.awt.*;
 
 import view.interfaces.*;
@@ -102,10 +101,10 @@ public class Menu extends JPanel{
     this.fileMenu.add(this.newFile);
 
     //NewFile
-    this.newWindow = new JMenuItem("Nouvelle fenetre", KeyEvent.VK_N);
+    /**this.newWindow = new JMenuItem("Nouvelle fenetre", KeyEvent.VK_N);
     this.newWindow.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
     this.newWindow.addActionListener(a);
-    this.fileMenu.add(this.newWindow);
+    this.fileMenu.add(this.newWindow);*/
 
     //open file
     this.open = new JMenuItem("Ouvrir", KeyEvent.VK_O);
@@ -123,7 +122,7 @@ public class Menu extends JPanel{
     this.fileMenu.add(this.save);
 
     //save as
-    this.saveAs = new JMenuItem("Enregistrer sous");
+    this.saveAs = new JMenuItem("Enregistrer-sous");
     this.saveAs.addActionListener(a);
     this.fileMenu.add(this.saveAs);
 
@@ -133,7 +132,7 @@ public class Menu extends JPanel{
     //this.fileMenu.addSeparator();
 
     //settings
-    this.settings = new JMenuItem("Parametres", KeyEvent.VK_P);
+    this.settings = new JMenuItem("Param\u00e8tres", KeyEvent.VK_P);
     this.settings.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
     this.settings.addActionListener(a);
     //this.fileMenu.add(this.settings);
@@ -162,7 +161,7 @@ public class Menu extends JPanel{
     this.undo.addActionListener(a);
     this.editMenu.add(this.undo);
 
-    this.redo = new JMenuItem("Retablir", KeyEvent.VK_Y);
+    this.redo = new JMenuItem("R\u00e9tablir", KeyEvent.VK_Y);
     this.redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
     this.redo.addActionListener(a);
     this.editMenu.add(this.redo);
@@ -222,7 +221,7 @@ public class Menu extends JPanel{
     this.helpMenu.add(this.manual);
 
     //about
-    this.about = new JMenuItem("A propos");
+    this.about = new JMenuItem("\u00c0 propos");
     this.about.addActionListener(a);
     this.helpMenu.add(this.about);
 

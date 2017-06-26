@@ -81,7 +81,7 @@ public class FenetreCreationRequetes extends JPanel
 	{
 
 		super(new BorderLayout());
-		this.setBorder(BorderFactory.createTitledBorder("Creation requetes"));
+		this.setBorder(BorderFactory.createTitledBorder("Cr\u00e9ation requ\u00eates"));
 
 		// Création de JTextArea et du RSyntaxTextArea
 
@@ -104,7 +104,7 @@ public class FenetreCreationRequetes extends JPanel
 
 		write = new JTabbedPane();
 		write.setBackground(Color.lightGray);
-		write.setPreferredSize(new Dimension(250, 600));
+		write.setPreferredSize(new Dimension(250, 700));
 
 		result = new JTabbedPane();
 		result.setBackground(Color.lightGray);

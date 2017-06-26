@@ -17,12 +17,25 @@ import javax.swing.text.JTextComponent;
 import org.fife.ui.rtextarea.*;
 import org.fife.ui.rsyntaxtextarea.*;
 
+/**
+ * This class lists all they actions on they buttons of the BarreCreationRequêtes.
+ * The set of actions specific to each button of this class act directly on the 
+ * CreationRequests Window, such as the "New" button that creates a new tab or 
+ * the "Search" button that searches for the string that the user enters the Text 
+ * area in order to search it and highlight it at each occurrence of it in the RTextArea.
+ * @author m.hervé
+ * @version 3.0
+ */
 public class ActionBarreCreationRequete implements ActionListener {
 
 	private int index;
 	private DBFrame f;
-    private final Highlighter.HighlightPainter hPainter = new HPainter(Color.YELLOW);
+    private final Highlighter.HighlightPainter hPainter = new HPainter(new Color(255, 106, 106));
 
+    /**
+     * The constructor of the class ActionBarreCreationRequete wich initializes the index at 1
+     * @param f The principal frame
+     */
 	public ActionBarreCreationRequete (DBFrame f) {
 
 		this.index = 1;
@@ -30,6 +43,12 @@ public class ActionBarreCreationRequete implements ActionListener {
 
 	}
 
+
+	@Override
+	/**
+	 * The action when the user push a button for exemple
+	 * @param e The event
+	 */
 	public void actionPerformed (ActionEvent e) {
 
 		Object source = e.getSource();
@@ -45,10 +64,10 @@ public class ActionBarreCreationRequete implements ActionListener {
 
 				AreaToSave jtx = new AreaToSave(30,100);
 				jtx.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
-  			jtx.setCodeFoldingEnabled(true);
+  				jtx.setCodeFoldingEnabled(true);
 
 
-				f.getFenetre().getWrite().addTab("untitled", new RTextScrollPane(jtx));
+				f.getFenetre().getWrite().addTab("untitled", new RTextScrollPane((Component)jtx));
 				JButton btn = new JButton("x");
 				JPanel pnlTab = new JPanel(new GridBagLayout());
 				pnlTab.setOpaque(false);
@@ -83,7 +102,7 @@ public class ActionBarreCreationRequete implements ActionListener {
 				jtx.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
   			jtx.setCodeFoldingEnabled(true);
 
-				f.getFenetre().getWrite().addTab("untitled", new RTextScrollPane(jtx));
+				f.getFenetre().getWrite().addTab("untitled", new RTextScrollPane((Component)jtx));
 				JButton btn = new JButton("x");
 				JPanel pnlTab = new JPanel(new GridBagLayout());
 				pnlTab.setOpaque(false);
@@ -109,23 +128,16 @@ public class ActionBarreCreationRequete implements ActionListener {
 
 				btn.addActionListener(new MyCloseActionHandler(f.getFenetre().getWrite(), index-1));
 			}
-		/*} else if ( source == f.getBarreRequete().getRechercher()) {
-
-			JOptionPane jop = new JOptionPane();
-
-			String search = jop.showInputDialog(null,"Voulez-vous supprimer cette connexion ?","Supprimer Connection", JOptionPane.QUESTION_MESSAGE);
-
-			String s1 = f.getFenetre().getWriteQuerry().getText();*/
 
 		} else if (source == f.getBarreRequete().getRechercher() ) {
 
 			JOptionPane jop = new JOptionPane();
 
-			String search = jop.showInputDialog(null,"Saisissez la chaine de caractere que vous souhaitez rechercher","Search", JOptionPane.QUESTION_MESSAGE);
+			String search = jop.showInputDialog(null,"Saisissez la cha\u00eene de caract\u00e8re que vous souhaitez rechercher","Recherche", JOptionPane.QUESTION_MESSAGE);
 
-			String s1 = f.getFenetre().getWriteQuerry().getText();
+			if(f.getFenetre().text().getText() != null && search != null)
 
-			addHighlight(f.getFenetre().text(), search);
+				addHighlight(f.getFenetre().text(), search);
 		}
 
 		else if ( source == f.getBarreRequete().getEffacer() ) {
@@ -151,47 +163,47 @@ public class ActionBarreCreationRequete implements ActionListener {
 							System.out.println("1");
 							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
 							System.out.println("2");
-							res += "Ligne ajoutée.";
+							res += "Ligne ajout\u00e9e.";
 						}
 						else if (q.toString().toUpperCase().contains("UPDATE"))
 						{
 							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
-							res += "Mise à jour de la ligne effectuée.";
+							res += "Mise \u00e0 jour de la ligne effectu\u00e9e.";
 						}
 						else if (q.toString().toUpperCase().contains("UPDATE"))
 						{
 							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
-							res += "Mise à jour de la ligne effectuée.";
+							res += "Mise \u00e0 jour de la ligne effectu\u00e9e.";
 						}
 						else if (q.toString().toUpperCase().contains("DELETE") || q.toString().toUpperCase().contains("TRUNCATE"))
 						{
 							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
-							res += "Ligne supprimée.";
+							res += "Ligne supprim\u00e9e.";
 						}
 						else if (q.toString().toUpperCase().contains("DROP"))
 						{
 							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
-							res += "Table supprimée.";
+							res += "Table supprim\u00e9e.";
 						}
 						else if (q.toString().toUpperCase().contains("TRIGGER"))
 						{
 							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
-							res += "Trigger crée.";
+							res += "Trigger cr\u00e9e.";
 						}
 						else if (q.toString().toUpperCase().contains("VIEW"))
 						{
 							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
-							res += "View crée.";
+							res += "View cr\u00e9e.";
 						}
 						else if (q.toString().toUpperCase().contains("CREATE TABLE"))
 						{
 							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
-							res += "Table crée.";
+							res += "Table cr\u00e9e.";
 						}
 						else if (q.toString().toUpperCase().contains("UPDATE"))
 						{
 							((ConnectDB)f.getBarreRequete().getCurrentConnexion().getSelectedItem()).sendUpdate(q);
-							res += "Table mise à jour.";
+							res += "Table mise \u00e0 jour.";
 						}
 					}
 					catch(Exception err)
@@ -221,6 +233,7 @@ public class ActionBarreCreationRequete implements ActionListener {
 				JOptionPane.showMessageDialog(new JFrame(), "Il faut choisir une connection pour executer un script", "Pas de connection choisie", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+		
 		// Action du boutton nouvel utilisateur
 		else if( source == f.getBarreRequete().getNewUser()) 
 		{
@@ -260,88 +273,114 @@ public class ActionBarreCreationRequete implements ActionListener {
         	}.start();
 		}
 
-
-
 	}
 
-		public void setIndex(int newI){
-			if (newI >= 0){
-				this.index = newI;
-			}
+	/**
+	 * Set the index
+	 * @param newI The the value of the index
+	 */
+	public void setIndex(int newI)
+	{
+		if (newI >= 0)
+		{
+			this.index = newI;
 		}
-		public int getIndex(){ return this.index;}
-		public ActionBarreCreationRequete getActionBarre(){return this;}
+	}
 
+	/**
+	 * Get the index
+	 * @return The index
+	 */
+	public int getIndex()
+	{ 
+		return this.index;
+	}
 
-		/**else if ( source == f.getBarreRequete().getTexte() ) {
+	/**
+	 * @return the actionBarreCreationRequete
+	 */
+	public ActionBarreCreationRequete getActionBarre()
+	{
+		return this;
+	}
 
-			//f.getCard().show(f.getPanelCard(), "ModeTexte");
-			System.out.println("ok");
-			f.getFenetre().getB().remove(f.getFenetre().getAffichageDiagramme());
-			f.setVisible(false);
-			f.setVisible(true);
+  	// Code important
+  	// Ajout un HighlightPainter de type HPainter sur toutes les occurrences "word"
 
-		}
+  	/**
+  	 * This method add an Highligther
+  	 * @param tcomp The component where the method higlith the text
+  	 * @param word The string higligth int the TextArea
+  	 */
+  	public void addHighlight(final JTextComponent tcomp, final String word) 
+  	{
 
-		else if ( source == f.getBarreRequete().getGraphique()) {
+    	// Supprime les anciens
+    	removeHighlights(tcomp);
 
-			f.getFenetre().getB().add(f.getFenetre().getAffichageDiagramme());
-			f.setVisible(false);
-			f.setVisible(true);
-		}*/
+    	try {
 
+      		final Highlighter h = tcomp.getHighlighter();
+      		final Document doc = tcomp.getDocument();
+      		final String fullText = doc.getText(0, doc.getLength());
+      		int pos = 0;
 
+      		// Recherche du "word"
+      		while ((pos = fullText.indexOf(word, pos)) >= 0) 
+      		{
 
+        		// Ajout du nouveau painter
+        		h.addHighlight(pos, pos + word.length(), hPainter);
+        		// On avance pour la suite
+        		pos += word.length();
+      		}
 
+    	} 
+    	catch (final BadLocationException e) 
+    	{
 
+      		e.printStackTrace();
+    	}
 
+  	}
 
+  	// Code important
+  	// Supprime les HighlightPainter de type HPainter
 
+  	/** 
+  	 * This method remove the higlights
+  	 * @param textComp the area where the method remove the higlight
+  	 */
+  	public void removeHighlights(final JTextComponent textComp) 
+  	{
 
+    	final Highlighter her = textComp.getHighlighter();
+    	final Highlighter.Highlight[] h = her.getHighlights();
+    	for (int i = 0; i < h.length; ++i) 
+    	{
 
+      		// Si c'est le notre on delete
+      		if (HPainter.class.isInstance(h[i].getPainter()))
+        		her.removeHighlight(h[i]);
+    	}
+  	}
 
-  // Code important
-  // Ajout un HighlightPainter de type HPainter sur toutes les occurrences "word"
-  public void addHighlight(final JTextComponent tcomp, final String word) {
-    // Supprime les anciens
-    removeHighlights(tcomp);
+  	// Code important
+  	// Le passage par une classe privée permet d'isoler nos HighlightPainter au
+  	// moment du remove
 
-    try {
-      final Highlighter h = tcomp.getHighlighter();
-      final Document doc = tcomp.getDocument();
-      final String fullText = doc.getText(0, doc.getLength());
-      int pos = 0;
-
-      // Recherche du "word"
-      while ((pos = fullText.indexOf(word, pos)) >= 0) {
-        // Ajout du nouveau painter
-        h.addHighlight(pos, pos + word.length(), hPainter);
-        // On avance pour la suite
-        pos += word.length();
-      }
-    } catch (final BadLocationException e) {
-      e.printStackTrace();
-    }
-
-  }
-
-  // Code important
-  // Supprime les HighlightPainter de type HPainter
-  public void removeHighlights(final JTextComponent textComp) {
-    final Highlighter her = textComp.getHighlighter();
-    final Highlighter.Highlight[] h = her.getHighlights();
-    for (int i = 0; i < h.length; ++i) {
-      // Si c'est le notre on delete
-      if (HPainter.class.isInstance(h[i].getPainter()))
-        her.removeHighlight(h[i]);
-    }
-  }
-  // Code important
-  // Le passage par une classe privée permet d'isoler nos HighlightPainter au
-  // moment du remove
-  class HPainter extends DefaultHighlighter.DefaultHighlightPainter {
-    public HPainter(final Color color) {
-      super(color);
-    }
-  }
+  	/**
+  	 * this class isolated teh color of our HighlightPainter
+  	 */
+  	class HPainter extends DefaultHighlighter.DefaultHighlightPainter 
+  	{
+  		/**
+  		 * The constructor of the HPainter
+  		 *@param Color The color of the HPainter
+  		 */
+    	public HPainter(final Color color) 
+    	{
+      		super(color);
+    	}
+  	}
 }

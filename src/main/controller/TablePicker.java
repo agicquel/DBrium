@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.table.*;
 
 /**
 * Simple way to pick a specific table from a 

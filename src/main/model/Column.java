@@ -1,14 +1,19 @@
 package model;
 
-import java.sql.*;
-
 /**
 * Column contain in the Table
 * @author Antoine Gicquel
 */
 public class Column
 {
+	/**
+	* Column's name
+	*/
 	private String name;
+
+	/**
+	* Column's type
+	*/
 	private String type;
 
 	/**

@@ -1,8 +1,5 @@
 package controller;
 
-import view.elements.*;
-import view.interfaces.*;
-
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;

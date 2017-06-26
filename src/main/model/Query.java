@@ -4,8 +4,11 @@ package model;
 * Query Object containing SQL code
 * @author Antoine Gicquel
 */
-public class Query
+public class Query implements Codable
 {
+	/**
+	* The code the query
+	*/
 	private String query;
 
 	/**
@@ -17,9 +20,17 @@ public class Query
 		this.query = query;
 	}
 
+	/**
+	* @return give the code
+	*/
+	public String getCode()
+	{
+		return this.query;
+	}
+
 	@Override
 	public String toString()
 	{
-		return this.query;
+		return this.getCode();
 	}
 } 

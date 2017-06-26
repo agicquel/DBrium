@@ -12,7 +12,6 @@ import javax.swing.UIManager.*;
 
 import com.alee.laf.*;
 
-//import de.javasoft.plaf.synthetica.*;
 
 /**
  * This is the class which initialyse the principal Frame.
@@ -67,7 +66,7 @@ public class DBFrame extends JFrame
 
 		// initialisation de la fenêtre et ajout de ses caractéristiques
 
-		super("DBrium - Gestionnaire de base de donnees");
+		super("DBrium - Gestionnaire de base de donn\u00e9es");
 		this.controller = new Controller(this);
 		WebLookAndFeel.install(); // theme
 
@@ -90,7 +89,6 @@ public class DBFrame extends JFrame
    		// Création du Panel où l'on ajoute les élements
 
    		p = new JPanel(new BorderLayout(1,1));
-   		p.setBackground(Color.black);
 
    		j1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, bg, fcr);
 
@@ -119,26 +117,41 @@ public class DBFrame extends JFrame
 
 	// Les getters pour les différents éléments de la fenetre
 
+	/**
+	 * @return the controller
+	 */
 	public Controller getController()
 	{
 		return this.controller;
 	}
 
+	/**
+	 * @return the leftBar
+	 */
 	public BarreGauche getBarreGauche() 
 	{ 
 		return this.bg; 
 	}
 
+	/**
+	 * @return the QueryCreationFrame 
+	 */
 	public FenetreCreationRequetes getFenetre() 
 	{ 
 		return this.fcr; 
 	}
 
+	/**
+	 * @return the QueryCreationBar
+	 */
 	public BarreCreationRequetes getBarreRequete() 
 	{ 
 		return this.bcr; 
 	}
 
+	/**
+	 * @return the menu bar
+	 */
 	public view.elements.Menu getMenu() 
 	{ 
 		return this.menu;

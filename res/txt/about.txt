@@ -1,9 +1,22 @@
-<html>
-<body>
+DBrium : Votre gestionnaire de base de données !
 
-<h1>My First Heading</h1>
+développé par M.Hervé, T.Furno, A.Gicquel
 
-<p>My first paragraph.</p>
+Etudiant d'informatique à l'IUT de Vannes
 
-</body>
-</html>
+date du livrée : 29/06/2017
+
+Pour de plus ample informations, nous vous invitons a nous contacter directement
+à nos adresses mails respectives :
+
+ - hervé.e1602408@etud.univ-ubs.fr
+ - gicquel.e1602877@etud.univ-ubs.fr
+ - furno.e1601783@etud.univ-ubs.fr
+
+Informations sur le logiciel :
+
+Version 1.29.06.17
+
+Ce logiciel est le résultat de plusieurs semaines de programmation.
+Tout droit réservé.
+

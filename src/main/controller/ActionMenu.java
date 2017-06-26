@@ -5,8 +5,9 @@
 */
 package controller;
 
-import view.elements.*;
 import view.interfaces.*;
+import view.elements.*;
+import util.*;
 
 import javax.swing.*;
 import javax.swing.text.*;
@@ -19,7 +20,6 @@ import org.fife.ui.rsyntaxtextarea.*;
 import org.fife.ui.rtextarea.RTextAreaEditorKit.*;
 
 import java.io.*;
-import javax.imageio.ImageIO;
 
 public class ActionMenu implements ActionListener{
 
@@ -29,14 +29,9 @@ public class ActionMenu implements ActionListener{
   private DBFrame f;
 
   /**
-  * Way of the last saveAS
-  */
-  private String way;
-
-  /**
   * HighLightPainter use in to highlign the word sherch
   */
-  private final Highlighter.HighlightPainter hPainter = new HPainter(Color.YELLOW);
+  private final Highlighter.HighlightPainter hPainter = new HPainter(new Color(255, 106, 106));
 
 
 
@@ -46,7 +41,6 @@ public class ActionMenu implements ActionListener{
   */
   public ActionMenu(DBFrame frame){
     this.f = frame;
-    this.way = null;
   }
 
   public void actionPerformed(ActionEvent e){
@@ -69,6 +63,7 @@ public class ActionMenu implements ActionListener{
 
     //Action listener for the menu item new File
     if (source.equals(this.f.getMenu().getNewFile())){
+
       ActionBarreCreationRequete a = this.f.getBarreRequete().getActionBarre();
       a.setIndex(f.getFenetre().getWrite().getTabCount() + 1);
       String ret = "untitled";
@@ -78,7 +73,7 @@ public class ActionMenu implements ActionListener{
       tamp.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
   		tamp.setCodeFoldingEnabled(true);
 
-      f.getFenetre().getWrite().addTab("untitled", new RTextScrollPane(tamp));
+      f.getFenetre().getWrite().addTab("untitled", new RTextScrollPane((Component)tamp));
       JButton btn = new JButton("x");
       JPanel pnlTab = new JPanel(new GridBagLayout());
       pnlTab.setOpaque(false);
@@ -122,10 +117,6 @@ public class ActionMenu implements ActionListener{
     }
 
     //Action listener for the menu item new window
-    if(source.equals(this.f.getMenu().getNewWindow())){
-      DBFrame f = new DBFrame();
-      f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    }
 
     //Action listener for the menu item settings
     if(source.equals(this.f.getMenu().getSettings())){
@@ -179,7 +170,7 @@ public class ActionMenu implements ActionListener{
     if(source.equals(this.f.getMenu().getFind())){
       JOptionPane jop = new JOptionPane();
 
-			String search = jop.showInputDialog(null,"Saisissez la chaine de caractere que vous souhaitez rechercher","Search", JOptionPane.QUESTION_MESSAGE);
+			String search = jop.showInputDialog(null,"Saisissez la cha\u00eene de caract\u00e8re que vous souhaitez rechercher","Recherche", JOptionPane.QUESTION_MESSAGE);
 
 			String s1 = f.getFenetre().getWriteQuerry().getText();
 
@@ -314,7 +305,7 @@ public class ActionMenu implements ActionListener{
 				else{
 
 					JOptionPane option=new JOptionPane();
-					option.showMessageDialog(choice,"Erreur sur le fichier selectionne");
+					option.showMessageDialog(choice,"Erreur sur le fichier selectionn\u00e9");
 
 				}
 
@@ -338,7 +329,7 @@ public class ActionMenu implements ActionListener{
       String fileContain = ats.getText();
 			JFileChooser choice = new JFileChooser();
       choice.setCurrentDirectory(new File("."));
-			int back = choice.showDialog(choice,"Enregistrer sous");
+			int back = choice.showDialog(choice,"Enregistrer-sous");
       String theFile = null;
       File f = null;
 			if(back == JFileChooser.APPROVE_OPTION){
@@ -349,7 +340,7 @@ public class ActionMenu implements ActionListener{
         }
         int c = JOptionPane.NO_OPTION;
 					if (f.exists()) {
-						c = JOptionPane.showConfirmDialog(null, "Le fichier exister deja voulez vous l ecraser ?");
+						c = JOptionPane.showConfirmDialog(null, "Le fichier existe d\u00e9ja voulez-vous l'\u00e9craser ?");
 						if(f.getName() != null && c == JOptionPane.YES_OPTION){
 							/*String title = file.getName().split("[.]")[0];
 							changeTitleTab(title);

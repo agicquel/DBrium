@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import com.alee.laf.*;
+
 
 public class LoadingWindow extends JWindow{
 
@@ -25,7 +27,7 @@ public class LoadingWindow extends JWindow{
   public LoadingWindow(){     
 
     setPreferredSize(new Dimension(1000, 600)); 
-    ClassLoader classLoader = getClass().getClassLoader();
+    WebLookAndFeel.install();
 
     try {
       setIconImage(ImageIO.read(getClass().getResourceAsStream("/res/img/DBrium.png")));

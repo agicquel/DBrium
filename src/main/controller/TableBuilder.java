@@ -34,7 +34,7 @@ public class TableBuilder extends JFrame implements ActionListener, WindowListen
 	*/
 	public TableBuilder()
 	{
-		super("Créer une table");
+		super("Cr\u00e9er une table");
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(this);
 		this.getContentPane().setLayout(new BorderLayout());
@@ -82,7 +82,7 @@ public class TableBuilder extends JFrame implements ActionListener, WindowListen
 	    buttonContainer.add(this.delBtn);
 
 		JPanel generatePanel = new JPanel();
-		this.generateBtn = new JButton("Générer");
+		this.generateBtn = new JButton("G\u00e9n\u00e9rer");
 		this.generateBtn.addActionListener(this);
 		generatePanel.add(this.generateBtn);
 
@@ -165,7 +165,7 @@ public class TableBuilder extends JFrame implements ActionListener, WindowListen
 					if(model.getValueAt(i, j) == null || model.getValueAt(i, j).toString().isEmpty())
 					{
 						check = false;
-						JOptionPane.showMessageDialog(new JFrame(), "Donnée invalide en (" + i + ", " + j + ")");
+						JOptionPane.showMessageDialog(new JFrame(), "Donn\u00e9e invalide en (" + i + ", " + j + ")");
 					}
 				}
 			}

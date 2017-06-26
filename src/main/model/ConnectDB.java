@@ -11,13 +11,44 @@ import java.util.Scanner;
 */
 public class ConnectDB
 {
+	/**
+	* Connexion name
+	*/
 	private String name;
+
+	/**
+	* Connexion infos
+	*/
 	private String url, user, pwd;
+
+	/**
+	* State of the connexion
+	*/
 	private boolean connected;
+
+	/**
+	* JDBC Connexion object
+	*/
 	private Connection conn;
+
+	/**
+	* JDBC state object needed to send query
+	*/
 	private Statement state;
+
+	/**
+	* All the tables of the DB server
+	*/
 	private ArrayList<Table> tables;
+
+	/**
+	* All the triggers of the DB server
+	*/
 	private ArrayList<Trigger> triggers;
+
+	/**
+	* All the views of the DB server
+	*/
 	private ArrayList<View> views;
 
 	/**
@@ -97,7 +128,7 @@ public class ConnectDB
 	}
 
 	/**
-	* Send a query to the DB
+	* Send a query to the DB (SELECT query)
 	* @param query the query you wanna send
 	* @return return a result object
 	* @throws SQLException if query is not valid
@@ -164,8 +195,10 @@ public class ConnectDB
 		
 	}
 
-	// public get list views array list string  SELECT VIEW_NAME FROM USER_VIEWS WHERE VIEW_NAME NOT LIKE '%$%'
-
+	/**
+	* Fill info about the triggers of the connexion into the triggers array list
+	* @throws SQLException if info about triggers can't be reached
+	*/
 	public void fillIntoTriggers() throws SQLException
 	{
 		try
@@ -189,6 +222,10 @@ public class ConnectDB
 		}
 	}
 
+	/**
+	* Fill info about the views of the connexion into the view array list
+	* @throws SQLException if info about views can't be reached
+	*/
 	public void fillIntoViews() throws SQLException
 	{
 		try
@@ -245,16 +282,25 @@ public class ConnectDB
 		return this.pwd;
 	}
 
+	/**
+	* @return give the tables array list
+	*/
 	public ArrayList<Table> getTables()
 	{
 		return this.tables;
 	}
 
+	/**
+	* @return give the triggers array list
+	*/
 	public ArrayList<Trigger> getTriggers()
 	{
 		return this.triggers;
 	}
 
+	/**
+	* @return give the views array list
+	*/
 	public ArrayList<View> getViews()
 	{
 		return this.views;
@@ -333,6 +379,7 @@ public class ConnectDB
 	* Save the connexions informations into a file
 	* @param fileName the file name
 	* @param con the connexion you wanna save
+	* @throws IOException if cant save the file
 	*/
 	public static void saveConnect(String fileName, ConnectDB con) throws IOException
 	{
@@ -360,6 +407,7 @@ public class ConnectDB
 	*  Load a connexion object from a file
 	* @param fileName the file name
 	* @return return the connectBD object
+	* @throws IOException if cant load the file
 	*/
 	public static ConnectDB loadConnect(String fileName) throws IOException
 	{

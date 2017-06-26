@@ -1,13 +1,14 @@
 package model;
 
-import java.sql.*;
-
 /**
 * The Object contained into Result
 * @author Antoine Gicquel
 */
 public class Row
 {
+	/**
+	* raw data of the row
+	*/
 	private Object data[];
 
 	/**

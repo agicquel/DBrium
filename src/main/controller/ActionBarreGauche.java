@@ -11,12 +11,21 @@ import javax.swing.event.*;
 import javax.swing.tree.*;
 import util.*;
 
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
  * This class lists all they actions on the BarreGauche so all the action on the JTree.
+ * The jtree has many actions.
+ * These actions like deleting or adding a connection are applicable in different ways, 
+ * initially through a right click on the selected connection that opens a JPopupMenu with 
+ * certain actions.
+ * In a second step, it is possible to delete this same connection by pressing the remove 
+ * or add button present in the JToolBar.
+ * Similar actions are also applied when double clicking on a connection that will allow the 
+ * connection to a database except if it is erroneous.
+ * By double clicking on one of the folders of a connection allows the display of a list of sound 
+ * contained with also multiple actions on the items.
  * @author m.hervé;
  * @version 1.0;
  */
@@ -74,8 +83,17 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 
 	}
 
+
+
 //==================================== ActionListener ====================================\\
 
+
+
+	@Override
+	/**
+	 * The action when the user push a button for exemple
+	 * @param e The event
+	 */
 	public void actionPerformed( ActionEvent e ) {
 
 		Object source = e.getSource();
@@ -149,35 +167,39 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 		else if(source == modifyCo)
 		{
 			lenoeud = (DefaultMutableTreeNode)f.getBarreGauche().getJtree().getLastSelectedPathComponent();
-			try
+
+			if(lenoeud != null)
 			{
-				ConnectDB con = f.getController().loadConnexion(f.getBarreGauche().getJtree().getLastSelectedPathComponent().toString());
-				ConnexionDialog cd = new ConnexionDialog(null, "Modifier connection", true, con);
-				ConnectDB newCon = new ConnectDB(cd.getConnexionName(), "jdbc:oracle:thin:@" + cd.getHost() + ":" + cd.getPortNumber() + ":" + cd.getSid(), cd.getUserName(), cd.getPassword());
+				try
+				{
+					ConnectDB con = f.getController().loadConnexion(f.getBarreGauche().getJtree().getLastSelectedPathComponent().toString());
+					ConnexionDialog cd = new ConnexionDialog(null, "Modifier connection", true, con);
+					ConnectDB newCon = new ConnectDB(cd.getConnexionName(), "jdbc:oracle:thin:@" + cd.getHost() + ":" + cd.getPortNumber() + ":" + cd.getSid(), cd.getUserName(), cd.getPassword());
 
-				f.getController().deleteConnexion(con);
-				f.getController().saveConnexion(newCon);
-				f.getController().getConnexions().add(newCon);
-				f.getController().getConnexions().remove(con);
+					f.getController().deleteConnexion(con);
+					f.getController().saveConnexion(newCon);
+					f.getController().getConnexions().add(newCon);
+					f.getController().getConnexions().remove(con);
 
-				f.getBarreGauche().getRacine1().remove(lenoeud);
-				indexTree--;
-				DefaultMutableTreeNode connexion = new DefaultMutableTreeNode(cd.getConnexionName());
-				DefaultMutableTreeNode tables = new DefaultMutableTreeNode("Tables");
-				DefaultMutableTreeNode view = new DefaultMutableTreeNode("View");
-				DefaultMutableTreeNode trigger = new DefaultMutableTreeNode("Trigger");
-				f.getBarreGauche().getM().insertNodeInto(connexion, f.getBarreGauche().getRacine1(), indexTree);
-				connexion.add(tables);
-				connexion.add(view);
-				connexion.add(trigger);
-				indexTree++;
-				f.getBarreGauche().getM().reload();	
+					f.getBarreGauche().getRacine1().remove(lenoeud);
+					indexTree--;
+					DefaultMutableTreeNode connexion = new DefaultMutableTreeNode(cd.getConnexionName());
+					DefaultMutableTreeNode tables = new DefaultMutableTreeNode("Tables");
+					DefaultMutableTreeNode view = new DefaultMutableTreeNode("View");
+					DefaultMutableTreeNode trigger = new DefaultMutableTreeNode("Trigger");
+					f.getBarreGauche().getM().insertNodeInto(connexion, f.getBarreGauche().getRacine1(), indexTree);
+					connexion.add(tables);
+					connexion.add(view);
+					connexion.add(trigger);
+					indexTree++;
+					f.getBarreGauche().getM().reload();	
 
-				f.getBarreRequete().fillIntoCurrentConnexion();
-			}
-			catch(Exception err)
-			{
-				JOptionPane.showMessageDialog(new JFrame(), err.getMessage(), "Impossible de modifier la connection", JOptionPane.ERROR_MESSAGE);
+					f.getBarreRequete().fillIntoCurrentConnexion();
+				}
+				catch(Exception err)
+				{
+					JOptionPane.showMessageDialog(new JFrame(), err.getMessage(), "Impossible de modifier la connection", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		}
 
@@ -273,28 +295,117 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 			catch(Exception err){}
 		}
 
+		else if ( source == f.getBarreGauche().getSupprimer())
+		{
+			lenoeud = (DefaultMutableTreeNode)f.getBarreGauche().getJtree().getLastSelectedPathComponent();
+
+			if(!lenoeud.isRoot() && lenoeud != null) {
+
+				JOptionPane jop = new JOptionPane();
+
+				int m = jop.showConfirmDialog(null,"Voulez-vous supprimer cette connexion ?","Supprimer Connection", JOptionPane.YES_NO_OPTION);
+      	
+      			if (m == JOptionPane.YES_OPTION ) {
+
+      				try
+					{
+						f.getController().deleteConnexion(f.getBarreGauche().getJtree().getLastSelectedPathComponent().toString());
+						f.getBarreRequete().fillIntoCurrentConnexion();
+					}
+					catch(Exception err){}
+
+      				indexTree--;
+					f.getBarreGauche().getM().reload();
+				}
+
+			}
+
+		}
+
+		else if ( source == f.getBarreGauche().getModifier() )
+		{
+
+			lenoeud = (DefaultMutableTreeNode)f.getBarreGauche().getJtree().getLastSelectedPathComponent();
+			try
+			{
+				ConnectDB con = f.getController().loadConnexion(f.getBarreGauche().getJtree().getLastSelectedPathComponent().toString());
+				ConnexionDialog cd = new ConnexionDialog(null, "Modifier connection", true, con);
+				ConnectDB newCon = new ConnectDB(cd.getConnexionName(), "jdbc:oracle:thin:@" + cd.getHost() + ":" + cd.getPortNumber() + ":" + cd.getSid(), cd.getUserName(), cd.getPassword());
+
+				f.getController().deleteConnexion(con);
+				f.getController().saveConnexion(newCon);
+				f.getController().getConnexions().add(newCon);
+				f.getController().getConnexions().remove(con);
+
+				f.getBarreGauche().getRacine1().remove(lenoeud);
+				indexTree--;
+				DefaultMutableTreeNode connexion = new DefaultMutableTreeNode(cd.getConnexionName());
+				DefaultMutableTreeNode tables = new DefaultMutableTreeNode("Tables");
+				DefaultMutableTreeNode view = new DefaultMutableTreeNode("View");
+				DefaultMutableTreeNode trigger = new DefaultMutableTreeNode("Trigger");
+				f.getBarreGauche().getM().insertNodeInto(connexion, f.getBarreGauche().getRacine1(), indexTree);
+				connexion.add(tables);
+				connexion.add(view);
+				connexion.add(trigger);
+				indexTree++;
+				f.getBarreGauche().getM().reload();	
+
+				f.getBarreRequete().fillIntoCurrentConnexion();
+			}
+			catch(Exception err)
+			{
+				JOptionPane.showMessageDialog(new JFrame(), err.getMessage(), "Impossible de modifier la connection", JOptionPane.ERROR_MESSAGE);
+			}
+
+		}
+
 		f.getBarreGauche().getM().reload();
 
 	}
 
+
+
 //==================================== MouseListener ====================================\\
 
+
+
+	@Override
+	/**
+	 * The action when the user Clicked his mouse
+	 * @param e The event
+	 */
 	public void mouseClicked(MouseEvent e){
 
 
 					
 	}
 
+	@Override
+	/**
+	 * The action when the user entered on a component with the cursor
+	 * @param e The event
+	 */
 	public void mouseEntered(MouseEvent e) {
 
 
 	}
 
+
+	@Override
+	/**
+	 * The action when the user exited a component with the cursor
+	 * @param e The event
+	 */
 	public void mouseExited(MouseEvent e) {
 
 
 	}
 
+	@Override
+	/**
+	 * The action when the user presses his mouse
+	 * @param e The event
+	 */
 	public void mousePressed(MouseEvent e) {
 
 		if (e != null && SwingUtilities.isRightMouseButton ( e ) )
@@ -306,11 +417,11 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 
             if ( pathBounds != null && pathBounds.contains ( e.getX (), e.getY () ) ) 
             {	
-            	if(lenoeud != null && !lenoeud.isLeaf()) 
+            	if(lenoeud != null && !lenoeud.isLeaf() && !lenoeud.isRoot()) 
             	{
 
                     JPopupMenu menu = new JPopupMenu ("Connections");
-                    menu.setPopupSize(new Dimension(300,80));
+                    menu.setPopupSize(new Dimension(300,100));
                     menu.add(co);
                     menu.add(deco);
                     menu.add(modifyCo);
@@ -367,10 +478,26 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 
 	}
 
+
+	@Override
+
+	/**
+	 * The action when the user released his mouse
+	 * @param e The event
+	 */
 	public void mouseReleased(MouseEvent e){}
+
+
 
 //==================================== TreeSelectionListener ====================================\\
 
+
+
+	@Override
+	/**
+	 * The action when the user change the Compoenent selected
+	 * @param e The event
+	 */
     public void valueChanged(TreeSelectionEvent e) 
     {
     	if(f.getBarreGauche().getJtree().getLastSelectedPathComponent() != null)
@@ -415,10 +542,17 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 	}
 
 
+
 //==================================== TreeWillExpandListener ====================================\\
 
 
+
 	@Override
+	/**
+	 * The action when the user want expand the JTree
+	 * @param e The event
+	 */
+
 	public void treeWillExpand(TreeExpansionEvent e) throws ExpandVetoException
 	{
 		if(lenoeud != null && lenoeud.children() != null && lenoeud.getFirstChild().isLeaf()) 
@@ -443,6 +577,10 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 	}
 
 	@Override
+	/**
+	 * The action when the user want collapse the JTree
+	 * @param e The event
+	 */
 	public void treeWillCollapse(TreeExpansionEvent e) throws ExpandVetoException
 	{
 		if(lenoeud != null && lenoeud.children() != null && lenoeud.getFirstChild().isLeaf()) 

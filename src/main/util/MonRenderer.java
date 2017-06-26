@@ -2,15 +2,12 @@ package util;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Insets;
-
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.table.TableCellRenderer;
 
 import javax.swing.*;
-import java.awt.*;
-import javax.swing.DefaultListModel;
+
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class MonRenderer extends JLabel implements ListCellRenderer<Object>
 {
@@ -25,7 +22,14 @@ public class MonRenderer extends JLabel implements ListCellRenderer<Object>
         //recuperer l'indice
         //int ind = ((Integer)value).intValue();
         
-        setIcon(new ImageIcon("Image/table.png"));
+        try
+        {
+            setIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/table.png"))));
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
         setText("" + list.getModel().getElementAt(index));
 

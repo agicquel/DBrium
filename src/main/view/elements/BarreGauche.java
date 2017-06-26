@@ -39,7 +39,7 @@ public class BarreGauche extends JPanel {
 	/**
 	 * The button of the leftBar to add new connexion
 	 */
-	private JButton ajouter;
+	private JButton ajouter, supprimer, modifier;
 
 	/**
 	 * The JscrollPane of the JTree and the JList
@@ -101,7 +101,17 @@ public class BarreGauche extends JPanel {
 			ajouter = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/NewConnection2.png"))));
 			ajouter.setBorderPainted(false);
 			ajouter.addActionListener(abg);
-			ajouter.setToolTipText("Ajouter une nouvelle connexion");
+			ajouter.setToolTipText("Ajouter une nouvelle connection");
+
+			supprimer = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/delete.png"))));
+			supprimer.setBorderPainted(false);
+			supprimer.addActionListener(abg);
+			supprimer.setToolTipText("Supprimer la connexion");
+
+			modifier = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/Parametre.png"))));
+			modifier.setBorderPainted(false);
+			modifier.addActionListener(abg);
+			modifier.setToolTipText("Modifier la connexion");
 		}
 		catch (IOException e)
 		{
@@ -171,6 +181,8 @@ public class BarreGauche extends JPanel {
 		// Ajout des elements
 
 		jtb.add(ajouter);
+		jtb.add(supprimer);
+		jtb.add(modifier);
 
 		barreHaut.add(jtb, BorderLayout.NORTH);
 		barreHaut.add(jsp, BorderLayout.CENTER);
@@ -190,6 +202,22 @@ public class BarreGauche extends JPanel {
 	{ 
 		return this.ajouter; 
 	}
+
+   /**
+    * @return the Delete Button
+    */
+	public JButton getSupprimer() 
+	{ 
+		return this.supprimer; 
+	}
+
+   /**
+    * @return the Change Button
+    */
+	public JButton getModifier() 
+	{ 
+		return this.modifier; 
+	}	
 
    /**
     * @return the JTree of this class

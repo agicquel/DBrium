@@ -4,6 +4,7 @@
     <property name="res.dir" value="res/"/>
     <property name="test.build.dir" value="build/test"/>
     <property name="test.src.dir" value="src/test/"/>
+    <property name="junit.report.dir" value="junit-report/"/>
     <property name="doc.dir" value="doc/"/>
     <property name="jar.dir" value="build/jar"/>
 
@@ -23,6 +24,7 @@
         <delete dir="${test.build.dir}"/> 
         <delete dir="${jar.dir}"/> 
         <delete dir="${doc.dir}"/> 
+        <delete dir="${junit.report.dir}" />
     </target> 
     
     <target name="build"> 
@@ -45,20 +47,31 @@
     <target name="test" depends="clean, build, test-build">
 
         <mkdir dir="${test.build.dir}" />
-
+        <mkdir dir="${junit.report.dir}" />
+        
         <junit printsummary="on" haltonfailure="yes" fork="true">
 
             <classpath refid="classpath"/>
 
-             <batchtest>
+             <batchtest todir="${junit.report.dir}">
+                <formatter type="xml" usefile="true" />
                 <fileset dir="${test.src.dir}">
                     <include name="*Test*.java" />
                 </fileset>
             </batchtest>
 
             <formatter type="brief" usefile="false" />
-
         </junit>
+
+        <mkdir dir="${junit.report.dir}/junit-report"/>
+        <junitreport todir="${junit.report.dir}/junit-report">
+            <fileset dir="${junit.report.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.report.dir}/junit-report"/>
+        </junitreport>
+
+
     </target>
     
     <target name="javadoc">
@@ -80,8 +93,6 @@
             </manifest>
             <zipgroupfileset dir="lib/" includes="*.jar"/> 
             <zipfileset dir="${res.dir}" prefix="${res.dir}"/>
-            <!-- <fileset dir="${res.dir}"> </fileset> -->
-
         </jar> 
     </target> 
     

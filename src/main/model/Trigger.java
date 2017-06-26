@@ -1,14 +1,19 @@
 package model;
 
-import java.sql.*;
-
 /**
 * Simple Trigger Object containing the trigger's code and its code
 * @author Antoine Gicquel
 */
 public class Trigger implements Deletable, Codable
 {
+	/**
+	* The trigger's name
+	*/
 	private String name;
+
+	/**
+	* The trigger's code
+	*/
 	private String code;
 
 	/**

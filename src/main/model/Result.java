@@ -9,13 +9,25 @@ import java.util.ArrayList;
 */
 public class Result
 {
+	/**
+	* JDBC ResultRes Object where to find the datas
+	*/
 	private ResultSet res;
+
+	/**
+	* JDBC ResultSetMetaData Object where to find the other datas
+	*/
 	private ResultSetMetaData meta;
+
+	/**
+	* Array List of rows extracted of the result set
+	*/
 	private ArrayList<Row> rows;
 
 	/**
 	* Constructor : Create from a ResultSet
 	* @param resultRaw the resultRaw which the infos came from
+	* @throws SQLException if result is not valid
 	*/
 	public Result(ResultSet resultRaw) throws SQLException
 	{
@@ -36,6 +48,7 @@ public class Result
 
 	/**
 	* Fill the ArrayList rows from the res attribute
+	* @throws SQLException if info about rows cant be extracted
 	*/
 	private void fillIntoRows() throws SQLException
 	{

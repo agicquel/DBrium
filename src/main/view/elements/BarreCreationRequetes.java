@@ -77,7 +77,7 @@ public class BarreCreationRequetes extends JPanel
 			executer = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/Execution.png"))));
 			executer.addActionListener(a);
 			executer.setBorderPainted(false);
-			executer.setToolTipText("Execution du script");
+			executer.setToolTipText("Ex\u00e9cution du script");
 
 			effacer = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/8.png"))));
 			effacer.addActionListener(a);
@@ -87,12 +87,12 @@ public class BarreCreationRequetes extends JPanel
 			rechercher = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/Search.png"))));
 			rechercher.addActionListener(a);
 			rechercher.setBorderPainted(false);
-			rechercher.setToolTipText("Search");
+			rechercher.setToolTipText("Rechercher");
 
 			createTable = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/ajouterTableBig.png"))));
 			createTable.addActionListener(a);
 			createTable.setBorderPainted(false);
-			createTable.setToolTipText("Créer une table");
+			createTable.setToolTipText("Cr\u00e9er une table");
 
 			newUser = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/img/users.png"))));
 			newUser.addActionListener(a);

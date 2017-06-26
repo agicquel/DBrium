@@ -1,6 +1,5 @@
 package model;
 
-import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +8,14 @@ import java.util.ArrayList;
 */
 public class Table implements Deletable, Codable
 {
+	/**
+	* Table name
+	*/
 	private String name;
+
+	/**
+	* Columns of the table
+	*/
 	private ArrayList<Column> columns;
 
 	/**
@@ -94,13 +100,6 @@ public class Table implements Deletable, Codable
 		return "SELECT * FROM " + this.name;
 	}
 
-	@Override
-	public String toString()
-	{
-		String ret = this.name + " (" + this.columns.size() + " colonnes)";
-		return ret;
-	}
-
 	/**
 	* Make the query to delete the table of the server
 	* @return the delete query
@@ -117,5 +116,12 @@ public class Table implements Deletable, Codable
 	public Query deleteFromTable()
 	{
 		return new Query("DELETE FROM " + this.name + " \n");
+	}
+
+	@Override
+	public String toString()
+	{
+		String ret = this.name + " (" + this.columns.size() + " colonnes)";
+		return ret;
 	}
 }

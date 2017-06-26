@@ -13,8 +13,12 @@ import javax.swing.table.*;
 public class TriggerBuilder implements ActionListener
 {
 	public TriggerBuilder()
-	{}
+	{
+
+	}
 
 	public synchronized void actionPerformed(ActionEvent e)
-	{}
+	{
+		
+	}
 }

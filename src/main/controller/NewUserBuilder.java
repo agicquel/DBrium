@@ -1,14 +1,14 @@
 package controller;
 
 import model.Query;
-import model.ConnectDB;
-import model.Table;
+//import model.ConnectDB;
+//import model.Table;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.table.*;
+//import javax.swing.table.*;
 
 /**
 * Create a new user into the db server
@@ -70,7 +70,7 @@ public class NewUserBuilder implements ActionListener
 		this.updateCB = new JCheckBox();
 		userInfo.add(this.updateCB);
 
-		this.validateBnt = new JButton("Générer");
+		this.validateBnt = new JButton("G\u00e9n\u00e9rer");
 		this.validateBnt.addActionListener(this);
 
 		this.frame.getContentPane().add(userInfo, BorderLayout.CENTER);

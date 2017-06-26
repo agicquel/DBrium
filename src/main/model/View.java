@@ -1,14 +1,19 @@
 package model;
 
-import java.sql.*;
-
 /**
 * Simple View Object 
 * @author Antoine Gicquel
 */
 public class View implements Deletable, Codable
 {
+	/**
+	* The view's name
+	*/
 	private String name;
+
+	/**
+	* The view's cpde
+	*/
 	private String code;
 
 	/**
