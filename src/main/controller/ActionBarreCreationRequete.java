@@ -161,7 +161,6 @@ public class ActionBarreCreationRequete implements ActionListener {
 				String res = f.getFenetre().getResultQuerry().getText();
 				for(Query q : f.getController().tokenArea(f.getFenetre().text().getText()))
 				{
-					System.out.println("query = '" + q.toString() + "'");
 					try
 					{
 						if(q.toString().toUpperCase().contains("SELECT"))
