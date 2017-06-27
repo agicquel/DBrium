@@ -1,28 +1,21 @@
 /**
-* Button for the file popupButton of the menu
-* extends JPopUpMenu
+* Menu of the application
 * @author Tristan Furno
 * @version 1.0
 */
 
 package view.elements;
 
-import javax.swing.JMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 import view.interfaces.*;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.ActionListener;
-
 import controller.*;
 
-
+/**
+* The top menu of the DBFrame
+*/
 public class Menu extends JPanel{
 
   /**

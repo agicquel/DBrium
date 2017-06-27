@@ -28,8 +28,19 @@ import org.fife.ui.rsyntaxtextarea.*;
  */
 public class ActionBarreCreationRequete implements ActionListener {
 
+	/**
+	* index of the tab
+	*/
 	private int index;
+
+	/**
+	* access to the main frame
+	*/
 	private DBFrame f;
+
+	/**
+	* highlighter object used with the search feature
+	*/
     private final Highlighter.HighlightPainter hPainter = new HPainter(new Color(255, 106, 106));
 
     /**
@@ -43,12 +54,11 @@ public class ActionBarreCreationRequete implements ActionListener {
 
 	}
 
-
-	@Override
 	/**
 	 * The action when the user push a button for exemple
 	 * @param e The event
 	 */
+	@Override
 	public void actionPerformed (ActionEvent e) {
 
 		Object source = e.getSource();

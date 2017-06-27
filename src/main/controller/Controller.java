@@ -14,20 +14,37 @@ import view.interfaces.DBFrame;
 
 public class Controller
 {
+	/**
+	* Array list of active connexions
+	*/
 	private ArrayList<ConnectDB> connexions;
+
+	/**
+	* access to the main frame
+	*/
 	private DBFrame frame;
 
+	/**
+	* Constructor
+	* @param frame the main frame
+	*/
 	public Controller(DBFrame frame)
 	{
 		this.frame = frame;
 		this.fillIntoConnexions();		
 	}
 
+	/**
+	* @return the user data dir from the system
+	*/
 	public static String getUserDataDirectory()
 	{
 		return System.getProperty("user.home") + File.separator + ".dbrium" + File.separator;
 	}
 
+	/**
+	* Fill the connexion array list from user data dir
+	*/
 	public void fillIntoConnexions()
 	{
 		this.connexions = new ArrayList<ConnectDB>();
@@ -54,11 +71,18 @@ public class Controller
 		}
 	}
 
+	/**
+	* @return give the connexion array list
+	*/
 	public ArrayList<ConnectDB> getConnexions()
 	{
 		return this.connexions;
 	}
 
+	/**
+	* Delete a connexion
+	* @param con the connexion you wanna delete
+	*/
 	public void deleteConnexion(ConnectDB con)
 	{
 		try
@@ -69,6 +93,10 @@ public class Controller
 		catch(Exception err){}
 	}
 
+	/**
+	* Delete a connexion
+	* @param conName the name of the connexion you wanna delete
+	*/
 	public void deleteConnexion(String conName)
 	{
 		try
@@ -79,6 +107,11 @@ public class Controller
 		catch(Exception err){}
 	}
 
+	/**
+	* Save a connexion
+	* @param con the connexion you wanna save
+	* @throws IOException if file cannot be read
+	*/
 	public void saveConnexion(ConnectDB con) throws IOException
 	{
 		try
@@ -91,6 +124,12 @@ public class Controller
 		}
 	}
 
+	/**
+	* load a connexion
+	* @param conName the name of the connexion you wanna load
+	* @return give the loaded ConnecDB Object
+	* @throws IOException if file cannot be read
+	*/
 	public ConnectDB loadConnexion(String conName) throws IOException
 	{
 		ConnectDB c = null;

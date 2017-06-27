@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+/**
+* Renderer of JList
+*/
 public class MonRenderer extends JLabel implements ListCellRenderer<Object>
 {
     public MonRenderer()

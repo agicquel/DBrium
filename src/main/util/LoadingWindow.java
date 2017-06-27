@@ -14,7 +14,9 @@ import javax.imageio.ImageIO;
 
 import com.alee.laf.*;
 
-
+/**
+* the loading frame used on the start of the app
+*/
 public class LoadingWindow extends JWindow{
 
   private Thread t;

@@ -7,9 +7,11 @@ import javax.swing.*;
 import java.awt.event.*;
 import util.*;
 
+/**
+* Listener of the loading frame used on the start of the app
+*/
 public class LoadingWindowListener implements WindowListener 
 {
-
     private LoadingWindow w;
 
     public LoadingWindowListener (LoadingWindow w) 

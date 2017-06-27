@@ -1,14 +1,10 @@
 package controller;
 
 import model.Query;
-//import model.ConnectDB;
-//import model.Table;
 
-//import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-//import javax.swing.table.*;
 
 /**
 * Create a new user into the db server
@@ -24,7 +20,14 @@ import java.awt.event.*;
 */
 public class NewUserBuilder implements ActionListener
 {
+	/**
+	* true when user finished to create the user
+	*/
 	private boolean done;
+
+	/**
+	* the query which create the new user
+	*/
 	private Query query;
 
 	private JFrame frame;

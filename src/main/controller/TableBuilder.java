@@ -26,7 +26,14 @@ public class TableBuilder extends JFrame implements ActionListener, WindowListen
 	private JTable table;
 	private DefaultTableModel model;
 
+	/**
+	* true when user finished to create the user
+	*/
 	private boolean done;
+
+	/**
+	* the query which create the new table
+	*/
 	private Query query;
 
 	/**

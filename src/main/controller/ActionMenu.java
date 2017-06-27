@@ -1,6 +1,6 @@
 /**
 * This class is use to make all actions of the menu
-* @author SomeOne
+* @author Tristan Furno
 * @version 1.0
 */
 package controller;
@@ -29,7 +29,7 @@ public class ActionMenu implements ActionListener{
   private DBFrame f;
 
   /**
-  * HighLightPainter use in to highlign the word sherch
+  * HighLightPainter use in to highlign the word search
   */
   private final Highlighter.HighlightPainter hPainter = new HPainter(new Color(255, 106, 106));
 
@@ -46,11 +46,6 @@ public class ActionMenu implements ActionListener{
   public void actionPerformed(ActionEvent e){
 
     Object source = e.getSource();
-
-
-    //System.out.println(e);
-
-
 
     //Action listener for the menu item save As
     if( source == this.f.getMenu().getSaveAs()){
@@ -101,73 +96,69 @@ public class ActionMenu implements ActionListener{
 
 
     }
-
-
     //Action listener for the menu item save
-    if(source.equals(this.f.getMenu().getSave())){
+    else if(source.equals(this.f.getMenu().getSave())){
       AreaToSave tamp = this.f.getFenetre().text();
 
       this.save(tamp);
     }
-
     //Action listener for the menu item open
-    if(source.equals(this.f.getMenu().getOpen())){
+    else if(source.equals(this.f.getMenu().getOpen())){
       this.open();
 
     }
-
     //Action listener for the menu item new window
 
     //Action listener for the menu item settings
-    if(source.equals(this.f.getMenu().getSettings())){
+    else if(source.equals(this.f.getMenu().getSettings())){
       System.out.println("Test settings");
     }
 
     //Action listener for the menu item undo
-    if(source.equals(this.f.getMenu().getUndo())){
+    else if(source.equals(this.f.getMenu().getUndo())){
       UndoAction ua = new UndoAction();
       ua.actionPerformedImpl(e, (RTextArea)this.f.getFenetre().text());
     }
 
     //Action listener for the menu item redo
-    if(source.equals(this.f.getMenu().getRedo())){
+    else if(source.equals(this.f.getMenu().getRedo())){
       RedoAction ra = new RedoAction();
       ra.actionPerformedImpl(e, (RTextArea)this.f.getFenetre().text());
     }
 
     //Action listener for the menu item copy
-    if(source.equals(this.f.getMenu().getCopy())){
+    else if(source.equals(this.f.getMenu().getCopy())){
       CopyAction ca = new CopyAction();
       ca.actionPerformedImpl(e, (RTextArea)this.f.getFenetre().text());
     }
 
     //Action listener for the menu item past
-    if(source.equals(this.f.getMenu().getPaste())){
+    else if(source.equals(this.f.getMenu().getPaste())){
       PasteAction pa = new PasteAction();
       pa.actionPerformedImpl(e, (RTextArea)this.f.getFenetre().text());
     }
 
     //Action listener for the menu item cut
-    if(source.equals(this.f.getMenu().getCut())){
+    else if(source.equals(this.f.getMenu().getCut())){
       CutAction ca = new CutAction();
       ca.actionPerformedImpl(e, (RTextArea)this.f.getFenetre().text());
     }
 
     //Action listener for the menu item selectA
-    if(source.equals(this.f.getMenu().getSelectA())){
+    else if(source.equals(this.f.getMenu().getSelectA())){
       SelectAllAction sa = new SelectAllAction();
       sa.actionPerformedImpl(e, (RTextArea)this.f.getFenetre().text());
     }
 
     //Action listener for the menu item full screen
-    if(source.equals(this.f.getMenu().getFullScreen())){
+    else if(source.equals(this.f.getMenu().getFullScreen())){
       f.setExtendedState(JFrame.MAXIMIZED_BOTH);
       f.setUndecorated(true);
       f.setVisible(true);
     }
 
     //Action listener for the menu item find
-    if(source.equals(this.f.getMenu().getFind())){
+    else if(source.equals(this.f.getMenu().getFind())){
       JOptionPane jop = new JOptionPane();
 
 			String search = jop.showInputDialog(null,"Saisissez la cha\u00eene de caract\u00e8re que vous souhaitez rechercher","Recherche", JOptionPane.QUESTION_MESSAGE);
@@ -178,27 +169,27 @@ public class ActionMenu implements ActionListener{
     }
 
     //Action listener for the menu item manual
-    if(source.equals(this.f.getMenu().getManual())){
+    else if(source.equals(this.f.getMenu().getManual())){
       FrameForMenus ffm = new FrameForMenus(getClass().getResourceAsStream("/res/txt/manuel.txt"), "Manuel");
     }
 
     //Action listener for the menu item about
-    if(source.equals(this.f.getMenu().getAbout())){
+    else if(source.equals(this.f.getMenu().getAbout())){
       FrameForMenus ffm = new FrameForMenus(getClass().getResourceAsStream("/res/txt/about.txt"), "A propos");
     }
 
     //Action listener for the menu item quit
-    if(source.equals(this.f.getMenu().getQuit())){
+    else if(source.equals(this.f.getMenu().getQuit())){
       System.exit(0);
     }
 
 
   }
 
-
   /**
   * Method to change the title of the curent file when is saved
   * @param title The name of the file to change
+  * @param contain The contain of the file to save
   */
   public void changeTitleTab(String title,String contain){
     ActionBarreCreationRequete a = this.f.getBarreRequete().getActionBarre();
@@ -319,7 +310,6 @@ public class ActionMenu implements ActionListener{
   /**
   * Method to save a file with a filechooser
   * @param ats the text Area to save
-  * @return The same area but with the save path changed
   */
 	public void saveAs(AreaToSave ats){
 
@@ -422,10 +412,14 @@ public class ActionMenu implements ActionListener{
     return ret;
   }
 
-  // Code important
-  // Ajout un HighlightPainter de type HPainter sur toutes les occurrences "word"
+
+  /**
+  * This method add an Highligther
+  * @param tcomp The component where the method higlith the text
+  * @param word The string higligth int the TextArea
+  */
   public void addHighlight(final JTextComponent tcomp, final String word) {
-    // Supprime les anciens
+
     removeHighlights(tcomp);
 
     try {
@@ -434,11 +428,10 @@ public class ActionMenu implements ActionListener{
       final String fullText = doc.getText(0, doc.getLength());
       int pos = 0;
 
-      // Recherche du "word"
       while ((pos = fullText.indexOf(word, pos)) >= 0) {
-        // Ajout du nouveau painter
+
         h.addHighlight(pos, pos + word.length(), hPainter);
-        // On avance pour la suite
+
         pos += word.length();
       }
     } catch (final BadLocationException e) {
@@ -447,8 +440,10 @@ public class ActionMenu implements ActionListener{
 
   }
 
-  // Code important
-  // Supprime les HighlightPainter de type HPainter
+  /** 
+  * This method remove the higlights
+  * @param textComp the area where the method remove the higlight
+  */
   public void removeHighlights(final JTextComponent textComp) {
     final Highlighter her = textComp.getHighlighter();
     final Highlighter.Highlight[] h = her.getHighlights();
@@ -458,9 +453,10 @@ public class ActionMenu implements ActionListener{
         her.removeHighlight(h[i]);
     }
   }
-  // Code important
-  // Le passage par une classe privée permet d'isoler nos HighlightPainter au
-  // moment du remove
+
+  /**
+  * this class isolated teh color of our HighlightPainter
+  */
   class HPainter extends DefaultHighlighter.DefaultHighlightPainter {
     public HPainter(final Color color) {
       super(color);

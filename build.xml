@@ -77,7 +77,7 @@
     <target name="javadoc">
         <mkdir dir="${doc.dir}"/>
 
-        <javadoc packagenames="*" sourcepath="${src.dir}" destdir ="${doc.dir}" version = "true" windowtitle = "DBrium Documentation">
+        <javadoc packagenames="*" sourcepath="${src.dir}" destdir ="${doc.dir}" version = "true" windowtitle = "DBrium Documentation" classpathref="classpath">
             <doctitle><![CDATA[= DBrium Documentation =]]></doctitle>
        </javadoc>
        

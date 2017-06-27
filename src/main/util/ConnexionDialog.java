@@ -6,21 +6,22 @@ import javax.swing.*;
 import java.util.Scanner;
 import model.ConnectDB;
 
+/**
+* Frame used to create of modify connexion paramaters
+*/
 public class ConnexionDialog extends JDialog {
 
 
   private boolean sendData;
-
   private JLabel nameUser, nameConnexion, mdp, nomHote, nomPort, sid, listeConnexion;
-
   private JTextField nameUserField, nameConnexionField, mdpField, sidField, nomHoteField, nomPortField;
-
   private JPanel centre, panConnexion, panTaille, panelBouton, panHaut, panBas, panInfoCo;
-
   private JCheckBox ch;
-
   private JButton save, help, connect, cancel;
 
+  /**
+  * true when user finished to create the user
+  */
   private boolean done;
 
   public ConnexionDialog(JFrame parent, String title, boolean modal){

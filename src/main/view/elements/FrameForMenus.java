@@ -1,6 +1,6 @@
 /**
-* This frame is use when the button about is use in the menu help
-* @author DBrium
+* This frame is use when the button about or manual is use in the menu help
+* @author Tristan Furno
 * @version 1.0
 */
 package view.elements;
@@ -11,6 +11,9 @@ import java.util.*;
 import java.awt.event.*;
 import java.io.*;
 
+/**
+* Frame for the menu
+*/
 public class FrameForMenus extends JFrame{
 
 	/**
@@ -47,7 +50,7 @@ public class FrameForMenus extends JFrame{
 
 	/**
 	* Constructor of the class
-	* @param fileName the file name to take the informations to show
+	* @param stream the imput stream of the file to show
 	* @param frameName the name to show in the frame
 	*/
 	public FrameForMenus(InputStream stream, String frameName){

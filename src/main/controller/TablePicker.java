@@ -23,7 +23,14 @@ import java.awt.event.*;
 */
 public class TablePicker implements ActionListener
 {
+	/**
+	* the array list of connexion
+	*/
 	private ArrayList<ConnectDB> cons;
+
+	/**
+	* true when user finished to create the user
+	*/
 	private boolean done;
 
 	private JFrame frame;

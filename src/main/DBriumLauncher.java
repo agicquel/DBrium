@@ -8,9 +8,6 @@ public class DBriumLauncher
 {
 	public static void main(String args[])
 	{
-
-
-		LoadingWindow w = new LoadingWindow();
-		
+		LoadingWindow w = new LoadingWindow();		
 	} 
 }

@@ -60,7 +60,6 @@ public class DBFrame extends JFrame
 	/**
 	 * This is the constructor of the class Frame
 	 */
-
 	public DBFrame () 
 	{
 

@@ -32,11 +32,34 @@ import javax.imageio.ImageIO;
 
 public class ActionBarreGauche implements ActionListener, MouseListener, TreeSelectionListener, TreeWillExpandListener{
 	
+	/**
+	* access to the main frame
+	*/
 	DBFrame f;
+
+	/**
+	* index of the current jtree size
+	*/
 	int indexTree;
+
+	/**
+	* Menu used with the right click on item
+	*/
 	JPopupMenu jpm, listMenu;
+
+	/**
+	* tree node object used to modify the jtree
+	*/
 	DefaultMutableTreeNode lenoeud;
+
+	/**
+	* items of the JPopupMenu
+	*/
 	JMenuItem openTable, openCode, createTable, delete, deleteTable, deleteCo, co, deco, modifyCo;
+
+	/**
+	* boolean object used to find if the selected object is a table or view or trigger
+	*/
 	boolean bTable, bView, bTrigger;
 
 	/**
@@ -88,12 +111,11 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 //==================================== ActionListener ====================================\\
 
 
-
-	@Override
 	/**
 	 * The action when the user push a button for exemple
 	 * @param e The event
 	 */
+	@Override
 	public void actionPerformed( ActionEvent e ) {
 
 		Object source = e.getSource();
@@ -134,10 +156,8 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 			{
 				JOptionPane.showMessageDialog(new JFrame(), "Tous les champs doivent être completés", "Impossible de créer la connection", JOptionPane.ERROR_MESSAGE);
 			}
-
-		// ACtion de deleteCo afin de supprimer une connection
-			
-		} else if(source == this.deleteCo ) {
+		}
+		else if(source == this.deleteCo ) {
 
 			lenoeud = (DefaultMutableTreeNode)f.getBarreGauche().getJtree().getLastSelectedPathComponent();
 
@@ -157,14 +177,14 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 					catch(Exception err){}
 
       				indexTree--;
+      				f.getBarreGauche().getRacine1().remove(lenoeud);
 					f.getBarreGauche().getM().reload();
 				}
 
 			}
 
 		}
-
-		else if(source == modifyCo)
+		else if(source == this.modifyCo)
 		{
 			lenoeud = (DefaultMutableTreeNode)f.getBarreGauche().getJtree().getLastSelectedPathComponent();
 
@@ -202,9 +222,6 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 				}
 			}
 		}
-
-		// Action sur les MenuItem
-
 		else if( source == this.openTable )
 		{
 			new Thread()
@@ -257,7 +274,6 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 				}
         	}.start();
 		}
-
 		else if ( source == this.deleteTable)
 		{
 			try
@@ -294,34 +310,37 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 			}
 			catch(Exception err){}
 		}
-
 		else if ( source == f.getBarreGauche().getSupprimer())
 		{
 			lenoeud = (DefaultMutableTreeNode)f.getBarreGauche().getJtree().getLastSelectedPathComponent();
+			try
+			{
+				if(!lenoeud.isRoot() && lenoeud != null) {
 
-			if(!lenoeud.isRoot() && lenoeud != null) {
+					JOptionPane jop = new JOptionPane();
 
-				JOptionPane jop = new JOptionPane();
+					int m = jop.showConfirmDialog(null,"Voulez-vous supprimer cette connexion ?","Supprimer Connection", JOptionPane.YES_NO_OPTION);
+	      	
+	      			if (m == JOptionPane.YES_OPTION ) {
 
-				int m = jop.showConfirmDialog(null,"Voulez-vous supprimer cette connexion ?","Supprimer Connection", JOptionPane.YES_NO_OPTION);
-      	
-      			if (m == JOptionPane.YES_OPTION ) {
+	      				try
+						{
+							f.getController().deleteConnexion(f.getBarreGauche().getJtree().getLastSelectedPathComponent().toString());
+							f.getBarreRequete().fillIntoCurrentConnexion();
+						}
+						catch(Exception err1){}
 
-      				try
-					{
-						f.getController().deleteConnexion(f.getBarreGauche().getJtree().getLastSelectedPathComponent().toString());
-						f.getBarreRequete().fillIntoCurrentConnexion();
+	      				indexTree--;
+	      				f.getBarreGauche().getRacine1().remove(lenoeud);
+						f.getBarreGauche().getM().reload();
 					}
-					catch(Exception err){}
-
-      				indexTree--;
-					f.getBarreGauche().getM().reload();
 				}
-
 			}
-
+			catch(Exception err2)
+			{
+				JOptionPane.showMessageDialog(new JFrame(), "Aucun element selectionné !", "Impossible de supprimer l'element", JOptionPane.ERROR_MESSAGE);
+			}
 		}
-
 		else if ( source == f.getBarreGauche().getModifier() )
 		{
 
@@ -354,58 +373,45 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 			}
 			catch(Exception err)
 			{
-				JOptionPane.showMessageDialog(new JFrame(), err.getMessage(), "Impossible de modifier la connection", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(new JFrame(), "Aucun element selectionné !", "Impossible de modifier la connection", JOptionPane.ERROR_MESSAGE);
 			}
 
 		}
 
 		f.getBarreGauche().getM().reload();
-
 	}
 
 
 
 //==================================== MouseListener ====================================\\
-
-
-
-	@Override
+	
 	/**
 	 * The action when the user Clicked his mouse
 	 * @param e The event
 	 */
-	public void mouseClicked(MouseEvent e){
-
-
-					
-	}
-
 	@Override
+	public void mouseClicked(MouseEvent e){}
+
+	
 	/**
 	 * The action when the user entered on a component with the cursor
 	 * @param e The event
 	 */
-	public void mouseEntered(MouseEvent e) {
-
-
-	}
-
-
 	@Override
+	public void mouseEntered(MouseEvent e){}
+
 	/**
 	 * The action when the user exited a component with the cursor
 	 * @param e The event
 	 */
-	public void mouseExited(MouseEvent e) {
-
-
-	}
-
 	@Override
+	public void mouseExited(MouseEvent e){}
+
 	/**
 	 * The action when the user presses his mouse
 	 * @param e The event
 	 */
+	@Override
 	public void mousePressed(MouseEvent e) {
 
 		if (e != null && SwingUtilities.isRightMouseButton ( e ) )
@@ -478,26 +484,22 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 
 	}
 
-
-	@Override
-
 	/**
 	 * The action when the user released his mouse
 	 * @param e The event
 	 */
+	@Override
 	public void mouseReleased(MouseEvent e){}
 
 
 
 //==================================== TreeSelectionListener ====================================\\
 
-
-
-	@Override
 	/**
 	 * The action when the user change the Compoenent selected
 	 * @param e The event
 	 */
+	@Override
     public void valueChanged(TreeSelectionEvent e) 
     {
     	if(f.getBarreGauche().getJtree().getLastSelectedPathComponent() != null)
@@ -545,14 +547,11 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 
 //==================================== TreeWillExpandListener ====================================\\
 
-
-
-	@Override
 	/**
 	 * The action when the user want expand the JTree
 	 * @param e The event
 	 */
-
+	@Override
 	public void treeWillExpand(TreeExpansionEvent e) throws ExpandVetoException
 	{
 		if(lenoeud != null && lenoeud.children() != null && lenoeud.getFirstChild().isLeaf()) 
@@ -576,11 +575,11 @@ public class ActionBarreGauche implements ActionListener, MouseListener, TreeSel
 		}
 	}
 
-	@Override
 	/**
 	 * The action when the user want collapse the JTree
 	 * @param e The event
 	 */
+	@Override
 	public void treeWillCollapse(TreeExpansionEvent e) throws ExpandVetoException
 	{
 		if(lenoeud != null && lenoeud.children() != null && lenoeud.getFirstChild().isLeaf()) 
